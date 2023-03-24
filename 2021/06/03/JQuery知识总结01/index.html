@@ -1,0 +1,876 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="UTF-8">
+<meta name="viewport"
+      content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+    <meta name="author" content="lufei">
+
+
+
+
+
+<title>JQuery概述和常用API | lufei</title>
+
+
+
+    <link rel="icon" href="/favicon.ico">
+
+
+
+
+    <!-- stylesheets list from _config.yml -->
+    
+    <link rel="stylesheet" href="/css/style.css">
+    
+
+
+
+    <!-- scripts list from _config.yml -->
+    
+    <script src="/js/script.js"></script>
+    
+    <script src="/js/tocbot.min.js"></script>
+    
+
+
+
+    
+    
+        
+    
+
+
+<meta name="generator" content="Hexo 5.4.2"></head>
+
+<body>
+    <script>
+        // this function is used to check current theme before page loaded.
+        (() => {
+            const currentTheme = window.localStorage && window.localStorage.getItem('theme') || '';
+            const isDark = currentTheme === 'dark';
+            const pagebody = document.getElementsByTagName('body')[0]
+            if (isDark) {
+                pagebody.classList.add('dark-theme');
+                // mobile
+                document.getElementById("mobile-toggle-theme").innerText = "· Dark"
+            } else {
+                pagebody.classList.remove('dark-theme');
+                // mobile
+                document.getElementById("mobile-toggle-theme").innerText = "· Light"
+            }
+        })();
+    </script>
+
+    <div class="wrapper">
+        <header>
+    <nav class="navbar">
+        <div class="container">
+            <div class="navbar-header header-logo"><a href="/">bravefei</a></div>
+            <div class="menu navbar-right">
+                
+                    <a class="menu-item" href="/archives">笔记</a>
+                
+                <input id="switch_default" type="checkbox" class="switch_default">
+                <label for="switch_default" class="toggleBtn"></label>
+            </div>
+        </div>
+    </nav>
+
+    
+    <nav class="navbar-mobile" id="nav-mobile">
+        <div class="container">
+            <div class="navbar-header">
+                <div>
+                    <a href="/">bravefei</a><a id="mobile-toggle-theme">·&nbsp;Light</a>
+                </div>
+                <div class="menu-toggle" onclick="mobileBtn()">&#9776; Menu</div>
+            </div>
+            <div class="menu" id="mobile-menu">
+                
+                    <a class="menu-item" href="/archives">笔记</a>
+                
+            </div>
+        </div>
+    </nav>
+
+</header>
+<script>
+    var mobileBtn = function f() {
+        var toggleMenu = document.getElementsByClassName("menu-toggle")[0];
+        var mobileMenu = document.getElementById("mobile-menu");
+        if(toggleMenu.classList.contains("active")){
+           toggleMenu.classList.remove("active")
+            mobileMenu.classList.remove("active")
+        }else{
+            toggleMenu.classList.add("active")
+            mobileMenu.classList.add("active")
+        }
+    }
+</script>
+            <div class="main">
+                <div class="container">
+    
+    
+        <div class="post-toc">
+    <div class="tocbot-list">
+    </div>
+    <div class="tocbot-list-menu">
+        <a class="tocbot-toc-expand" onclick="expand_toc()">Expand all</a>
+        <a onclick="go_top()">Back to top</a>
+        <a onclick="go_bottom()">Go to bottom</a>
+    </div>
+</div>
+
+<script>
+    var tocbot_timer;
+    var DEPTH_MAX = 6; // 为 6 时展开所有
+    var tocbot_default_config = {
+        tocSelector: '.tocbot-list',
+        contentSelector: '.post-content',
+        headingSelector: 'h1, h2, h3, h4, h5',
+        orderedList: false,
+        scrollSmooth: true,
+        onClick: extend_click,
+    };
+
+    function extend_click() {
+        clearTimeout(tocbot_timer);
+        tocbot_timer = setTimeout(function() {
+            tocbot.refresh(obj_merge(tocbot_default_config, {
+                hasInnerContainers: true
+            }));
+        }, 420); // 这个值是由 tocbot 源码里定义的 scrollSmoothDuration 得来的
+    }
+
+    document.ready(function() {
+        tocbot.init(obj_merge(tocbot_default_config, {
+            collapseDepth: 1
+        }));
+    });
+
+    function expand_toc() {
+        var b = document.querySelector('.tocbot-toc-expand');
+        var expanded = b.getAttribute('data-expanded');
+        expanded ? b.removeAttribute('data-expanded') : b.setAttribute('data-expanded', true);
+        tocbot.refresh(obj_merge(tocbot_default_config, {
+            collapseDepth: expanded ? 1 : DEPTH_MAX
+        }));
+        b.innerText = expanded ? 'Expand all' : 'Collapse all';
+    }
+
+    function go_top() {
+        window.scrollTo(0, 0);
+    }
+
+    function go_bottom() {
+        window.scrollTo(0, document.body.scrollHeight);
+    }
+
+    function obj_merge(target, source) {
+        for (var item in source) {
+            if (source.hasOwnProperty(item)) {
+                target[item] = source[item];
+            }
+        }
+        return target;
+    }
+</script>
+    
+
+    
+    <article class="post-wrap">
+        <header class="post-header">
+            <h1 class="post-title">JQuery概述和常用API</h1>
+            
+                <div class="post-meta">
+                    
+                        Author: <a itemprop="author" rel="author" href="/">lufei</a>
+                    
+
+                    
+                        <span class="post-time">
+                        Date: <a href="#">六月 3, 2021&nbsp;&nbsp;17:51:51</a>
+                        </span>
+                    
+                    
+                </div>
+            
+        </header>
+
+        <div class="post-content">
+            <h1 id="JQuery知识总结"><a href="#JQuery知识总结" class="headerlink" title="JQuery知识总结"></a>JQuery知识总结</h1><h1 id="JQuery概述"><a href="#JQuery概述" class="headerlink" title="JQuery概述"></a>JQuery概述</h1><ol>
+<li><p>JavaScript库</p>
+<p>仓库：可以把很多东西放到这个仓库里面。找东西只需要到仓库里面查找到就可以了。</p>
+<p>JavaScript库：即library，是一个封装好的特定的集合(方法和函数)。从封装一大堆函数的角度理解库，就是在这个库中，封装了很多预先定义好的函数在里面，比如动画animate、hide、show，比如获取元素等。</p>
+<p>JQuery就是为了快速方便的操作DOM，里面基本都是函数(方法)。</p>
+<p>对原生JavaScript的封装，内部都是用JavaScript 实现的，我们主要学习的是JQuery。</p>
+</li>
+<li><p>JQuery的概念</p>
+<p>JQuery 是一个快速、简洁的JavaScript库，其设计的宗旨是“write Less , Do More”，即倡导写更少的代码，做更多的事情。</p>
+<p>j就是JavaScript；Query查询;意思就是查询js，把js中的DOM操作做了封装，我们可以快速的查询使用里面的功能。</p>
+<p>JQuery封装了JavaScript常用的功能代码，优化了DOM操作、事件处理、动画设计和Ajax交互。学习JQuery本质:就是学习调用这些函数(方法)。</p>
+<p>JQuery出现的目的是加快前端人员的开发速度，我们可以非常方便的调用和使用它，从而提高开发效率。</p>
+</li>
+<li><p>JQuery的优点</p>
+<p>轻量级、免费、开源。核心文件才几十kb，不会影响页面加载速度</p>
+<p>跨浏览器兼容。基本兼容了现在主流的浏览器</p>
+<p>链式编程、隐式迭代</p>
+<p>对事件、样式、动画支持，人大简化了DOM操作</p>
+<p>支持插件扩展开发。有着丰富的第三方的插件，例收︰树形菜单、日期控件、轮播图等</p>
+</li>
+</ol>
+<h1 id="JQuery基本使用"><a href="#JQuery基本使用" class="headerlink" title="JQuery基本使用"></a>JQuery基本使用</h1><p>JQuery使用时要写入口函数</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">$(function() &#123;  // 入口函数</span><br><span class="line">	JS内容  </span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+
+<ol>
+<li><p>JQuery 的下载</p>
+<p>官网地址: <a target="_blank" rel="noopener" href="https://jquery.com/">https://JQuery.com/</a></p>
+<p>版本︰</p>
+<p>​    1x:兼容IE678等低版本浏览器，官网不再更新</p>
+<p>​    2x∶不兼容IE 678等低版本浏览器，官网不再更新</p>
+<p>​    3x:不兼容E678等低版本浏览器，是官方主要更新维护的版本</p>
+<p>各个版本的下载:<a target="_blank" rel="noopener" href="https://code.jquery.com/">https://code.JQuery.com/</a></p>
+</li>
+<li><p>JQuery的顶级对象$</p>
+<p>$是JQuery的别称，在代码中可以使用JQuery代替$，但一般为了方便，通常都直接使用$。  JQuery()  === $()</p>
+<p>$是JQuery的顶级对象，相当于原生JavaScript中的window。把元素利用$包装成JQuery对象，就可以调用JQuery的方法。</p>
+</li>
+</ol>
+<p><strong>JQuery对象和DOM对象</strong></p>
+<p>用原生JS获取来的对象就是 DOM对象</p>
+<p>JQuery方法获取的元素就是JQuery对象</p>
+<p>JQuery对象本质是：利用$对DOM对象包装后产生的对象（伪数组形式存储)</p>
+<p>JQuery 对象只能使用 JQuery 方法，DOM 对象则使用原生的 JavaScirpt 属性和方法</p>
+<p>DOM对象与JQuery对象之间是可以相互转换的。</p>
+<p>因为原生js比JQuery更大，原生的一些属性和方法JQuery没有给我们封装.要想使用这些属性和方法需要把JQuery对象转换为DOM对象才能使用。</p>
+<p>DOM对象转换为JQuery对象</p>
+<p>​    $(DOM对象)：$(‘div’)</p>
+<p>JQuery对象转换为DOM对象(两种方式)</p>
+<p>​    $(div’) [index]       index是索引号</p>
+<p>​    $(‘div ‘).get(index)     index是索引号</p>
+<h1 id="JQuery常用API"><a href="#JQuery常用API" class="headerlink" title="JQuery常用API"></a>JQuery常用API</h1><h3 id="JQuery选择器"><a href="#JQuery选择器" class="headerlink" title="JQuery选择器"></a>JQuery选择器</h3><p>原生JS获取元素方式很多，很杂，而且兼容性情况不一致，因此JQuery给我们做了封装，使获取元素统一标准。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">$(“选择器”) //里面选择器直接写CSS选择器即可，但是要加引号</span><br><span class="line">$(this)    // 获取当前元素</span><br><span class="line">$(this).index()  // 获取当前元素的索引值</span><br></pre></td></tr></table></figure>
+
+<p><strong>JQuery基本选择器</strong></p>
+<table>
+<thead>
+<tr>
+<th>名称</th>
+<th>用法</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>ID选择器</td>
+<td>$(“#id”)</td>
+<td>获取指定ID的元素</td>
+</tr>
+<tr>
+<td>全选选择器</td>
+<td>$(“*”)</td>
+<td>匹配所有元素</td>
+</tr>
+<tr>
+<td>类选择器</td>
+<td>$(“.class”)</td>
+<td>获取同一类class的元素</td>
+</tr>
+<tr>
+<td>标签选择器</td>
+<td>$(“div”)</td>
+<td>获取同一类标签的所有元素</td>
+</tr>
+<tr>
+<td>并集选择器</td>
+<td>$(“div,p,li”)</td>
+<td>选取多个元素</td>
+</tr>
+<tr>
+<td>交集选择器</td>
+<td>$(“Ii.current”)</td>
+<td>交集元素</td>
+</tr>
+</tbody></table>
+<p><strong>JQuery层级选择器</strong></p>
+<table>
+<thead>
+<tr>
+<th>名称</th>
+<th>用法</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>子代选择器</td>
+<td>$(“ul&gt;li”)</td>
+<td>使用&gt;号，获取亲儿子层级的元素;注意，并不会获取孙子层级的元素</td>
+</tr>
+<tr>
+<td>后代选择器</td>
+<td>$(“ul li”)</td>
+<td>使用空格，代表后代选择器，获取ul下的所有li元素，包括孙子等</td>
+</tr>
+</tbody></table>
+<p>JQuery设置样式  </p>
+<p>​    $(‘div’).css(“属性,值)</p>
+<p>隐式迭代</p>
+<p>​    遍历内部 DOM元素(伪数组形式存储)的过程就叫做隐式迭代。</p>
+<p>​    简单理解：给匹配到的所有元素进行循环遍历，执行相应的方法，而不用我们再进行循环，简化我们的操作，方便我们调用。</p>
+<p><strong>JQuery筛选选择器</strong></p>
+<table>
+<thead>
+<tr>
+<th>语法</th>
+<th>用法</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>:first</td>
+<td>$(“li:first”)</td>
+<td>获取第一个li元素</td>
+</tr>
+<tr>
+<td>:last</td>
+<td>$(“li:last”)</td>
+<td>获取最后一个li元素</td>
+</tr>
+<tr>
+<td>:eq(index)</td>
+<td>$(“li:eq(2)”)</td>
+<td>获取到的li元素中，选择索引号为2的元素，索引号index从0开始</td>
+</tr>
+<tr>
+<td>:odd</td>
+<td>$(“li:odd”)</td>
+<td>获取到的li元素中，选择索引号为奇数的元素</td>
+</tr>
+<tr>
+<td>:even</td>
+<td>$(“li:even”)</td>
+<td>获取到的li元素中，选择索引号为偶数的元素</td>
+</tr>
+</tbody></table>
+<p><strong>JQuery筛选方法</strong></p>
+<table>
+<thead>
+<tr>
+<th>语法</th>
+<th>用法</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>parent()</td>
+<td>$(“li”).parent();</td>
+<td>查找父级</td>
+</tr>
+<tr>
+<td>children(selector)</td>
+<td>$(“ul”).chiidren(“li”);</td>
+<td>相当于$(“u1&gt;li”)，最近一级（亲儿子)</td>
+</tr>
+<tr>
+<td>find(selector)</td>
+<td>$(“ul”).find(“li”);</td>
+<td>相当于$(“”ul li”),后代选择器</td>
+</tr>
+<tr>
+<td>siblings(selector)</td>
+<td>$(“.first”).siblings(“li”);</td>
+<td>查找兄弟节点，不包括自己本身</td>
+</tr>
+<tr>
+<td>nextAll( [expr])</td>
+<td>$(“.first”).nextAll()</td>
+<td>查找当前元素之后所有的同辈元素</td>
+</tr>
+<tr>
+<td>prevtAll( [expr])</td>
+<td>$(“.last””).prevAll()</td>
+<td>查找当前元素之前所有的同辈元素</td>
+</tr>
+<tr>
+<td>hasClass(class)</td>
+<td>$ ( “ div ‘ ).hasClass( “protected”)</td>
+<td>检查当前的元素是否含有某个特定的类，如果有，则返回true</td>
+</tr>
+<tr>
+<td>eq(index)</td>
+<td>$(“li” ).eq(2);</td>
+<td>相当于$(“”li:eq(2)” ),index从0开始</td>
+</tr>
+</tbody></table>
+<p>父 parent()：返回的是 最近一级的父级元素 亲爸爸</p>
+<p>亲儿子 children()：类似子代选择器 ul&gt;li</p>
+<p>后代find()：可以选里面所有的孩子 包括儿子和孙子 ，类似于后代选择器</p>
+<p>兄弟元素siblings()：除了自身元素之外的所有亲兄弟</p>
+<p>选择元素eq()：利用选择方法的方式选择索引为n的元素</p>
+<p>重点记住: parent()：children() find() siblings()  eq()</p>
+<p>JQuery里面的排他思想</p>
+<p>想要多选一的效果，排他思想:当前元素设置样式，其余的兄弟元素清除样式。</p>
+<p>:checked选择器 :checked查找被选中的表单元素</p>
+<p><strong>链式编程</strong></p>
+<p>链式编程是为了节省代码量，看起来更优雅。</p>
+<p>$(this).css(‘color , ‘red’).sibling().css(‘color’, “”);  // 自己变色，兄弟为空</p>
+<p>$(this).siblings().css(‘color’, ‘red’); // 兄弟变色，自己不变</p>
+<p>$(this).siblings().parent().css(‘color’, ‘blue’); // 兄弟的爸爸变色</p>
+<h4 id="JQuery选择器拓展案例"><a href="#JQuery选择器拓展案例" class="headerlink" title="JQuery选择器拓展案例"></a>JQuery选择器拓展案例</h4><p>​    鼠标经过当前元素，后代子元素显示，鼠标移开，后代子元素隐藏</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">$(function () &#123;</span><br><span class="line">	// 鼠标经过</span><br><span class="line">	$(&quot;.nav&gt;li&quot;).mouseover(function () &#123;</span><br><span class="line">		// $(this) JQuery 当前元素  this不要加引号</span><br><span class="line">		// show() 显示元素  hide() 隐藏元素</span><br><span class="line">		$(this).children(&quot;ul&quot;).show();</span><br><span class="line">	&#125;);</span><br><span class="line">	// 鼠标离开</span><br><span class="line">	$(&quot;.nav&gt;li&quot;).mouseout(function () &#123;</span><br><span class="line">		$(this).children(&quot;ul&quot;).hide();</span><br><span class="line">	&#125;)</span><br><span class="line">&#125;)</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+
+
+<p>​    排它思想：按钮变色</p>
+<p>​    点击按钮当前元素变色，其他元素回复正常</p>
+<p>​    通过隐式迭代和siblings兄弟元素，变化自己，清除其他</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">$(function() &#123;</span><br><span class="line">	// 1. 隐式迭代 给所有的按钮都绑定了点击事件</span><br><span class="line">	$(&quot;button&quot;).click(function() &#123;</span><br><span class="line">		// 2. 当前的元素变化背景颜色</span><br><span class="line">		$(this).css(&quot;background&quot;, &quot;pink&quot;);</span><br><span class="line">		// 3. 其余的兄弟去掉背景颜色 隐式迭代</span><br><span class="line">		$(this).siblings(&quot;button&quot;).css(&quot;background&quot;, &quot;&quot;);</span><br><span class="line">	&#125;);</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+
+
+
+<p>​    淘宝服饰精品案例分析</p>
+<p>​    核心原理∶鼠标经过左侧盒子某个小li，就让内容区盒子相对应图片显示，其余的图片隐藏。</p>
+<p>​    需要得到当前小li的索引号，就可以显示对应索引号的图片</p>
+<p>​    JQuery得到当前元素索引号$(this).index()</p>
+<p>​    中间对应的图片，可以通过eq(index)方法去选择</p>
+<p>​    显示元素show()隐藏元素hide()</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">$(function () &#123;</span><br><span class="line">	// 1. 鼠标经过左侧的小li </span><br><span class="line">	$(&quot;#left li&quot;).mouseover(function () &#123;</span><br><span class="line">		// 2. 得到当前小li 的索引号</span><br><span class="line">		var index = $(this).index();</span><br><span class="line">		console.log(index);</span><br><span class="line">		// 3. 让我们右侧的盒子相应索引号的图片显示出来就好了</span><br><span class="line">		// $(&quot;#content div&quot;).eq(index).show();</span><br><span class="line">		// 4. 让其余的图片（就是其他的兄弟）隐藏起来</span><br><span class="line">		// $(&quot;#content div&quot;).eq(index).siblings().hide();</span><br><span class="line">		// 链式编程</span><br><span class="line">		$(&quot;#content div&quot;).eq(index).show().siblings().hide();</span><br><span class="line">	&#125;)</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+
+
+
+<h3 id="JQuery样式操作"><a href="#JQuery样式操作" class="headerlink" title="JQuery样式操作"></a>JQuery样式操作</h3><p><strong>操作css方法</strong></p>
+<p>JQuery可以使用css方法来修改简单元素样式;也可以操作类，修改多个样式。</p>
+<p>​    (1) 参数只写属性名，则是返回属性值</p>
+<p>​        $(this).css(“color”);</p>
+<p>​    (2) 参数是属性名，属性值，逗号分隔，是设置一组样式，属性必须加引号，值如果是数字可以不用跟单位和引号</p>
+<p>​        $(this).css(“color”,”red”); // 属性名属性值加引号，中间逗号隔开</p>
+<p>​    (3) 参数可以是对象形式，方便设置多组样式。属性名和属性值用冒号隔开，属性可以不用加引号，</p>
+<p>​        $(this).css(“color”:”white” ,”font-size”:” 20px”):</p>
+<p>​        $(“div”).css(width: 400,height: 400,backgroundColor: “red” })</p>
+<p>​         注意： 如果是复合属性则必须采取驼峰命名法，如果值不是数字，则需要加引号</p>
+<p><strong>设置class类方法</strong></p>
+<p>作用等同于以前的classList，可以操作类样式，注意操作类里面的参数不要加点。</p>
+<p>​    $(“div” ).addClass(“current”);     // 添加类</p>
+<p>​    $( “div” ).removeClass(“current”);   // 移除类</p>
+<p>​    $(“div” ).toggleClass(“current”);    // 切换类（没有则添加，有则删除）</p>
+<p><strong>类操作与className区别</strong></p>
+<p>原生JS中 className会覆盖元素原先里面的类名。</p>
+<p>JQuery里面类操作只是对指定类进行操作，不影响原先的类名。</p>
+<h4 id="JQuery样式切换拓展案例"><a href="#JQuery样式切换拓展案例" class="headerlink" title="JQuery样式切换拓展案例"></a>JQuery样式切换拓展案例</h4><p>tab栏切换</p>
+<p>​    点击上部的li，当前li添加current类，其余兄弟移除类。</p>
+<p>​    点击的同时，得到当前li的索引号</p>
+<p>​    让下部里面相应索引号的item显示，其余的item隐藏</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">$(function () &#123;</span><br><span class="line">	// 1.点击上部的li，当前li 添加current类，其余兄弟移除类</span><br><span class="line">	$(&quot;.tab_list li&quot;).click(function () &#123;</span><br><span class="line">		// 链式编程操作，当前元素赋予current类，其余兄弟消除current类</span><br><span class="line">		$(this).addClass(&quot;current&quot;).siblings().removeClass(&quot;current&quot;);</span><br><span class="line">		// 2.点击的同时，得到当前li 的索引号</span><br><span class="line">		var index = $(this).index();</span><br><span class="line">		console.log(index);</span><br><span class="line">		// 3.让下部里面相应索引号的item显示，其余的item隐藏</span><br><span class="line">		$(&quot;.tab_con .item&quot;).eq(index).show().siblings().hide();</span><br><span class="line">	&#125;);</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+
+
+
+<h3 id="JQuery效果"><a href="#JQuery效果" class="headerlink" title="JQuery效果"></a>JQuery效果</h3><p>JQuery给我们封装了很多动画效果，最为常见的如下:</p>
+<p>效果        方法</p>
+<table>
+<thead>
+<tr>
+<th>方法</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>show()，hide()，toggle()</td>
+<td>显示隐藏</td>
+</tr>
+<tr>
+<td>slideDown()，slideUp()，slideToggle()</td>
+<td>滑动</td>
+</tr>
+<tr>
+<td>fadeln()，fadeOut()，fadeToggle()，fadeTo()</td>
+<td>淡入淡出</td>
+</tr>
+<tr>
+<td>animate()</td>
+<td>自定义动画</td>
+</tr>
+</tbody></table>
+<p>语法规范：参数为 执行时间，匀速/快/慢，回调函数</p>
+<table>
+<thead>
+<tr>
+<th>用法</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>show ( [speed,[easing] , [fn] ])</td>
+<td>显示</td>
+</tr>
+<tr>
+<td>hide ( [speed,[easing] , [ fn]])</td>
+<td>隐式</td>
+</tr>
+<tr>
+<td>toggle ( [ speed, [easing] , [fn]])</td>
+<td>显隐式切换</td>
+</tr>
+<tr>
+<td>slideDown ( [speed, [easing] , [fn]])</td>
+<td>下滑</td>
+</tr>
+<tr>
+<td>slideUp( [speed,[easing] , [fn]])</td>
+<td>上滑</td>
+</tr>
+<tr>
+<td>slideToggle( [speed , [easing] ,[fn]])</td>
+<td>上下滑动切换</td>
+</tr>
+<tr>
+<td>fadeIn ( [speed, [easing] , [fn]])</td>
+<td>淡入</td>
+</tr>
+<tr>
+<td>fadeout ( [speed, [easing],[fn] ])</td>
+<td>淡出</td>
+</tr>
+<tr>
+<td>fadeToggle( [speed, [easing] , [fn]])</td>
+<td>淡入淡出切换</td>
+</tr>
+<tr>
+<td>fadeTo([speed,transparency], [fn]])</td>
+<td>透明度（速度，透明效果，回调函数）</td>
+</tr>
+<tr>
+<td>animate(params , [ speed] , [easing] ,[fn])</td>
+<td>自定义动画（样式对象，执行时间，匀速/快/慢，回调函数）</td>
+</tr>
+</tbody></table>
+<p><strong>animate自定义动画</strong></p>
+<p>animate(params , [ speed] , [easing] , [fn])</p>
+<ul>
+<li><p>params：想要更改的样式属性，以对象形式传递，必须写。属性名可以不用带引号，如果是复合属性则需要采取驼峰命名法borderLeft。其余参数都可以省略。</p>
+</li>
+<li><p>speed : 三种预定速度之一的字符串(“slow”, “nomal”,or“fast”)或表示动画时长的毫秒数值(如:1000)。</p>
+</li>
+<li><p>easing : (Optional)用来指定切换效果，默认是“swing”，可用参数“linear”。</p>
+</li>
+<li><p>fn:回调函数，在动画完成时执行的函数，每个元素执行一次。</p>
+</li>
+</ul>
+<p>​    (1) 参数都可以省略，无动画直接显示。</p>
+<p>​    (2) speed :三种预定速度之一的字符串(“slow”,”normal”,or“fast”)或表示动画时长的毫秒数值(如:∶1000)。</p>
+<p>​    (3) easing : (Optional)用来指定切换效果，默认是“swing”，可用参数“linear”.</p>
+<p>​    (4) fn:回调函数，在动画完成时执行的函数，每个元素执行一次。</p>
+<p>​    (5) transparency：透明效果在 [0-1] 区间内设置透明度，0为原效果，1为无透明</p>
+<p>​    (6) params:想要更改的样式属性，以对象形式传递，必须写。属性名可以不用带引号，如果是复合属性则需要采取驼峰命名法borderLeft。其除参数都可以省略。</p>
+<p>​    一般情况下，我们都不加参数直接显示隐藏</p>
+<p>事件切换</p>
+<p>hover([over,]out)</p>
+<p>​    over:鼠标移到元素上要触发的函数(相当于mouseenter )</p>
+<p>​    out:鼠标移出元素要触发的函数（相当于mouseleave )</p>
+<p>​    如果只写一个函数，那么鼠标经过和鼠标离开都会触发这个函数</p>
+<p>动画队列及其停止排队方法</p>
+<p>动画或者效果一旦触发就会执行，如果多次触发，就造成多个动画或者效果排队执行。</p>
+<p>​    停止排队</p>
+<p>​    stop()</p>
+<p>​        (1) stop()方法用于停止动画或效果。</p>
+<p>​        (2) 注意: stop()写到动画或者效果的前面，相当于停止结束上一次的动画。</p>
+<h4 id="JQuery效果拓展案例"><a href="#JQuery效果拓展案例" class="headerlink" title="JQuery效果拓展案例"></a>JQuery效果拓展案例</h4><p>鼠标移入图片，其他图片透明度降低，移除复原</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">$(function () &#123;</span><br><span class="line">	//鼠标进入的时候,其他的li标签透明度：0.5</span><br><span class="line">	$(&quot;.wrap li&quot;).hover(function () &#123;</span><br><span class="line">		$(this).siblings().stop().fadeTo(400, 0.5);</span><br><span class="line">	&#125;, function () &#123;</span><br><span class="line">		// 鼠标离开，其他li 透明度改为 1</span><br><span class="line">		$(this).siblings().stop().fadeTo(400, 1);</span><br><span class="line">	&#125;)</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+
+<p>点击按钮，使当前盒子变化下移500px，右移300px，宽改变为500ox，透明度0.5、</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">$(function() &#123;</span><br><span class="line">	$(&quot;button&quot;).click(function() &#123;</span><br><span class="line">		$(&quot;div&quot;).animate(&#123;</span><br><span class="line">			left: 500,</span><br><span class="line">			top: 300,</span><br><span class="line">			opacity: 0.4,</span><br><span class="line">			width: 500</span><br><span class="line">		&#125;, 500);</span><br><span class="line">	&#125;)</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+
+
+
+<p>手风琴效果</p>
+<p>鼠标经过某个小li有两步操作:</p>
+<p>​    当前小li宽度变为224px，同时里面的小图片淡出，大图片淡入</p>
+<p>​    其余兄弟小li宽度变为69px ，小图片淡入，大图片淡出</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">$(function () &#123;</span><br><span class="line">	// 鼠标经过某个小li 有两步操作：</span><br><span class="line">	$(&quot;.king li&quot;).mouseenter(function () &#123;</span><br><span class="line">		// 1.当前小li 宽度变为 224px， 同时里面的小图片淡出，大图片淡入</span><br><span class="line">		$(this).stop().animate(&#123;</span><br><span class="line">			width: 224</span><br><span class="line">		&#125;).find(&quot;.small&quot;).stop().fadeOut().siblings(&quot;.big&quot;).stop().fadeIn();</span><br><span class="line">		// 2.其余兄弟小li宽度变为69px， 小图片淡入， 大图片淡出</span><br><span class="line">		$(this).siblings(&quot;li&quot;).stop().animate(&#123;</span><br><span class="line">			width: 69</span><br><span class="line">		&#125;).find(&quot;.small&quot;).stop().fadeIn().siblings(&quot;.big&quot;).stop().fadeOut();</span><br><span class="line">	&#125;)</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+
+
+
+<h3 id="JQuery属性操作"><a href="#JQuery属性操作" class="headerlink" title="JQuery属性操作"></a>JQuery属性操作</h3><p>设置或获取元素固有属性值prop()</p>
+<p>所谓元素固有属性就是元素本身自带的属性，比如<a>元素里面的 href，比如<input>元素里面的type</p>
+<p>prop获取固有属性</p>
+<ul>
+<li><p>prop(“属性””)     // 获取属性语法</p>
+</li>
+<li><p>prop(“属性”;”属性值””) // 设置属性语法</p>
+</li>
+</ul>
+<p>设置或获取元素自定义属性attr()</p>
+<p>用户自己给元素添加的属性，我们称为自定义属性。比如给div添加index = “1”。</p>
+<p>attr()获取自定义属性</p>
+<ul>
+<li><p>attr(“属性”)      // 类似原生getAttribute() 获取属性语法</p>
+</li>
+<li><p>attr(“”属性”,”属性值””) //类似原生setAttribute() 设置属性语法</p>
+</li>
+</ul>
+<p>数据缓存data()</p>
+<p>data()方法可以在指定的元素上存取数据，并不会修改DOM元素结构。一旦页面刷新，之前存放的数据都将被移除。</p>
+<ul>
+<li><p>data(“name” ,”value”) //向被选元素附加数据 附加数据语法</p>
+</li>
+<li><p>date(“name”)    //向被选元素获取数据 获取数据语法</p>
+</li>
+</ul>
+<p>同时，还可以读取HTML5自定义属性data-index，得到的是数字型</p>
+<p>注意：这个方法获取data-index h5自定义属性，属性不用写data- 而且返回的是数字型</p>
+<p>attr(“data-index”) === data(“index”)  // 获取data-index属性</p>
+<h4 id="JQuery属性操作拓展案例"><a href="#JQuery属性操作拓展案例" class="headerlink" title="JQuery属性操作拓展案例"></a>JQuery属性操作拓展案例</h4><p>购物车案例模块-全选分析</p>
+<p>​    全选思路∶里面3个小的复选框按钮( j-checkbox )选中状态( checked )跟着全选按钮 ( checkall )走。</p>
+<p>​    因为checked是复选框的固有属性，此时我们需要利用prop()方法获取和设置该属性。</p>
+<p>​    把全选按钮状态赋值给3小复选框就可以了</p>
+<p>​    当我们每次点击小的复选框按钮，就来判断:</p>
+<p>​    如果小复选框被选中的个数等于3就应该把全选按钮选上，否则全选按钮不选。</p>
+<p>​    :checked选择器:checked查找被选中的表单元素。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">$(function () &#123;</span><br><span class="line">	// 1. 全选 全不选功能模块</span><br><span class="line">	// 就是把全选按钮（checkall）的状态赋值给三个小的按钮(j-checkbox）就可以了</span><br><span class="line">	// 改变事件 change</span><br><span class="line">	$(&quot;.checkall&quot;).change(function () &#123;</span><br><span class="line">		$(&quot;.j-checkbox,.checkall&quot;).prop(&quot;checked&quot;, $(this).prop(&quot;checked&quot;));</span><br><span class="line">	&#125;)</span><br><span class="line">	// 2. 如果小复选框被选中的个数等于3 就应该把全选按钮选上，否则全选按钮不选。</span><br><span class="line">	// 通过被选中复选框的值改变全选框按钮</span><br><span class="line">	// $(&quot;.j-checkbox&quot;).length 这个是所有的小复选框的个数</span><br><span class="line">	$(&quot;.j-checkbox&quot;).change(function () &#123;</span><br><span class="line">		// .j-checkbox:checked选中状态的复选框</span><br><span class="line">		if ($(&quot;.j-checkbox:checked&quot;).length === $(&quot;.j-checkbox&quot;).length) &#123;</span><br><span class="line">		$(&quot;.checkall&quot;).prop(&quot;checked&quot;, true);</span><br><span class="line">	&#125; else &#123;</span><br><span class="line">		$(&quot;.checkall&quot;).prop(&quot;checked&quot;, false);</span><br><span class="line">	&#125;</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+
+
+
+<h3 id="JQuery文本属性值"><a href="#JQuery文本属性值" class="headerlink" title="JQuery文本属性值"></a>JQuery文本属性值</h3><p>主要针对元素的内容还有表单的值操作。</p>
+<p>普通元素内容html)(相当于原生inner HTML)</p>
+<ul>
+<li><p>html()     // 获取元素的内容</p>
+</li>
+<li><p>html(“内容”)  //设置元素的内容</p>
+</li>
+</ul>
+<p>普通元素文本内容text)(相当与原生innerText)</p>
+<ul>
+<li><p>text()       //获取元素的文本内容</p>
+</li>
+<li><p>text(“”文本内容”) //设置元素的文本内容</p>
+</li>
+</ul>
+<p> 表单的值val((相当于原生value)</p>
+<ul>
+<li><p>val()     // 获取元素的value值</p>
+</li>
+<li><p>val(“内容”)  // 设置元素的value值</p>
+</li>
+</ul>
+<p>toFixed(n)  // 保留小数n位</p>
+<h4 id="JQuery文本属性拓展案例"><a href="#JQuery文本属性拓展案例" class="headerlink" title="JQuery文本属性拓展案例"></a>JQuery文本属性拓展案例</h4><p>购物车案例模块-增减商品数量分析</p>
+<p>​    核心思路∶首先声明一个变量，当我们点击+号( increment )，就让这个值++，然后赋值给文本框。</p>
+<p>​    注意1:只能增加本商品的数量，就是当前+号的兄弟文本框( itxt )的值。</p>
+<p>​    修改表单的值是val()方法</p>
+<p>​    注意2∶这个变量初始值应该是这个文本框的值，在这个值的基础上++。要获取表单的值</p>
+<p>​    减号(decrement )思路同理，但是如果文本框的值是1，就不能再减了。</p>
+<p>​    增减商品数量模块 首先声明一个变量，当我们点击+号（increment），就让这个值++，然后赋值给文本框。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">$(&quot;.increment&quot;).click(function () &#123; // 加号</span><br><span class="line">	// 得到兄弟文本框的值</span><br><span class="line">	var n = $(this).siblings(&quot;.itxt&quot;).val();</span><br><span class="line">	n++;</span><br><span class="line">	$(this).siblings(&quot;.itxt&quot;).val(n);</span><br><span class="line">&#125;)</span><br><span class="line">$(&quot;.decrement&quot;).click(function () &#123; // 减号</span><br><span class="line">	var n = $(this).siblings(&quot;.itxt&quot;).val();</span><br><span class="line">	if (n == 1) &#123;</span><br><span class="line">		return false; // 商品数量为1 退出点击事件</span><br><span class="line">	&#125;</span><br><span class="line">	n--;</span><br><span class="line">	$(this).siblings(&quot;.itxt&quot;).val(n);</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+
+
+
+<p>购物车案例模块-修改商品小计分析</p>
+<p>​    核心思路:每次点击+号或者-号，根据文本框的值乘以当前商品的价格就是商品的小计</p>
+<p>​    注意1:只能增加本商品的小计，就是当前商品的小计模块( p-sum )</p>
+<p>​    修改普通元素的内容是text0方法</p>
+<p>​    当前商品的价格，要把￥符号去掉再相乘截取字符串substr(1)</p>
+<p>​    最后计算的结果如果想要保留2位小数通过toFixed(2)方法</p>
+<p>​    parents(‘选择器’)可以返回指定祖先元素</p>
+<p>​    用户也可以直接修改表单里面的值，同样要计算小计。</p>
+<p>​    用表单change事件用最新的表单内的值乘以单价即可但是还是当前商品小计</p>
+<p>​    增减商品数量模块 首先声明一个变量，当我们点击+号（increment），就让这个值++，然后赋值给文本框。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">$(&quot;.increment&quot;).click(function () &#123; // 加号</span><br><span class="line">	// 得到兄弟文本框的值</span><br><span class="line">	var n = $(this).siblings(&quot;.itxt&quot;).val();</span><br><span class="line">	n++;</span><br><span class="line">	$(this).siblings(&quot;.itxt&quot;).val(n);</span><br><span class="line">	// 3.1 计算小计模块 根据文本框的值 乘以 当前商品的价格 就是 商品的小计</span><br><span class="line">	// var p = $(this).parent().parent().siblings(&quot;.p-price&quot;).html();</span><br><span class="line">	// parents(‘选择器’)可以返回指定祖先元素  toFixed(n) 保留小数n位</span><br><span class="line">	var p = $(this).parents(&quot;.p-num&quot;).siblings(&quot;.p-price&quot;).html();  // 单价</span><br><span class="line">	price = (n * p.substr(1)).toFixed(2);</span><br><span class="line">	$(this).parent().parent().siblings(&quot;.p-sum&quot;).html(&quot;￥&quot; + price);</span><br><span class="line">&#125;)</span><br><span class="line">// 4. 用户修改文本框的值 计算 小计模块 </span><br><span class="line">$(&quot;.itxt&quot;).change(function () &#123;</span><br><span class="line">	var n = $(this).val(); // 获取修改后的值</span><br><span class="line">	var p = $(this).parents(&quot;.p-num&quot;).siblings(&quot;.p-price&quot;).html();</span><br><span class="line">	price = (n * p.substr(1));</span><br><span class="line">	$(this).parent().parent().siblings(&quot;.p-sum&quot;).html(&quot;￥&quot; + price.toFixed(2));</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+
+
+
+<h3 id="JQuery元素操作"><a href="#JQuery元素操作" class="headerlink" title="JQuery元素操作"></a>JQuery元素操作</h3><p>主要是遍历、创建、添加、删除元素操作。</p>
+<p><strong>遍历元素</strong></p>
+<p>JQuery隐式迭代是对同一类元素做了同样的操作。如果想要给同一类元素做不同操作，就需要用到遍历。</p>
+<p>语法1:</p>
+<p>​    $( “div”” ).each (function (index,domEle){ xXx; })</p>
+<p>​    each0方法遍历匹配的每一个元素。主要用DOM处理。each每一个</p>
+<p>​    里面的回调函数有2个参数:index是每个元素的索引号; demEle是每个DOM元素对象，不是JQuery对象</p>
+<p>​    所以要想使用JQuery方法，需要给这个dom元素转换为JQuery对象$(domEle)</p>
+<p>语法2∶</p>
+<p>​    $.each (object , function (index, element) { xxx; })</p>
+<p>​    $.each(方法可用于遍历任何对象。主要用于数据处理，比如数组，对象</p>
+<p>​    里面的函数有2个参数: index是每个元素的索引号; element遍历内容</p>
+<p>​    主要用于遍历数据，处理数据</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">var arr = [&quot;red&quot;, &quot;green&quot;, &quot;blue&quot;];</span><br><span class="line">$.each(arr, function(i, ele) &#123;</span><br><span class="line">	console.log(i); // 0,1,2</span><br><span class="line">	console.log(ele); // red,green,blue</span><br><span class="line">&#125;)</span><br><span class="line">$.each(&#123;</span><br><span class="line">	name: &quot;andy&quot;,</span><br><span class="line">	age: 18</span><br><span class="line">&#125;, function (i, ele) &#123;</span><br><span class="line">	console.log(i);   // i输出的是 name age 属性名</span><br><span class="line">	console.log(ele);  // ele 输出的是 andy 18 属性值</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+
+
+
+<p>创建元素</p>
+<p>​    <code>$(&quot;&lt;li&gt;&lt;/li&gt;&quot;);</code> // 动态的创建了一个<li></p>
+<p>添加元素</p>
+<p>内部添加</p>
+<p>​    element.append(“内容”)  // 内部添加append(); 并且放到内容的最后面</p>
+<p>​    element.prepend(“内容”); // 内部添加prepend(); 并且放到内容的最前面</p>
+<p>外部添加</p>
+<p>​    element.after(“内容”);  //把内容放入目标元素后面</p>
+<p>​    element.before(“内容”);  //把内容放入目标元素前面</p>
+<p>内部添加元素，生成之后，它们是父子关系。</p>
+<p>外部添加元素，生成之后，他们是兄弟关系。</p>
+<p>​    $(“ul”).append(li);  // ul内部最后面添加li元素</p>
+<p>​    $(“div”).after(span);  // 在div后面添加span元素</p>
+<p>删除元素</p>
+<p>​    element.remove()  //删除匹配的元素(〔本身）</p>
+<p>​    element.empty()  //删除匹配的元素集合中所有的子节点</p>
+<p>​    element.htmI(“”)  //清空匹配的元素内容 可以删除匹配的元素里面的子节点</p>
+<h4 id="元素操作拓展案例"><a href="#元素操作拓展案例" class="headerlink" title="元素操作拓展案例"></a>元素操作拓展案例</h4><p>遍历盒子变色</p>
+<p>遍历三个盒子的设置不同的颜色，并把三个盒子的值相加</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">$(function() &#123;</span><br><span class="line">	// $(&quot;div&quot;).css(&quot;color&quot;, &quot;red&quot;);</span><br><span class="line">	// 如果针对于同一类元素做不同操作，需要用到遍历元素（类似for，但是比for强大）</span><br><span class="line">	var sum = 0;</span><br><span class="line">	// 1. each() 方法遍历元素 </span><br><span class="line">	var arr = [&quot;red&quot;, &quot;green&quot;, &quot;blue&quot;];</span><br><span class="line">	$(&quot;div&quot;).each(function(i, domEle) &#123;</span><br><span class="line">		// 回调函数第一个参数一定是索引号 可以自己指定索引号号名称</span><br><span class="line">		// 回调函数第二个参数一定是 dom元素对象 也是自己命名</span><br><span class="line">		// domEle.css(&quot;color&quot;); dom对象没有css方法</span><br><span class="line">		$(domEle).css(&quot;color&quot;, arr[i]); // 遍历设置颜色</span><br><span class="line">		sum += parseInt($(domEle).text()); // 计算和</span><br><span class="line">	&#125;)</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+
+
+
+<p>购物车案例模块-计算总计和总额</p>
+<p>​    核心思路:把所有文本框里面的值相加就是总计数量。总额同理</p>
+<p>​    文本框里面的值不相同，如果想要相加需要用到each遍历。声明一个变量，相加即可</p>
+<p>​    点击+号-号，会改变总计和总额，如果用户修改了文本框里面的值同样会改变总计和总额</p>
+<p>​    因此可以封装一个函数求总计和总额的，以上2个操作调用这个函数即可。</p>
+<p>​    注意1：总计是文本框里面的值相加用val()总额是普通元素的内容用text()</p>
+<p>​    注意2：普通元素里面的内容要去掉￥并且转换为数字型才能相加</p>
+<p>​     // 5.  计算总计和总额模块</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">function getSum() &#123;</span><br><span class="line">	var count = 0; // 计算总件数</span><br><span class="line">	var money = 0; // 计算总价钱</span><br><span class="line">	$(&quot;.itxt&quot;).each(function (i, ele) &#123; // i索引号 ele元素</span><br><span class="line">		count += parseInt($(ele).val());</span><br><span class="line">	&#125;);</span><br><span class="line">	$(&quot;.amount-sum em&quot;).text(count);</span><br><span class="line">	$(&quot;.p-sum&quot;).each(function (i, ele) &#123;</span><br><span class="line">		money += parseFloat($(ele).text().substr(1)); // 取值，去除￥符号</span><br><span class="line">	&#125;);</span><br><span class="line">	$(&quot;.price-sum em&quot;).text(&quot;￥&quot; + money.toFixed(2)) // 保留两位小数</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+
+
+<p>购物车案例模块-删除商品模块</p>
+<p>​    核心思路:把商品remove)删除元素即可</p>
+<p>​    有三个地方需要删除：1.商品后面的删除按钮⒉删除选中的商品3.清理购物车</p>
+<p>​    商品后面的删除按钮：一定是删除当前的商品，所以从$(this)出发</p>
+<p>​    删除选中的商品：先判断小的复选框按钮是否选中状态，如果是选中，则删除对应的商品</p>
+<p>​    // 6. 删除商品模块</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">$(&quot;.p-action a&quot;).click(function () &#123; // 商品后面的删除按钮</span><br><span class="line">	$(this).parents(&quot;.cart-item&quot;).remove();</span><br><span class="line">	getSum() // 计算总计</span><br><span class="line">&#125;);</span><br><span class="line">$(&quot;.remove-batch&quot;).click(function () &#123; // 删除选中的商品</span><br><span class="line">	// .j-checkbox:checked选中状态的复选框</span><br><span class="line">	$(&quot;.j-checkbox:checked&quot;).parents(&quot;.cart-item&quot;).remove();</span><br><span class="line">	getSum() // 计算总计</span><br><span class="line">&#125;);</span><br><span class="line">$(&quot;.clear-all&quot;).click(function () &#123; // 清空购物车 删除全部商品</span><br><span class="line">	$(&quot;.cart-item&quot;).remove();</span><br><span class="line">	getSum() // 计算总计</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+
+
+
+<p>购物车案例模块-选中商品添加背景</p>
+<p>​    核心思路:选中的商品添加背景，不选中移除背景即可</p>
+<p>​    全选按钮点击∶如果全选是选中的，则所有的商品添加背景，否则移除背景</p>
+<p>​    小的复选框点击︰如果是选中状态，则当前商品添加背景，否则移除背景</p>
+<p>​    这个背景，可以通过类名修改，添加类和删除类</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">if ($(this).prop(&quot;checked&quot;)) &#123; // 选中添加check-cart-item类</span><br><span class="line">	$(&quot;.cart-item&quot;).addClass(&quot;check-cart-item&quot;);</span><br><span class="line">&#125; else &#123; // 没选中移除check-cart-item类</span><br><span class="line">	$(&quot;.cart-item&quot;).removeClass(&quot;check-cart-item&quot;);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+<h3 id="JQuery尺寸、位置操作"><a href="#JQuery尺寸、位置操作" class="headerlink" title="JQuery尺寸、位置操作"></a>JQuery尺寸、位置操作</h3><p><strong>JQuery尺寸</strong></p>
+<table>
+<thead>
+<tr>
+<th>用法</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>width() / height()</td>
+<td>取得匹配元素宽度和高度值只算width / height</td>
+</tr>
+<tr>
+<td>innerWidth() / innerHieght()</td>
+<td>取得匹配元素宽度和高度值包含 padding</td>
+</tr>
+<tr>
+<td>outerWidth() / outerHeight()</td>
+<td>取得四配元素宽度和高度值包含padding . border</td>
+</tr>
+<tr>
+<td>outerWidth(true) / outerHeight(true)</td>
+<td>取得匹配元素宽度和高度值包含 padding . borde、margin</td>
+</tr>
+</tbody></table>
+<p>以上参数为空，则是获取相应值，返回的是数字型。</p>
+<p>如果参数为数字，则是修改相应值。</p>
+<p>参数可以不必写单位。</p>
+<p><strong>JQuery位置</strong></p>
+<p>位置主要有三个: offset(). position(). scrollTop()/scrollLeft()</p>
+<p>offset()设置或获取元素偏移</p>
+<p>​    (1) offset()方法设置或返回被选元素相对于文档的偏移坐标，跟父级没有关系。</p>
+<p>​    (2) 该方法有2个属性left、top。offset().top用于获取距离文档顶部的距离，offset().left用于获取距离文档左侧的距离。</p>
+<p>​    (3) 可以设置元素的偏移: offset(f top: 10, left: 30 };</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">$(&quot;.son&quot;).offset(&#123;</span><br><span class="line">	top: 200, // 设置头部偏移200像素</span><br><span class="line">	left: 200 // 设置左偏移200像素</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+
+
+
+<p>Position()获取元素偏移</p>
+<p>​    (1) position()方法用于返回被选元素相对于带有定位的父级偏移坐标，如果父级都没有定位，则以文档为准。</p>
+<p>​    (2) 该方法有2个属性left、top。position().top用于获取距离最近相对定位的父级元素头部的距离，position().left用于获取距离最近相对定位的父级元素左侧的距离。</p>
+<p>​    (3) 这个方法只能获取不能设置偏移</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">$(&quot;.son&quot;).position(&#123;</span><br><span class="line">	top: 200, // 无效</span><br><span class="line">	left: 200 // 无效</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+
+<p>scrollTop()/scrollLeft()设置或获取元素被卷去的头部和左侧</p>
+<p>scrollTop()方法设置或返回被选元素被卷去的头部距离。</p>
+<p>scrollLeft()方法设置或返回被选元素被卷去的左侧距离。</p>
+<h4 id="JQuery位置操作拓展案例"><a href="#JQuery位置操作拓展案例" class="headerlink" title="JQuery位置操作拓展案例"></a>JQuery位置操作拓展案例</h4><p>带有动画的返回顶部</p>
+<p>​    页面向下滚动到返回顶部盒子距离时，出现返回顶部，点击后慢慢返回顶部</p>
+<p>​    核心原理:使用animate动画返回顶部（animate(obj, target, callback)）。</p>
+<p>​    但是是元素做动画，因此$(“body,html” ).animate([scrollTop: 0))</p>
+<p>​     animate函数封装obj目标对象 target 目标位置 callback回调函数</p>
+<p>​    animate动画函数里面有个scrollTop属性，可以设置位置</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">$(function () &#123;</span><br><span class="line">	var boxTop = $(&quot;.container&quot;).offset().top; // 返回顶部盒子高度</span><br><span class="line">	$(window).scroll(function () &#123;</span><br><span class="line">		// 被卷去的头部 scrollTop() / 被卷去的左侧 scrollLeft()</span><br><span class="line">		// 可以设置和获取</span><br><span class="line">		if ($(window).scrollTop() &gt;= boxTop) &#123;</span><br><span class="line">			// console.log(&quot;已到达&quot;);</span><br><span class="line">			$(&quot;.back&quot;).fadeIn(); // 返回顶部淡入</span><br><span class="line">		&#125; else &#123;</span><br><span class="line">			$(&quot;.back&quot;).fadeOut(); // 返回顶部淡出</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;);</span><br><span class="line">	$(&quot;.back&quot;).click(function () &#123;</span><br><span class="line">		// animate(obj, target, callback)</span><br><span class="line">		// animate函数封装obj目标对象 target 目标位置 callback回调函数</span><br><span class="line">		// 但是是元素做动画，因此$(“body, html&quot; ).animate([scrollTop: 0))</span><br><span class="line">		$(&quot;body,html&quot;).animate(&#123; scrollTop: 0 &#125;);</span><br><span class="line">	&#125;)</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+
+
+
+<p>品优购电梯导航</p>
+<p>​    当我们滚动到今日推荐模块，就让电梯导航显示出来</p>
+<p>​    点击电梯导航页面可以滚动到相应内容区域</p>
+<p>​    核心算法:因为电梯导航模块和内容区模块——对应的</p>
+<p>​    当我们点击电梯导航某个小模块，就可以拿到当前小模块的索引号</p>
+<p>​    就可以把animate要移动的距离求出来∶当前索引号内容区模块它的offset().top</p>
+<p>​    然后执行动画即可</p>
+<p>​    当我们点击电梯导航某个小li，当前小li添加current类，兄弟移除类名</p>
+<p>​    当我们页面滚动到内容区域某个模块，左侧电梯导航，相对应的小i模块，也会添加current类，兄弟移除current类。</p>
+<p>​    触发的事件是页面滚动，因此这个功能要写到页面滚动事件里面。</p>
+<p>​    需要用到each，遍历内容区域大模块。each里面能拿到内容区域每一个模块元素和索引号</p>
+<p>​    判断的条件:被卷去的头部大于等于内容区域里面每个模块的offset().top</p>
+<p>​    就利用这个索引号找到相应的电梯导航小li添加类。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br></pre></td><td class="code"><pre><span class="line">$(function () &#123;</span><br><span class="line"></span><br><span class="line">  // 当我们点击了小li 此时不需要执行 页面滚动事件里面的 li 的背景选择 添加 current，通过节流阀判定互斥</span><br><span class="line">	// 1. 显示隐藏电梯导航</span><br><span class="line">	var toolTop = $(&quot;.recommend&quot;).offset().top; // 推荐服务盒子高度</span><br><span class="line">	var flag = true; // 节流阀 互斥锁 </span><br><span class="line">	toggleTool();</span><br><span class="line">	function toggleTool() &#123; // 封装电梯导航展示效果</span><br><span class="line">		if ($(document).scrollTop() &gt;= toolTop) &#123;</span><br><span class="line">			$(&quot;.fixedtool&quot;).fadeIn();</span><br><span class="line">		&#125; else &#123;</span><br><span class="line">			$(&quot;.fixedtool&quot;).fadeOut();</span><br><span class="line">		&#125;;</span><br><span class="line">	&#125;</span><br><span class="line">	$(window).scroll(function () &#123;</span><br><span class="line">        toggleTool(); // 调用函数</span><br><span class="line">        // 3. 页面滚动到某个内容区域，左侧电梯导航小li相应添加和删除current类名</span><br><span class="line">        // 通过each遍历四个大模块</span><br><span class="line">        $(&quot;.floor .w&quot;).each(function (i, ele) &#123;</span><br><span class="line">            if ($(document).scrollTop() &gt;= $(ele).offset().Top) &#123; // 判断已到达大模块位置</span><br><span class="line">            $(&quot;.fixedtool li&quot;).eq(i).addClass(&quot;current&quot;).siblings().removeClass(&quot;current&quot;);</span><br><span class="line">        &#125;</span><br><span class="line">	&#125;)</span><br><span class="line">	if (flag) &#123; // 节流阀，避免点击时页面跳动</span><br><span class="line">        $(&quot;.floor .w&quot;).each(function (i, ele) &#123;</span><br><span class="line">            if ($(document).scrollTop() &gt;= $(ele).offset().top) &#123;</span><br><span class="line">                $(&quot;.fixedtool li&quot;).eq(i).addClass(&quot;current&quot;).siblings().removeClass();</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;)</span><br><span class="line">	&#125;</span><br><span class="line">&#125;)</span><br><span class="line">// 2. 点击电梯导航页面可以滚动到相应内容区域</span><br><span class="line">$(&quot;.fixedtool li&quot;).click(function () &#123;</span><br><span class="line">	flag = false; // 节流阀，点击时不执行页面滚动判断</span><br><span class="line">	// var index = $(this).index(); 获取点击元素索引值</span><br><span class="line">	var current = $(&quot;.floor .w&quot;).eq($(this).index()).offset().top;</span><br><span class="line">	// 页面动画滚动效果</span><br><span class="line">	$(&quot;body,html&quot;).stop().animate(&#123;</span><br><span class="line">		scrollTop: current</span><br><span class="line">	&#125;, function () &#123;</span><br><span class="line">		flag = true; // 节流阀，点击跳转动画执行完毕时执行页面滚动判断</span><br><span class="line">	&#125;);</span><br><span class="line">	// 点击之后，让当前的小li 添加current 类名 ，姐妹移除current类名</span><br><span class="line">	$(this).addClass(&quot;current&quot;).siblings().removeClass(&quot;current&quot;);</span><br><span class="line">	&#125;)</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+
+
+
+
+        </div>
+
+        
+            <section class="post-copyright">
+                
+                
+                
+                
+
+            </section>
+        
+        <section class="post-tags">
+            <div>
+                <span>Tag(s):</span>
+                <span class="tag">
+                    
+                </span>
+            </div>
+            <div>
+                <a href="javascript:window.history.back();">back</a>
+                <span>· </span>
+                <a href="/">home</a>
+            </div>
+        </section>
+        <section class="post-nav">
+            
+                <a class="prev" rel="prev" href="/2021/06/03/MySQL%E5%9F%BA%E7%A1%80/">MySQL基础</a>
+            
+            
+            <a class="next" rel="next" href="/2021/05/12/JS%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86%E6%80%BB%E7%BB%9304/">JS常见案例</a>
+            
+        </section>
+
+
+    </article>
+</div>
+
+            </div>
+            <footer id="footer" class="footer">
+    <div class="copyright">
+        <span>© lufei | Powered by <a href="https://hexo.io" target="_blank">Hexo</a> & <a href="https://github.com/Siricee/hexo-theme-Chic" target="_blank">Chic</a></span>
+    </div>
+</footer>
+
+    </div>
+</body>
+
+</html>

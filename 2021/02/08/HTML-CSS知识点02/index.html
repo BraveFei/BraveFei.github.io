@@ -1,0 +1,811 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="UTF-8">
+<meta name="viewport"
+      content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+    <meta name="author" content="lufei">
+
+
+
+
+
+<title>Css布局 | lufei</title>
+
+
+
+    <link rel="icon" href="/favicon.ico">
+
+
+
+
+    <!-- stylesheets list from _config.yml -->
+    
+    <link rel="stylesheet" href="/css/style.css">
+    
+
+
+
+    <!-- scripts list from _config.yml -->
+    
+    <script src="/js/script.js"></script>
+    
+    <script src="/js/tocbot.min.js"></script>
+    
+
+
+
+    
+    
+        
+    
+
+
+<meta name="generator" content="Hexo 5.4.2"></head>
+
+<body>
+    <script>
+        // this function is used to check current theme before page loaded.
+        (() => {
+            const currentTheme = window.localStorage && window.localStorage.getItem('theme') || '';
+            const isDark = currentTheme === 'dark';
+            const pagebody = document.getElementsByTagName('body')[0]
+            if (isDark) {
+                pagebody.classList.add('dark-theme');
+                // mobile
+                document.getElementById("mobile-toggle-theme").innerText = "· Dark"
+            } else {
+                pagebody.classList.remove('dark-theme');
+                // mobile
+                document.getElementById("mobile-toggle-theme").innerText = "· Light"
+            }
+        })();
+    </script>
+
+    <div class="wrapper">
+        <header>
+    <nav class="navbar">
+        <div class="container">
+            <div class="navbar-header header-logo"><a href="/">bravefei</a></div>
+            <div class="menu navbar-right">
+                
+                    <a class="menu-item" href="/archives">笔记</a>
+                
+                <input id="switch_default" type="checkbox" class="switch_default">
+                <label for="switch_default" class="toggleBtn"></label>
+            </div>
+        </div>
+    </nav>
+
+    
+    <nav class="navbar-mobile" id="nav-mobile">
+        <div class="container">
+            <div class="navbar-header">
+                <div>
+                    <a href="/">bravefei</a><a id="mobile-toggle-theme">·&nbsp;Light</a>
+                </div>
+                <div class="menu-toggle" onclick="mobileBtn()">&#9776; Menu</div>
+            </div>
+            <div class="menu" id="mobile-menu">
+                
+                    <a class="menu-item" href="/archives">笔记</a>
+                
+            </div>
+        </div>
+    </nav>
+
+</header>
+<script>
+    var mobileBtn = function f() {
+        var toggleMenu = document.getElementsByClassName("menu-toggle")[0];
+        var mobileMenu = document.getElementById("mobile-menu");
+        if(toggleMenu.classList.contains("active")){
+           toggleMenu.classList.remove("active")
+            mobileMenu.classList.remove("active")
+        }else{
+            toggleMenu.classList.add("active")
+            mobileMenu.classList.add("active")
+        }
+    }
+</script>
+            <div class="main">
+                <div class="container">
+    
+    
+        <div class="post-toc">
+    <div class="tocbot-list">
+    </div>
+    <div class="tocbot-list-menu">
+        <a class="tocbot-toc-expand" onclick="expand_toc()">Expand all</a>
+        <a onclick="go_top()">Back to top</a>
+        <a onclick="go_bottom()">Go to bottom</a>
+    </div>
+</div>
+
+<script>
+    var tocbot_timer;
+    var DEPTH_MAX = 6; // 为 6 时展开所有
+    var tocbot_default_config = {
+        tocSelector: '.tocbot-list',
+        contentSelector: '.post-content',
+        headingSelector: 'h1, h2, h3, h4, h5',
+        orderedList: false,
+        scrollSmooth: true,
+        onClick: extend_click,
+    };
+
+    function extend_click() {
+        clearTimeout(tocbot_timer);
+        tocbot_timer = setTimeout(function() {
+            tocbot.refresh(obj_merge(tocbot_default_config, {
+                hasInnerContainers: true
+            }));
+        }, 420); // 这个值是由 tocbot 源码里定义的 scrollSmoothDuration 得来的
+    }
+
+    document.ready(function() {
+        tocbot.init(obj_merge(tocbot_default_config, {
+            collapseDepth: 1
+        }));
+    });
+
+    function expand_toc() {
+        var b = document.querySelector('.tocbot-toc-expand');
+        var expanded = b.getAttribute('data-expanded');
+        expanded ? b.removeAttribute('data-expanded') : b.setAttribute('data-expanded', true);
+        tocbot.refresh(obj_merge(tocbot_default_config, {
+            collapseDepth: expanded ? 1 : DEPTH_MAX
+        }));
+        b.innerText = expanded ? 'Expand all' : 'Collapse all';
+    }
+
+    function go_top() {
+        window.scrollTo(0, 0);
+    }
+
+    function go_bottom() {
+        window.scrollTo(0, document.body.scrollHeight);
+    }
+
+    function obj_merge(target, source) {
+        for (var item in source) {
+            if (source.hasOwnProperty(item)) {
+                target[item] = source[item];
+            }
+        }
+        return target;
+    }
+</script>
+    
+
+    
+    <article class="post-wrap">
+        <header class="post-header">
+            <h1 class="post-title">Css布局</h1>
+            
+                <div class="post-meta">
+                    
+                        Author: <a itemprop="author" rel="author" href="/">lufei</a>
+                    
+
+                    
+                        <span class="post-time">
+                        Date: <a href="#">二月 8, 2021&nbsp;&nbsp;14:35:10</a>
+                        </span>
+                    
+                    
+                </div>
+            
+        </header>
+
+        <div class="post-content">
+            <h1 id="Css布局"><a href="#Css布局" class="headerlink" title="Css布局"></a>Css布局</h1><h2 id="盒子模型"><a href="#盒子模型" class="headerlink" title="盒子模型"></a>盒子模型</h2><p>border边框   content内容   padding内边距  margin外边距</p>
+<p>边框会影响盒子的实际大小，盒子已经有了宽度和高度，此时再指定边框会撑大盒子</p>
+<p>如果保证盒子跟效果图大小保持一致，则让width/height减去多出来的边框大小即可</p>
+<h3 id="border-边框"><a href="#border-边框" class="headerlink" title="border 边框"></a>border 边框</h3><table>
+<thead>
+<tr>
+<th>属性</th>
+<th>用途</th>
+<th>使用介绍</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>border-width</td>
+<td>边框的粗细</td>
+<td>一般情况下都用 px</td>
+</tr>
+<tr>
+<td>border-style</td>
+<td>边框的样式</td>
+<td>solid 实线边框  dashed 虚线边框  dotted 点线边框  none 无边框 hidden 隐藏边框</td>
+</tr>
+<tr>
+<td>border-color</td>
+<td>边框的颜色</td>
+<td></td>
+</tr>
+<tr>
+<td>border-collaps</td>
+<td>控制相邻单元格的边框</td>
+<td>collapse 合并相邻的边框</td>
+</tr>
+</tbody></table>
+<p>border-style：</p>
+<p>​    dotted :在MAC平台上IE4+与WINDowS和UNIx平台上IES.5+为 ··· 线，否则为实线</p>
+<p>​    dashed :在MAC平台上IE4+与WINDOWS和UNIX平台上IE5.5+为 — 线，否则为实线</p>
+<p>​    double :线边框。两条单线与其间隔的和等于指定的border-width值</p>
+<p>​    groove :根据    border-colo日的直画3D凹悟</p>
+<p>​    ridge :根据border-color的值画菱形边钰</p>
+<p>​    inset :根据border-color的值画3DNI边</p>
+<p>​    outset :根据border-color的值画3D产边</p>
+<h3 id="padding-内边距"><a href="#padding-内边距" class="headerlink" title="padding 内边距"></a>padding 内边距</h3><p>内边距会影响盒子的实际大小  盒子已经有了宽度和高度，此时再指定内边距，会撑大盒子。</p>
+<p>如果保证盒子跟效果图大小保持一致，则让width/height减去多出来的内边距大小即可。</p>
+<p>如何盒子本身没有指定width/height属性,则此时padding不会撑开盒子大小</p>
+<p>注意：使用<code>box-sizing:border-box;</code>可以在不撑大盒子的同时实现内边距</p>
+<table>
+<thead>
+<tr>
+<th>属性</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>padding-top</td>
+<td>上内边距</td>
+</tr>
+<tr>
+<td>padding-right</td>
+<td>右内边距</td>
+</tr>
+<tr>
+<td>padding-bottom</td>
+<td>下内边距</td>
+</tr>
+<tr>
+<td>padding-left</td>
+<td>左内边距</td>
+</tr>
+<tr>
+<td>padding</td>
+<td>内边距，固定表示为上右下左内边距</td>
+</tr>
+</tbody></table>
+<p>padding值个数不同表示的样式也不同</p>
+<table>
+<thead>
+<tr>
+<th>padding</th>
+<th>值的个数</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>padding: 5px;</td>
+<td>1个值</td>
+<td>代表上下左右都有5像素内边距;</td>
+</tr>
+<tr>
+<td>padding: 5px 10px;</td>
+<td>2个值</td>
+<td>代表上下内边距是5像素左右内边距是10像素;</td>
+</tr>
+<tr>
+<td>padding: 5px 10px 20px;</td>
+<td>3个值</td>
+<td>代表上内边距5像素左右内边距10像素下内边距20像素;</td>
+</tr>
+<tr>
+<td>padding: 5px 10px 20px 30px;</td>
+<td>4个值</td>
+<td>代表上是5像素右10像素下20像素左是30像素顺时针</td>
+</tr>
+</tbody></table>
+<h3 id="margin-外边距"><a href="#margin-外边距" class="headerlink" title="margin 外边距"></a>margin 外边距</h3><p>margin属性用于设置外边距，即控制盒子和盒子之间的距离。不会影响盒子的实际大小</p>
+<table>
+<thead>
+<tr>
+<th>属性</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>margin-left</td>
+<td>左外边距</td>
+</tr>
+<tr>
+<td>margin-right</td>
+<td>右外边距</td>
+</tr>
+<tr>
+<td>margin-top</td>
+<td>上外边距</td>
+</tr>
+<tr>
+<td>margin-bottom</td>
+<td>下外边距</td>
+</tr>
+<tr>
+<td>margin</td>
+<td>内边距，固定表示为上右下左内边距</td>
+</tr>
+</tbody></table>
+<p>外边距可以让块级盒子水平居中,但是必须满足两个条件:</p>
+<ul>
+<li>盒子必须指定了宽度(width)。</li>
+<li>盒子左右的外边距都设置为auto。</li>
+</ul>
+<p>行内元素或者行内块元素水平居中给其父元素添加<code>text-align:center</code>即可</p>
+<h3 id="盒子塌陷问题"><a href="#盒子塌陷问题" class="headerlink" title="盒子塌陷问题"></a>盒子塌陷问题</h3><p>嵌套块元素垂直外边距的塌陷</p>
+<p>对于两个嵌套关系(父子关系)的块元素，父元素有上外边距同时，子元素也有上外边距，此时父元素会塌陷较大的外边距值。</p>
+<p>解决方案:</p>
+<ul>
+<li>可以为父元素定义上边框。</li>
+<li>可以为父元素定义上内边距。</li>
+<li>可以为父元素添加<code>overflow:hidden</code>。（清除浮动）</li>
+</ul>
+<p>还有其他方法,比如浮动、固定,绝对定位的盒子不会有塌陷问题。</p>
+<h2 id="flex布局"><a href="#flex布局" class="headerlink" title="flex布局"></a>flex布局</h2><p>注意，设为Flex布局以后，子元素的float、clear和vertical-align属性将失效。</p>
+<p>默认存在两根轴：水平的主轴（main axis）和垂直的交叉轴（cross axis）</p>
+<p>flex-direction  决定主轴的方向</p>
+<ul>
+<li>row（默认值）：主轴为水平方向，起点在左端。</li>
+<li>row-reverse：主轴为水平方向，起点在右端。</li>
+<li>column：主轴为垂直方向，起点在上沿。</li>
+<li>column-reverse：主轴为垂直方向，起点在下沿。</li>
+</ul>
+<p>flex-wrap  一条轴线排不下，如何换行</p>
+<ul>
+<li>nowrap（默认）：不换行</li>
+<li>wrap：换行</li>
+<li>wrap-reverse：换行，在上方换行</li>
+</ul>
+<p>flex-flow  flex-direction属性和flex-wrap属性的简写形式，默认值为row nowrap</p>
+<p>justify-content  主轴上的对齐方式</p>
+<ul>
+<li>flex-start（默认值）：左对齐</li>
+<li>flex-end：右对齐</li>
+<li>center： 居中</li>
+<li>space-between：两端对齐，盒子之间的间隔都相等。</li>
+<li>space-around：每个盒子两侧的间隔相等，盒子之间的间隔比盒子与边框的间隔大一倍</li>
+</ul>
+<p>align-items  交叉轴上如何对齐</p>
+<ul>
+<li>flex-start：交叉轴的起点对齐。</li>
+<li>flex-end：交叉轴的终点对齐。</li>
+<li>center：交叉轴的中点对齐。</li>
+<li>baseline: 项目的第一行文字的基线对齐。</li>
+<li>stretch（默认值）：如果项目未设置高度或设为auto，将占满整个容器的高度。</li>
+</ul>
+<p>align-content  多根轴线的对齐方式</p>
+<ul>
+<li>flex-start：与交叉轴的起点对齐。</li>
+<li>flex-end：与交叉轴的终点对齐。</li>
+<li>center：与交叉轴的中点对齐。</li>
+<li>space-between：与交叉轴两端对齐，轴线之间的间隔平均分布。</li>
+<li>space-around：每根轴线两侧的间隔都相等，轴线之间的间隔比轴线与边框的间隔大一倍</li>
+<li>stretch（默认值）：轴线占满整个交叉轴。</li>
+</ul>
+<h2 id="浮动问题"><a href="#浮动问题" class="headerlink" title="浮动问题"></a>浮动问题</h2><p>float 浮动 属性值有left、right 表示左浮动、右浮动</p>
+<h3 id="为什么需要清除浮动"><a href="#为什么需要清除浮动" class="headerlink" title="为什么需要清除浮动?"></a>为什么需要清除浮动?</h3><p>​    父级没高度。</p>
+<p>​    子盒子浮动了。</p>
+<p>​    影响下面布局了，我们就应该清除浮动了。</p>
+<p>浮动的盒子不会有外边距合并的问题</p>
+<ol>
+<li>浮动元素会脱离标准流(脱标)<ul>
+<li>脱离标准普通流的控制(浮）移动到指定位置(动)，(俗称脱标)</li>
+<li>浮动的盒子不再保留原先的位置</li>
+</ul>
+</li>
+<li>浮动的元素会一行内显示并且元素顶部对齐<ul>
+<li>浮动的元素是互相贴靠在一起的(不会有缝隙）</li>
+<li>如果父级宽度装不下这些浮动的盒子，多出的盒子会另起一行对齐。</li>
+</ul>
+</li>
+<li>浮动的元素会具有行内块元素的特性<ul>
+<li>如果块级盒子没有设置宽度，默认宽度和父级一样宽，但是添加浮动后，它的大小根据内容来决定</li>
+<li>浮动的盒子中间是没有缝隙的，是紧挨着一起的</li>
+<li>行内元素同理</li>
+</ul>
+</li>
+</ol>
+<h3 id="清除浮动"><a href="#清除浮动" class="headerlink" title="清除浮动"></a>清除浮动</h3><table>
+<thead>
+<tr>
+<th>属性</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>clear: left;</td>
+<td>不允许左侧有浮动元素（清除左侧浮动的影响)</td>
+</tr>
+<tr>
+<td>clear: right;</td>
+<td>不允许右侧有浮动元素（清除右侧浮动的影响)</td>
+</tr>
+<tr>
+<td>clear: both;</td>
+<td>同时清除左右两侧浮动的影响</td>
+</tr>
+</tbody></table>
+<p>我们实际工作中，几乎只用clear: both;</p>
+<p>清除浮动的策略就是：闭合浮动。</p>
+<p>清除浮动方法：额外标签法、父级添加overflow属性、父级添加after伪元素、父级添加双伪元素</p>
+<table>
+<thead>
+<tr>
+<th>清除浮动的方式</th>
+<th>优点</th>
+<th>缺点</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>额外标签法（隔墙法)</td>
+<td>通俗易懂，书写方便</td>
+<td>添加许多无意义的标签，结构化较差</td>
+</tr>
+<tr>
+<td>父级overflow:hidden;</td>
+<td>书写简单</td>
+<td>溢出隐藏</td>
+</tr>
+<tr>
+<td>父级after伪元素</td>
+<td>结构语义化正确</td>
+<td>兼容性问题，IE6-7不支持:after</td>
+</tr>
+<tr>
+<td>父级双伪元素</td>
+<td>结构语义化正确</td>
+<td>兼容性问题，IE6-7不支持</td>
+</tr>
+</tbody></table>
+<ol>
+<li><p>额外标签法也称为隔墙法，是W3C推荐的做法。</p>
+<ul>
+<li><p>清除浮动本质是?</p>
+<p>清除浮动的本质是清除浮动元素脱离标准流造成的影响</p>
+</li>
+<li><p>清除浮动策略是?</p>
+<p>闭合浮动.只让浮动在父盒子内部影响,不影响父盒子外面的其他盒子. </p>
+</li>
+<li><p>额外标签法?</p>
+<p>隔墙法,就是在最后一个浮动的子元素后面添加一个额外标签添加清除浮动样式.实际工作可能会遇到,但是不常用</p>
+<ul>
+<li>额外标签法也称为隔墙法，是W3C推荐的做法。</li>
+<li>额外标签法会在浮动元素末尾添加一个空的标签。例如<code>&lt;divstyle=&quot; clear:both” &gt;&lt;/div&gt;</code>，或者其他标签(如<code>&lt;br /&gt;</code>等）。</li>
+</ul>
+</li>
+</ul>
+<p>优点:通俗易懂，书写方便</p>
+<p>缺点:添加许多无意义的标签，结构化较差</p>
+<p>注意：这个新增的盒子要求必须是块级元素不能是行内元素</p>
+</li>
+<li><p>父级添加overflow属性</p>
+<p>可以给父级添加overflow属性，将其属性值设置为hidden、auto或 scroll ,子不教父之过,注意是给父元素添加代码</p>
+<p>优点:代码简洁</p>
+<p>缺点:无法显示溢出的部分</p>
+</li>
+<li><p>父级添加after伪元素</p>
+<p>:after方式是额外标签法的升级版。也是给父元素添加</p>
+</li>
+</ol>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-class">.clearfix</span><span class="selector-pseudo">:after</span> &#123;</span><br><span class="line">    <span class="attribute">content</span>: <span class="string">&quot;&quot;</span>;</span><br><span class="line">    <span class="attribute">display</span>: block;</span><br><span class="line">    <span class="attribute">height</span>: <span class="number">0</span>;</span><br><span class="line">    <span class="attribute">clear</span>: both;</span><br><span class="line">    <span class="attribute">visibility</span>: hidden;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="selector-class">.clearfix</span> &#123;</span><br><span class="line">    <span class="comment">/* IE6、7 专有 */</span></span><br><span class="line">    *zoom: <span class="number">1</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>​    优点∶没有增加标签，结构更简单</p>
+<p>​    缺点∶照顾低版本浏览器</p>
+<p>​    代表网站:百度、淘宝网、网易等</p>
+<ol start="4">
+<li><p>父级添加双伪元素</p>
+<p>也是给给父元素添加</p>
+</li>
+</ol>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-class">.clearfix</span><span class="selector-pseudo">:before</span>,</span><br><span class="line"><span class="selector-class">.clearfix</span><span class="selector-pseudo">:after</span> &#123;</span><br><span class="line">    <span class="attribute">content</span>: <span class="string">&quot;&quot;</span>;</span><br><span class="line">    <span class="attribute">display</span>: table;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="selector-class">.clearfix</span><span class="selector-pseudo">:after</span> &#123;</span><br><span class="line">	<span class="attribute">clear</span>: both;</span><br><span class="line">&#125;</span><br><span class="line"><span class="selector-class">.clearfix</span> &#123;</span><br><span class="line">	*zoom: <span class="number">1</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>​    优点∶代码更简洁</p>
+<p>​    缺点︰照顾低版本浏览器</p>
+<p>​    代表网站:小米、腾讯等</p>
+<h2 id="定位"><a href="#定位" class="headerlink" title="定位"></a>定位</h2><p><strong>为什么需要定位</strong></p>
+<ol>
+<li>浮动可以让多个块级盒子一行没有缝隙排列显示，经常用于横向排列盒子。</li>
+<li>定位则是可以让盒子自由的在某个盒子内移动位置或者固定屏幕中某个位置，并且可以压住其他盒子。</li>
+</ol>
+<h3 id="定位含义与特殊特性"><a href="#定位含义与特殊特性" class="headerlink" title="定位含义与特殊特性"></a>定位含义与特殊特性</h3><p>​    定位∶将盒子定在某一个位置，所以定位也是在摆放盒子，按照定位的方式移动盒子。</p>
+<p>​    定位 = 定位模式＋边偏移。</p>
+<p>​    定位模式：用于指定一个元素在文档中的定位方式。边偏移则决定了该元素的最终位置。</p>
+<p>定位模式</p>
+<p>​    定位模式决定元素的定位方式，它通过CSS的position属性来设置，其值可以分为四个:</p>
+<table>
+<thead>
+<tr>
+<th>属性</th>
+<th>语义</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>static</td>
+<td>静态定位</td>
+</tr>
+<tr>
+<td>relative</td>
+<td>相对定位</td>
+</tr>
+<tr>
+<td>absolute</td>
+<td>绝对定位</td>
+</tr>
+<tr>
+<td>fixed</td>
+<td>固定定位</td>
+</tr>
+</tbody></table>
+<p>​     绝对定位和固定定位也和浮动类似。</p>
+<ol>
+<li>行内元素添加绝对或者固定定位，可以直接设置高度和宽度。</li>
+<li>块级元素添加绝对或者固定定位，如果不给宽度或者高度，默认大小是内容的大小。</li>
+</ol>
+<p><strong>边偏移</strong></p>
+<p>​    边偏移就是定位的盒子移动到最终位置。有top、bottom、left和right 4个属性。</p>
+<table>
+<thead>
+<tr>
+<th>属性</th>
+<th>示例</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>top</td>
+<td>top: 80px;</td>
+<td>顶端偏移量，定义元素相对于其父元素上边线的距离</td>
+</tr>
+<tr>
+<td>bottom</td>
+<td>bottom: 80px;</td>
+<td>底部偏移量，定义元素相对于其父元素下边线的距离</td>
+</tr>
+<tr>
+<td>left</td>
+<td>left: 80px;</td>
+<td>左侧偏移量，定义元素相对于其父元素左边线的距离</td>
+</tr>
+<tr>
+<td>right</td>
+<td>right: 80px;</td>
+<td>右侧偏移量，定义元素相对于其父元素右边线的距离</td>
+</tr>
+</tbody></table>
+<h3 id="定位特点"><a href="#定位特点" class="headerlink" title="定位特点"></a>定位特点</h3><table>
+<thead>
+<tr>
+<th>属性</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>position: static;</td>
+<td>静态定位是元素的默认定位方式，无定位的意思</td>
+</tr>
+<tr>
+<td>position: relative;</td>
+<td>相对定位是元素在移动位置的时候，相对于它原来的位置来说的(自恋型)</td>
+</tr>
+<tr>
+<td>position: absolute;</td>
+<td>绝对定位是元素在移动位置的时候，是相对于它祖先元素来说的(拼爹型)</td>
+</tr>
+<tr>
+<td>position: fixed;</td>
+<td>固定定位是元素固定于浏览器可视区的位置。主要使用场景∶可以在浏览器页面滚动时元素的位置不会改变</td>
+</tr>
+<tr>
+<td>position : sticky;</td>
+<td>top: 10px; 粘性定位可以被认为是相对定位和固定定位的混合，Sticky粘性的</td>
+</tr>
+</tbody></table>
+<p>相对定位的特点︰（务必记住)</p>
+<ul>
+<li>它是相对于自己原来的位置来移动的(移动位置的时候参照点是自己原来的位置)。</li>
+<li>原来在标准流的位置继续占有，后面的盒子仍然以标准流的方式对待它。(不脱标，继续保留原来位置)</li>
+<li>因此，相对定位并没有脱标。它最典型的应用是给绝对定位当爹的.</li>
+</ul>
+<p>绝对定位的特点︰(务必记住)</p>
+<ul>
+<li>如果没有祖先元素或者祖先元素没有定位，则以浏览器为准定位（ Document文档)。</li>
+<li>如果祖先元素有定位(相对、绝对、固定定位），则以最近一级的有定位祖先元素为参考点移动位置。</li>
+<li>绝对定位不再占有原先的位置。〔脱标)</li>
+</ul>
+<p>固定定位的特点:(务必记住)</p>
+<ul>
+<li><p>以浏览器的可视窗口为参照点移动元素</p>
+<p>跟父元素没有任何关系，不随滚动条滚动</p>
+</li>
+<li><p>固定定位不在占有原先的位置。</p>
+</li>
+<li><p>固定定位也是脱标的，其实固定定位也可以看做是一种特殊的绝对定位。</p>
+</li>
+</ul>
+<p>粘性定位的特点:</p>
+<ul>
+<li><p>以浏览器的可视窗口为参照点移动元素（固定定位特点)</p>
+</li>
+<li><p>粘性定位占有原先的位置（相对定位特点)</p>
+</li>
+<li><p>必须添加 top . left、 right、bottom其中一个才有效</p>
+</li>
+</ul>
+<p>跟页面滚动搭配使用。兼容性较差，IE不支持。</p>
+<h3 id="定位模式"><a href="#定位模式" class="headerlink" title="定位模式"></a>定位模式</h3><table>
+<thead>
+<tr>
+<th>定位模式</th>
+<th>是否脱标（脱离文档流）</th>
+<th>移动位置</th>
+<th>是否常用</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>static静态定位</td>
+<td>否</td>
+<td>能使用边偏移</td>
+<td>很少</td>
+</tr>
+<tr>
+<td>relative相对定位</td>
+<td>否(占有位置)</td>
+<td>相对于自身位置移动</td>
+<td>常用</td>
+</tr>
+<tr>
+<td>absolute绝对定位</td>
+<td>是(不占有位置)</td>
+<td>带有定位的父级</td>
+<td>常用</td>
+</tr>
+<tr>
+<td>fixed固定定位</td>
+<td>是(不占有位置)</td>
+<td>浏览器可视区</td>
+<td>常用</td>
+</tr>
+<tr>
+<td>sticky粘性定位</td>
+<td>否(占有位置)</td>
+<td>浏览器可视区</td>
+<td>较少</td>
+</tr>
+</tbody></table>
+<p>相对定位、固定定位、绝对定位两个大的特点∶</p>
+<ul>
+<li>是否占有位置（脱标否）；</li>
+<li>以谁为基准点移动位置；</li>
+</ul>
+<p>浮动元素、绝对定位(固定定位)元素的都不会触发外边距合并的问题。</p>
+<p><strong>固定定位小技巧∶</strong>固定在版心右侧位置。</p>
+<ul>
+<li><p>让固定定位的盒子<code>left: 50%</code>走到浏览器可视区（也可以看做版心）的一半位置。</p>
+</li>
+<li><p>让固定定位的盒子margin-left:版心宽度的一半距离。多走版心宽度的一半位置就可以让固定定位的盒了贴着版心右侧对齐了。</p>
+</li>
+</ul>
+<p><strong>子绝父相</strong></p>
+<p>这个“子绝父相”太重要了，是我们学习定位的口诀，是定位中最常用的一种方式。这句话的意思是∶子级是绝对定位的话，父级要用相对定位。</p>
+<ol>
+<li>子级绝对定位，不会占有位置，可以放到父盒子里面的任何一个地方，不会影响其他的兄弟盒子。</li>
+<li>父盒子需要加定位限制子盒子在父盒子内显示</li>
+<li>父盒子布局时，需要占有位置，因此父亲只能是相对定位。</li>
+</ol>
+<p>这就是子绝父相的由来，所以相对定位经常用来作为绝对定位的父级。</p>
+<p>总结∶因为父级需要占有位置，因此是相对定位，子盒子不需要占有位置，则是绝对定位</p>
+<p>绝对定位（固定定位）会完全压住盒子，压住下面标准流所有的内容。</p>
+<p>浮动元素不同，只会压住它下面标准流的盒子，但是不会压住下面标准流盒子里面的文字(图片)</p>
+<p><strong>绝对定位的盒子居中</strong></p>
+<p>加了绝对定位的盒子不能通过<code>margin: 0 auto;</code>水平居中，但是可以通过以下计算方法实现水平和垂直居中。</p>
+<p><code>left: 50%;</code>让盒子的左侧移动到父级元素的水平中心位置。</p>
+<p><code>margin-left: - 100px;</code>让盒子向左移动自身宽度的一半。</p>
+<h3 id="显示隐藏"><a href="#显示隐藏" class="headerlink" title="显示隐藏"></a>显示隐藏</h3><p>显示隐藏本质：让一个元素在页面中隐藏或者显示出来.</p>
+<p>display显示隐藏     visibility显示隐藏    overflow溢出显示隐藏</p>
+<p>display属性用于设置一个元素应如何显示</p>
+<p><code>display: none;</code>隐藏对象</p>
+<p><code>display: block;</code>除了转换为块级元素之外，同时还有显示元素的意思</p>
+<p><strong>注意</strong>：display隐藏元素后，不再占有原来的位置。</p>
+<p>visibility属性用于指定一个元素应可见还是隐藏</p>
+<p><code>visibility: visible;</code>元素可视</p>
+<p><code>visibility: hidden;</code>元素隐藏</p>
+<p><strong>注意</strong>：visibility隐藏元素后，继续占有原来的位置。</p>
+<p>overflow属性指定了如果内容溢出一个元素的框（超过其指定高度及宽度）时，会发生什么。</p>
+<table>
+<thead>
+<tr>
+<th>属性值</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>visible</td>
+<td>不剪切内容也不添加滚动条</td>
+</tr>
+<tr>
+<td>hidden</td>
+<td>不显示超过对象尺寸的内容，超出的部分隐藏掉</td>
+</tr>
+<tr>
+<td>scroll</td>
+<td>不管超出内容否，总是显示滚动条</td>
+</tr>
+<tr>
+<td>auto</td>
+<td>超出自动显示滚动条，不超出不显示滚动条</td>
+</tr>
+</tbody></table>
+<p>一般情况下，我们都不想让溢出的内容显示出来，因为溢出的部分会影响布局。</p>
+<p>但是如果有定位的盒子，请慎用<code>overflow: hidden</code>因为它会隐藏多余的部分。</p>
+<p><strong>注意</strong>：</p>
+<ol>
+<li>display显示隐藏元素但是不保留位置</li>
+<li>visibility显示隐藏元素但是保留原来的位置</li>
+<li>overflow溢出显示隐藏但是只是对于溢出的部分处理</li>
+</ol>
+<p><strong>堆叠顺序</strong></p>
+<p>z-index: 1; 来控制盒子的前后次序(z轴)</p>
+<ul>
+<li><p>数值可以是正整数、负整数或0,默认是auto，数值越大，盒了越靠上</p>
+</li>
+<li><p>如果属性值相同，则按照书写顺序，后来居上</p>
+</li>
+<li><p>数字后面不能加单位</p>
+</li>
+</ul>
+
+        </div>
+
+        
+            <section class="post-copyright">
+                
+                
+                
+                
+
+            </section>
+        
+        <section class="post-tags">
+            <div>
+                <span>Tag(s):</span>
+                <span class="tag">
+                    
+                </span>
+            </div>
+            <div>
+                <a href="javascript:window.history.back();">back</a>
+                <span>· </span>
+                <a href="/">home</a>
+            </div>
+        </section>
+        <section class="post-nav">
+            
+                <a class="prev" rel="prev" href="/2021/02/09/Vscode%E4%BD%BF%E7%94%A8/">Hello World</a>
+            
+            
+            <a class="next" rel="next" href="/2021/01/15/HTML-CSS%E7%9F%A5%E8%AF%86%E7%82%B901/">Html常见标签和属性</a>
+            
+        </section>
+
+
+    </article>
+</div>
+
+            </div>
+            <footer id="footer" class="footer">
+    <div class="copyright">
+        <span>© lufei | Powered by <a href="https://hexo.io" target="_blank">Hexo</a> & <a href="https://github.com/Siricee/hexo-theme-Chic" target="_blank">Chic</a></span>
+    </div>
+</footer>
+
+    </div>
+</body>
+
+</html>

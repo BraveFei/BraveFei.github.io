@@ -1,0 +1,418 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="UTF-8">
+<meta name="viewport"
+      content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+    <meta name="author" content="lufei">
+
+
+
+
+
+<title>CSS高级技巧 | lufei</title>
+
+
+
+    <link rel="icon" href="/favicon.ico">
+
+
+
+
+    <!-- stylesheets list from _config.yml -->
+    
+    <link rel="stylesheet" href="/css/style.css">
+    
+
+
+
+    <!-- scripts list from _config.yml -->
+    
+    <script src="/js/script.js"></script>
+    
+    <script src="/js/tocbot.min.js"></script>
+    
+
+
+
+    
+    
+        
+    
+
+
+<meta name="generator" content="Hexo 5.4.2"></head>
+
+<body>
+    <script>
+        // this function is used to check current theme before page loaded.
+        (() => {
+            const currentTheme = window.localStorage && window.localStorage.getItem('theme') || '';
+            const isDark = currentTheme === 'dark';
+            const pagebody = document.getElementsByTagName('body')[0]
+            if (isDark) {
+                pagebody.classList.add('dark-theme');
+                // mobile
+                document.getElementById("mobile-toggle-theme").innerText = "· Dark"
+            } else {
+                pagebody.classList.remove('dark-theme');
+                // mobile
+                document.getElementById("mobile-toggle-theme").innerText = "· Light"
+            }
+        })();
+    </script>
+
+    <div class="wrapper">
+        <header>
+    <nav class="navbar">
+        <div class="container">
+            <div class="navbar-header header-logo"><a href="/">bravefei</a></div>
+            <div class="menu navbar-right">
+                
+                    <a class="menu-item" href="/archives">笔记</a>
+                
+                <input id="switch_default" type="checkbox" class="switch_default">
+                <label for="switch_default" class="toggleBtn"></label>
+            </div>
+        </div>
+    </nav>
+
+    
+    <nav class="navbar-mobile" id="nav-mobile">
+        <div class="container">
+            <div class="navbar-header">
+                <div>
+                    <a href="/">bravefei</a><a id="mobile-toggle-theme">·&nbsp;Light</a>
+                </div>
+                <div class="menu-toggle" onclick="mobileBtn()">&#9776; Menu</div>
+            </div>
+            <div class="menu" id="mobile-menu">
+                
+                    <a class="menu-item" href="/archives">笔记</a>
+                
+            </div>
+        </div>
+    </nav>
+
+</header>
+<script>
+    var mobileBtn = function f() {
+        var toggleMenu = document.getElementsByClassName("menu-toggle")[0];
+        var mobileMenu = document.getElementById("mobile-menu");
+        if(toggleMenu.classList.contains("active")){
+           toggleMenu.classList.remove("active")
+            mobileMenu.classList.remove("active")
+        }else{
+            toggleMenu.classList.add("active")
+            mobileMenu.classList.add("active")
+        }
+    }
+</script>
+            <div class="main">
+                <div class="container">
+    
+    
+        <div class="post-toc">
+    <div class="tocbot-list">
+    </div>
+    <div class="tocbot-list-menu">
+        <a class="tocbot-toc-expand" onclick="expand_toc()">Expand all</a>
+        <a onclick="go_top()">Back to top</a>
+        <a onclick="go_bottom()">Go to bottom</a>
+    </div>
+</div>
+
+<script>
+    var tocbot_timer;
+    var DEPTH_MAX = 6; // 为 6 时展开所有
+    var tocbot_default_config = {
+        tocSelector: '.tocbot-list',
+        contentSelector: '.post-content',
+        headingSelector: 'h1, h2, h3, h4, h5',
+        orderedList: false,
+        scrollSmooth: true,
+        onClick: extend_click,
+    };
+
+    function extend_click() {
+        clearTimeout(tocbot_timer);
+        tocbot_timer = setTimeout(function() {
+            tocbot.refresh(obj_merge(tocbot_default_config, {
+                hasInnerContainers: true
+            }));
+        }, 420); // 这个值是由 tocbot 源码里定义的 scrollSmoothDuration 得来的
+    }
+
+    document.ready(function() {
+        tocbot.init(obj_merge(tocbot_default_config, {
+            collapseDepth: 1
+        }));
+    });
+
+    function expand_toc() {
+        var b = document.querySelector('.tocbot-toc-expand');
+        var expanded = b.getAttribute('data-expanded');
+        expanded ? b.removeAttribute('data-expanded') : b.setAttribute('data-expanded', true);
+        tocbot.refresh(obj_merge(tocbot_default_config, {
+            collapseDepth: expanded ? 1 : DEPTH_MAX
+        }));
+        b.innerText = expanded ? 'Expand all' : 'Collapse all';
+    }
+
+    function go_top() {
+        window.scrollTo(0, 0);
+    }
+
+    function go_bottom() {
+        window.scrollTo(0, document.body.scrollHeight);
+    }
+
+    function obj_merge(target, source) {
+        for (var item in source) {
+            if (source.hasOwnProperty(item)) {
+                target[item] = source[item];
+            }
+        }
+        return target;
+    }
+</script>
+    
+
+    
+    <article class="post-wrap">
+        <header class="post-header">
+            <h1 class="post-title">CSS高级技巧</h1>
+            
+                <div class="post-meta">
+                    
+                        Author: <a itemprop="author" rel="author" href="/">lufei</a>
+                    
+
+                    
+                        <span class="post-time">
+                        Date: <a href="#">三月 11, 2021&nbsp;&nbsp;10:38:24</a>
+                        </span>
+                    
+                    
+                </div>
+            
+        </header>
+
+        <div class="post-content">
+            <h2 id="CSS高级技巧"><a href="#CSS高级技巧" class="headerlink" title="CSS高级技巧"></a>CSS高级技巧</h2><h3 id="精灵图"><a href="#精灵图" class="headerlink" title="精灵图"></a>精灵图</h3><p>​        为了有效地减少服务器接收和发送请求的次数，提高页面的加载速度，出现了CSS精灵技术(也称css Sprites、CSS雪碧）。</p>
+<p>精灵图核心：</p>
+<ol>
+<li>精灵技术主要针对于背景图片使用。就是把多个小背景图片整合到一张大图片中。</li>
+<li>这个大图片也称为sprites精灵图或者雪碧图</li>
+<li>移动背景图片位置，此时可以使用background-position.</li>
+<li>移动的距离就是这个目标图片的×和y坐标。注意网页中的坐标有所不同（向右x/向下y）</li>
+</ol>
+<p>总结：</p>
+<ul>
+<li><p>精灵图主要针对于小的背景图片使用。</p>
+</li>
+<li><p>主要借助于背景位置来实现—background-position。</p>
+</li>
+<li><p>一般情况下精灵图都是负值。(千万注意网页中的坐标︰x轴右边走是正值，左边走是负值，y轴同理。)</p>
+</li>
+</ul>
+<h3 id="字体图标"><a href="#字体图标" class="headerlink" title="字体图标"></a>字体图标</h3><p>字体图标使用场景:主要用于显示网页中通用、常用的一些小图标</p>
+<p>精灵图是有诸多优点的，但是缺点很明显。</p>
+<ul>
+<li>图片文件还是比较大的</li>
+<li>图片本身放大和缩小会失真</li>
+<li>一旦图片制作完毕想要更换非常复杂</li>
+</ul>
+<p>字体图标iconfont 的出现很好的解决了以上问题，</p>
+<p>​        字体图标可以为前端工程师提供一种方便高效的图标使用方式，展示的是图标，本质属于字体。</p>
+<p>操作步骤：</p>
+<ol>
+<li><p>字体图标的下载（<a target="_blank" rel="noopener" href="https://icomoon.io/#home%EF%BC%89">https://icomoon.io/#home）</a></p>
+<p><strong>注意</strong>：下载完毕之后，注意原先的文件不要删除，后面会用。</p>
+<p>把下载包里面的fonts文件夹放入页面根目录下</p>
+</li>
+<li><p>字体图标的引入（引入到我们html页面中)</p>
+<ul>
+<li>在CSS样式中全局声明字体:简单理解把这些字体文件通过css引入到我们页面中。一定注意字体文件路径的问题。</li>
+</ul>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">@font-face &#123;</span><br><span class="line">   font-family: &#x27;icomoon&#x27;;</span><br><span class="line">   src: url(&#x27;fonts/icomoon.eot?p4ssmb&#x27;);</span><br><span class="line">   src: url(&#x27;fonts/icomoon.eot?p4ssmb#iefix&#x27;) format(&#x27;embedded-opentype&#x27;),</span><br><span class="line">		url(&#x27;fonts/icomoon.ttf?p4ssmb&#x27;) format(&#x27;truetype&#x27;),</span><br><span class="line">		url(&#x27;fonts/icomoon.woff?p4ssmb&#x27;) format(&#x27;woff&#x27;),</span><br><span class="line">		url(&#x27;fonts/icomoon.svg?p4ssmb#icomoon&#x27;) format(&#x27;svg&#x27;);</span><br><span class="line">   font-weight: normal;</span><br><span class="line">   font-style: normal;</span><br><span class="line">   font-display: block;</span><br><span class="line">  &#125;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><p>html标签内添加小图标。</p>
+<p>在网站(<a target="_blank" rel="noopener" href="https://icomoon.io/app/#/select/font)%E4%B8%AD%E6%89%BE%E5%88%B0%E6%89%80%E9%9C%80%E7%9A%84%E5%9B%BE%E6%A0%87">https://icomoon.io/app/#/select/font)中找到所需的图标</a></p>
+<p>复制图标下方数字后方对应的小方框，粘贴到对应位置</p>
+</li>
+<li><p>设置字体图标的字体（font-family: ‘icomoon’;）</p>
+</li>
+</ul>
+</li>
+<li><p>字体图标的追加（添加新的小图标)</p>
+<ul>
+<li><p>如果工作中，原来的字体图标不够用了，我们需要添加新的字体图标到原来的字体文件中。</p>
+</li>
+<li><p>把压缩包里面的 selection.json 从新上传，然后选中自己想要新的图标，从新下载压缩包，并替换原来的文件即可。</p>
+</li>
+</ul>
+</li>
+</ol>
+<h3 id="CSS三角"><a href="#CSS三角" class="headerlink" title="CSS三角"></a>CSS三角</h3><p>设置宽高为零，给予透明颜色内边框（border），最后根据所需设置对应位置边框颜色（border-left-color）</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">div &#123;</span><br><span class="line">    width: 0;</span><br><span class="line">    height: 0;</span><br><span class="line">    line-height : 0;</span><br><span class="line">    font-size : 0;</span><br><span class="line">    border: 50px solid transparent;</span><br><span class="line">    border-left-color: pink;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+<h3 id="鼠标样式（-pointer）"><a href="#鼠标样式（-pointer）" class="headerlink" title="鼠标样式（ pointer）"></a><strong>鼠标样式（</strong> pointer）</h3><p><code>cursor: pointer; </code>设置或检索在对象上移动的鼠标指针采用何种系统预定义的光标形状。</p>
+<table>
+<thead>
+<tr>
+<th>属性</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>cursor: default;</td>
+<td>小白默认</td>
+</tr>
+<tr>
+<td>cursor: pointer;</td>
+<td>小手</td>
+</tr>
+<tr>
+<td>cursor: move;</td>
+<td>移动</td>
+</tr>
+<tr>
+<td>cursor: text;</td>
+<td>文本</td>
+</tr>
+<tr>
+<td>cursor: not-allowed;</td>
+<td>禁止</td>
+</tr>
+</tbody></table>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">ul</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">li</span> <span class="attr">style</span>=<span class="string">&quot;cursor: default;&quot;</span>&gt;</span>我是默认的小白鼠标样式<span class="tag">&lt;/<span class="name">li</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">li</span> <span class="attr">style</span>=<span class="string">&quot;cursor: pointer;&quot;</span>&gt;</span>我是鼠标小手样式<span class="tag">&lt;/<span class="name">li</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">li</span> <span class="attr">style</span>=<span class="string">&quot;cursor: move;&quot;</span>&gt;</span>我是鼠标移动样式<span class="tag">&lt;/<span class="name">li</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">li</span> <span class="attr">style</span>=<span class="string">&quot;cursor: text;&quot;</span>&gt;</span>我是鼠标文本样式<span class="tag">&lt;/<span class="name">li</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">li</span> <span class="attr">style</span>=<span class="string">&quot;cursor: not-allowed;&quot;</span>&gt;</span>我是鼠标禁止样式<span class="tag">&lt;/<span class="name">li</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">ul</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="轮廓线（outline）-文本域拖拽"><a href="#轮廓线（outline）-文本域拖拽" class="headerlink" title="轮廓线（outline）/文本域拖拽"></a>轮廓线（outline）/文本域拖拽</h3><p>​        给表单添加<code>outline: 0;</code>或者<code>outline: none;</code>样式之后，就可以去掉默认的蓝色边框</p>
+<p>​        给文本域添加resizeL none;样式之后，就可以防止拖拽文本域</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">input, textarea &#123;</span><br><span class="line">    /* 取消表单轮廓 */</span><br><span class="line">    outline: none;</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">textarea &#123;</span><br><span class="line">    /* 防止拖拽文本域 */</span><br><span class="line">    resize: none;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+<h3 id="图片文字对其方式"><a href="#图片文字对其方式" class="headerlink" title="图片文字对其方式"></a>图片文字对其方式</h3><p>vertical-align：用于设置图片或者表单(行内块元素)和文字垂直对齐。</p>
+<p>官方解释：用于设置一个元素的垂直对齐方式，但是它只针对于行内元素或者行内块元素有效。</p>
+<p>vertical-align：baseline l top l middle | bottom</p>
+<table>
+<thead>
+<tr>
+<th>属性值</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>baseline</td>
+<td>默认、元素放置在父元素的基线上</td>
+</tr>
+<tr>
+<td>top</td>
+<td>把元素的顶端与行中最高元素的顶端对齐</td>
+</tr>
+<tr>
+<td>middle</td>
+<td>把此元素放置在父元素的中部</td>
+</tr>
+<tr>
+<td>bottom</td>
+<td>把元素的顶端与行中最低的元素的低端对齐</td>
+</tr>
+</tbody></table>
+<h3 id="图片底侧空白缝隙解决方案"><a href="#图片底侧空白缝隙解决方案" class="headerlink" title="图片底侧空白缝隙解决方案"></a>图片底侧空白缝隙解决方案</h3><p>bug：图片底侧会有一个空白缝隙，原因是行内块元素会和文字的基线对齐。</p>
+<p>主要解决方法有两种︰</p>
+<ol>
+<li>给图片添加vertical-align:middle | topl bottom等。（提倡使用的)</li>
+<li>把图片转换为块级元素<code>display: block;</code>（只有行内元素、行内块元素有对齐方式，块级元素无对齐方式）</li>
+</ol>
+<h3 id="溢出文本省略号显示"><a href="#溢出文本省略号显示" class="headerlink" title="溢出文本省略号显示"></a>溢出文本省略号显示</h3><ul>
+<li>单行文本溢出显示省略号必须满足三个条件</li>
+</ul>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">/* 1.文字显示不开也必须强制一行内显示（默认normal文字显示不开自动换行） */</span><br><span class="line">white-space: nowrap;</span><br><span class="line">/* 2.溢出的部分隐藏起来 */</span><br><span class="line">overflow: hidden;</span><br><span class="line">/* 3. 文字溢出的时候用省略号来显示 */</span><br><span class="line">text-overflow: ellipsis;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><p>多行文本溢出显示省略号</p>
+<p>多行文本溢出显示省略号，有较大兼容性问题，适合于webKit浏览器或移动端（移动端大部分是webkit内核)</p>
+</li>
+</ul>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">overflow : hidden;</span><br><span class="line">text-overflow: ellipsis;</span><br><span class="line">/*弹性伸缩盒子模型显示*/</span><br><span class="line">display: -webkit-box;</span><br><span class="line">/*限制在一个块元素显示的文本的行数*/</span><br><span class="line">-webkit-line-clamp : 2;</span><br><span class="line">/*设置或检索伸缩盒对象的子元素的排列方式*/</span><br><span class="line">-webkit-box-orient: vertical;</span><br></pre></td></tr></table></figure>
+
+<p>更推荐让后台人员来做这个效果，因为后台人员可以设置显示多少个字，操作更简单。</p>
+<h3 id="常见布局技巧"><a href="#常见布局技巧" class="headerlink" title="常见布局技巧"></a>常见布局技巧</h3><ol>
+<li> margin负值的运用</li>
+</ol>
+<p>   (1) 让每个盒子margin往左侧移动-1px 正好压住相邻盒子边框</p>
+<p>   (2) 标经过某个盒子的时候，提高当前盒子的层级即可(如果没有有定位，则加相对定位（保留位置)，如果有定位，则加z-index )</p>
+<ol start="2">
+<li><p>文字围绕浮动元素</p>
+<p>巧妙运用浮动元素不会压住文字的特性</p>
+</li>
+<li><p>行内块的巧妙运用</p>
+<p>(1) 行内块元素可以设置大小，本身默认有外边距</p>
+<p>(2) 通过给行内块元素的父亲设置text-align: center; 则所有下级的行内元素、行内块元素都会居中对齐。</p>
+</li>
+<li><p>css三角强化</p>
+<p>获取直角三角形两种方式</p>
+<p>第一种方式：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">/* 把上内框宽度调大，保留右侧内边框 */</span><br><span class="line">border-top: 100px solid transparent;</span><br><span class="line">border-right: 50px solid skyblue;</span><br><span class="line">/* 左边和下边的边框宽度设置为0 */</span><br><span class="line">border-bottom: 0 solid blue;</span><br><span class="line">border-left: 0 solid green;</span><br></pre></td></tr></table></figure>
+
+<p>第二种方式（简写）：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">/* 1.只保留右边的边框有颜色 */</span><br><span class="line">border-color: transparent red transparent transparent;</span><br><span class="line">/* 2. 样式都是solid */</span><br><span class="line">border-style: solid;</span><br><span class="line">/* 3. 上边框宽度要大， 右边框 宽度稍小， 其余的边框该为 0 */</span><br><span class="line">border-width: 100px 50px 0 0;</span><br></pre></td></tr></table></figure></li>
+</ol>
+
+        </div>
+
+        
+            <section class="post-copyright">
+                
+                
+                
+                
+
+            </section>
+        
+        <section class="post-tags">
+            <div>
+                <span>Tag(s):</span>
+                <span class="tag">
+                    
+                </span>
+            </div>
+            <div>
+                <a href="javascript:window.history.back();">back</a>
+                <span>· </span>
+                <a href="/">home</a>
+            </div>
+        </section>
+        <section class="post-nav">
+            
+                <a class="prev" rel="prev" href="/2021/03/21/HTML-CSS%E7%9F%A5%E8%AF%86%E7%82%B904/">H5-C3新特性</a>
+            
+            
+            <a class="next" rel="next" href="/2021/02/09/Vscode%E4%BD%BF%E7%94%A8/">Hello World</a>
+            
+        </section>
+
+
+    </article>
+</div>
+
+            </div>
+            <footer id="footer" class="footer">
+    <div class="copyright">
+        <span>© lufei | Powered by <a href="https://hexo.io" target="_blank">Hexo</a> & <a href="https://github.com/Siricee/hexo-theme-Chic" target="_blank">Chic</a></span>
+    </div>
+</footer>
+
+    </div>
+</body>
+
+</html>

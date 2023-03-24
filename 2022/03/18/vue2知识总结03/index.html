@@ -1,0 +1,684 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="UTF-8">
+<meta name="viewport"
+      content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+    <meta name="author" content="lufei">
+
+
+
+
+
+<title>Vue2脚手架 | lufei</title>
+
+
+
+    <link rel="icon" href="/favicon.ico">
+
+
+
+
+    <!-- stylesheets list from _config.yml -->
+    
+    <link rel="stylesheet" href="/css/style.css">
+    
+
+
+
+    <!-- scripts list from _config.yml -->
+    
+    <script src="/js/script.js"></script>
+    
+    <script src="/js/tocbot.min.js"></script>
+    
+
+
+
+    
+    
+        
+    
+
+
+<meta name="generator" content="Hexo 5.4.2"></head>
+
+<body>
+    <script>
+        // this function is used to check current theme before page loaded.
+        (() => {
+            const currentTheme = window.localStorage && window.localStorage.getItem('theme') || '';
+            const isDark = currentTheme === 'dark';
+            const pagebody = document.getElementsByTagName('body')[0]
+            if (isDark) {
+                pagebody.classList.add('dark-theme');
+                // mobile
+                document.getElementById("mobile-toggle-theme").innerText = "· Dark"
+            } else {
+                pagebody.classList.remove('dark-theme');
+                // mobile
+                document.getElementById("mobile-toggle-theme").innerText = "· Light"
+            }
+        })();
+    </script>
+
+    <div class="wrapper">
+        <header>
+    <nav class="navbar">
+        <div class="container">
+            <div class="navbar-header header-logo"><a href="/">bravefei</a></div>
+            <div class="menu navbar-right">
+                
+                    <a class="menu-item" href="/archives">笔记</a>
+                
+                <input id="switch_default" type="checkbox" class="switch_default">
+                <label for="switch_default" class="toggleBtn"></label>
+            </div>
+        </div>
+    </nav>
+
+    
+    <nav class="navbar-mobile" id="nav-mobile">
+        <div class="container">
+            <div class="navbar-header">
+                <div>
+                    <a href="/">bravefei</a><a id="mobile-toggle-theme">·&nbsp;Light</a>
+                </div>
+                <div class="menu-toggle" onclick="mobileBtn()">&#9776; Menu</div>
+            </div>
+            <div class="menu" id="mobile-menu">
+                
+                    <a class="menu-item" href="/archives">笔记</a>
+                
+            </div>
+        </div>
+    </nav>
+
+</header>
+<script>
+    var mobileBtn = function f() {
+        var toggleMenu = document.getElementsByClassName("menu-toggle")[0];
+        var mobileMenu = document.getElementById("mobile-menu");
+        if(toggleMenu.classList.contains("active")){
+           toggleMenu.classList.remove("active")
+            mobileMenu.classList.remove("active")
+        }else{
+            toggleMenu.classList.add("active")
+            mobileMenu.classList.add("active")
+        }
+    }
+</script>
+            <div class="main">
+                <div class="container">
+    
+    
+        <div class="post-toc">
+    <div class="tocbot-list">
+    </div>
+    <div class="tocbot-list-menu">
+        <a class="tocbot-toc-expand" onclick="expand_toc()">Expand all</a>
+        <a onclick="go_top()">Back to top</a>
+        <a onclick="go_bottom()">Go to bottom</a>
+    </div>
+</div>
+
+<script>
+    var tocbot_timer;
+    var DEPTH_MAX = 6; // 为 6 时展开所有
+    var tocbot_default_config = {
+        tocSelector: '.tocbot-list',
+        contentSelector: '.post-content',
+        headingSelector: 'h1, h2, h3, h4, h5',
+        orderedList: false,
+        scrollSmooth: true,
+        onClick: extend_click,
+    };
+
+    function extend_click() {
+        clearTimeout(tocbot_timer);
+        tocbot_timer = setTimeout(function() {
+            tocbot.refresh(obj_merge(tocbot_default_config, {
+                hasInnerContainers: true
+            }));
+        }, 420); // 这个值是由 tocbot 源码里定义的 scrollSmoothDuration 得来的
+    }
+
+    document.ready(function() {
+        tocbot.init(obj_merge(tocbot_default_config, {
+            collapseDepth: 1
+        }));
+    });
+
+    function expand_toc() {
+        var b = document.querySelector('.tocbot-toc-expand');
+        var expanded = b.getAttribute('data-expanded');
+        expanded ? b.removeAttribute('data-expanded') : b.setAttribute('data-expanded', true);
+        tocbot.refresh(obj_merge(tocbot_default_config, {
+            collapseDepth: expanded ? 1 : DEPTH_MAX
+        }));
+        b.innerText = expanded ? 'Expand all' : 'Collapse all';
+    }
+
+    function go_top() {
+        window.scrollTo(0, 0);
+    }
+
+    function go_bottom() {
+        window.scrollTo(0, document.body.scrollHeight);
+    }
+
+    function obj_merge(target, source) {
+        for (var item in source) {
+            if (source.hasOwnProperty(item)) {
+                target[item] = source[item];
+            }
+        }
+        return target;
+    }
+</script>
+    
+
+    
+    <article class="post-wrap">
+        <header class="post-header">
+            <h1 class="post-title">Vue2脚手架</h1>
+            
+                <div class="post-meta">
+                    
+                        Author: <a itemprop="author" rel="author" href="/">lufei</a>
+                    
+
+                    
+                        <span class="post-time">
+                        Date: <a href="#">三月 18, 2022&nbsp;&nbsp;19:21:20</a>
+                        </span>
+                    
+                    
+                </div>
+            
+        </header>
+
+        <div class="post-content">
+            <h1 id="Vue2脚手架"><a href="#Vue2脚手架" class="headerlink" title="Vue2脚手架"></a>Vue2脚手架</h1><p>​    Vue脚手架是Vue官方提供的标准化开发工具(开发平台)。</p>
+<p>​    文档: <a target="_blank" rel="noopener" href="https://cli.vuejs.org/zh/">https://cli.vuejs.org/zh/</a></p>
+<pre><code> Vue CLI 是一个基于 Vue.js 进行快速开发的完整系统，
+</code></pre>
+<p>​     通过@vue/cli实现的交互式的项目脚手架。</p>
+<p>​    通过@@vue/cli + @vue/cli-service-global 实现的零配置原型开发。</p>
+<h3 id="项目创建具体步骤"><a href="#项目创建具体步骤" class="headerlink" title="项目创建具体步骤"></a>项目创建具体步骤</h3><p>​    第一步(仅第一次执行)︰全局安装@vue/cli</p>
+<p>​        npm install -g @vue/clie</p>
+<p>​    第二步:切换到你要创建项目的目录，然后使用命令创建项目&lt;</p>
+<p>​        vue create xxxx</p>
+<p>​    第三步:启动项目</p>
+<p>​        npm run serve</p>
+<p>第四部:项目打包</p>
+<p>​        npm run build</p>
+<p>​        打包后的文件放置在根目录下的dist文件夹下（后面要用）</p>
+<p>​        注意：项目打包上线时用history路由模式，刷新页面会404报错</p>
+<p>​            hash路由模式刷新页面不会报错（router 的配置 mode: “hash”, ）</p>
+<p>​            可以通过connect-history-api-fallback插件解决问题（识别前端/后端路由）</p>
+<p>​                1）在上线的服务器中安转插件npm i connect-history-api-fallback</p>
+<p>​                2）在服务器文件中使用 </p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">const express = require(&#x27;express&#x27;)</span><br><span class="line">const history = require(&#x27;connect-history-api-fallback&#x27;)</span><br><span class="line">/* 创建服务实例对象 */</span><br><span class="line">const app = express()</span><br><span class="line"></span><br><span class="line">/* 消除刷新404报错  必须在使用静态资源之前引用 */</span><br><span class="line">app.use(history())</span><br><span class="line">/* 使用静态资源    __dirname当前路径  */</span><br><span class="line">app.use(express.static(__dirname + &#x27;/static&#x27;))</span><br></pre></td></tr></table></figure>
+
+<p>​                3）重新启动服务器即可</p>
+<p>第五步:项目部署（服务器上线）</p>
+<ol>
+<li><p>创建项目文件夹  test  用VSCode打开</p>
+</li>
+<li><p>调出控制台（ctrl+`），输入初始化命令 npm init，自定义包名称</p>
+</li>
+<li><p>安转express插件 npm i express</p>
+</li>
+<li><p>新建服务器主文件server.js</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">/* 微型服务器  使用commmon.js模块化 */</span><br><span class="line">const express = require(&#x27;express&#x27;)</span><br><span class="line"></span><br><span class="line">/* 创建服务实例对象 */</span><br><span class="line">const app = express()</span><br><span class="line"></span><br><span class="line">/* 返回一个请求信息 */</span><br><span class="line">app.get(&#x27;/person&#x27;, (request, response) =&gt; &#123;</span><br><span class="line">    /* 给服务器返回数据 */</span><br><span class="line">    response.send(&#123;</span><br><span class="line">        name: &#x27;lufei&#x27;,</span><br><span class="line">        age: &#x27;18&#x27;,</span><br><span class="line">    &#125;)</span><br><span class="line">&#125;)</span><br><span class="line"></span><br><span class="line">/* 创建监听端口 */</span><br><span class="line">app.listen(5005, (err) =&gt; &#123;</span><br><span class="line">    console.log(&quot;服务器启动成功了&quot;)</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure></li>
+<li><p>启动服务器 node server</p>
+</li>
+<li><p>输入网址：<a target="_blank" rel="noopener" href="http://localhost:5005/person%E6%B5%8B%E8%AF%95%E6%98%AF%E5%90%A6%E6%AD%A3%E5%B8%B8%E5%90%AF%E5%8A%A8">http://localhost:5005/person测试是否正常启动</a></p>
+</li>
+<li><p>根目录下创建static文件夹，放置静态文件（html，css）</p>
+<p>把dist文件中生成的项目文件粘贴到static中</p>
+</li>
+<li><p>在服务器文件server.js中使用</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">const express = require(&#x27;express&#x27;)</span><br><span class="line">/* 创建服务实例对象 */</span><br><span class="line">const app = express()</span><br><span class="line"></span><br><span class="line">/* 使用静态资源   __dirname当前路径  */</span><br><span class="line">app.use(express.static(__dirname + &#x27;/static&#x27;))</span><br></pre></td></tr></table></figure></li>
+<li><p>123</p>
+</li>
+</ol>
+<p>备注:<br>    1.如出现下载缓慢请配置npm淘宝镜像</p>
+<p>​        npm config set registry <a target="_blank" rel="noopener" href="https://registry.npm.taobao.org/">https://registry.npm.taobao.org</a></p>
+<ol start="2">
+<li>Vue脚手架隐藏了所有webpack相关的配置</li>
+</ol>
+<p>  若想查看具体的webpakc配置，请执行:vue inspect &gt; output.js</p>
+<h3 id="脚手架文件结构"><a href="#脚手架文件结构" class="headerlink" title="脚手架文件结构"></a>脚手架文件结构</h3><p>  ├── node_modules </p>
+<p>  ├── public</p>
+<p>  │  ├── favicon.ico: 页签图标</p>
+<p>  │  └── index.html: 主页面</p>
+<p>  ├── src</p>
+<p>  │  ├── assets: 存放静态资源</p>
+<p>  │  │  └── logo.png</p>
+<p>  │  │── component: 存放组件</p>
+<p>  │  │  └── HelloWorld.vue</p>
+<p>  │  │── App.vue: 汇总所有组件</p>
+<p>  │  │── main.js: 入口文件</p>
+<p>  ├── .gitignore: git版本管制忽略的配置</p>
+<p>  ├── babel.config.js: babel的配置文件</p>
+<p>  ├── package.json: 应用包配置文件 </p>
+<p>  ├── README.md: 应用描述文件</p>
+<p>  ├── package-lock.json：包版本控制文件</p>
+<h3 id="关于不同版本的Vue"><a href="#关于不同版本的Vue" class="headerlink" title="关于不同版本的Vue"></a>关于不同版本的Vue</h3><ol>
+<li><p>vue.js与vue.runtime.xxx.js的区别：</p>
+<p>(1) vue.js是完整版的Vue，包含：核心功能 + 模板解析器。</p>
+<p>(2) vue.runtime.xxx.js是运行版的Vue，只包含：核心功能；没有模板解析器。</p>
+</li>
+<li><p>因为vue.runtime.xxx.js没有模板解析器，所以不能使用template这个配置项，需要使用render函数接收到的createElement函数去指定具体内容。</p>
+</li>
+</ol>
+<h3 id="vue-config-js配置文件"><a href="#vue-config-js配置文件" class="headerlink" title="vue.config.js配置文件"></a>vue.config.js配置文件</h3><ol>
+<li>使用vue inspect &gt; output.js可以查看到Vue脚手架的默认配置。</li>
+<li>使用vue.config.js可以对脚手架进行个性化定制，详情见：<a target="_blank" rel="noopener" href="https://cli.vuejs.org/zh">https://cli.vuejs.org/zh</a></li>
+</ol>
+<h3 id="脚手架文件结构-1"><a href="#脚手架文件结构-1" class="headerlink" title="脚手架文件结构"></a>脚手架文件结构</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">├── node_modules </span><br><span class="line">├── public</span><br><span class="line">│   ├── favicon.ico: 页签图标</span><br><span class="line">│   └── index.html: 主页面</span><br><span class="line">├── src</span><br><span class="line">│   ├── assets: 存放静态资源</span><br><span class="line">│   │   └── logo.png</span><br><span class="line">│   │── component: 存放组件</span><br><span class="line">│   │   └── HelloWorld.vue</span><br><span class="line">│   │── App.vue: 汇总所有组件</span><br><span class="line">│   │── main.js: 入口文件</span><br><span class="line">├── .gitignore: git版本管制忽略的配置</span><br><span class="line">├── babel.config.js: babel的配置文件</span><br><span class="line">├── package.json: 应用包配置文件 </span><br><span class="line">├── README.md: 应用描述文件</span><br><span class="line">├── package-lock.json：包版本控制文件</span><br><span class="line">├──vue.config.js:自行定义vue配置文件</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">node_modules  // 第三方库</span><br><span class="line">public  // 放前端页面与样式</span><br><span class="line">	css、js、fonts</span><br><span class="line">	favicon.ico  // 程序logo</span><br><span class="line">	index.html  // 整个项目的界面</span><br><span class="line">src</span><br><span class="line">	assets  // 该文件一般放静态资源（图片，logo，视频）</span><br><span class="line">	components  // 组件</span><br><span class="line">	App.vue  // 集成组件</span><br><span class="line">	main.js  // 该文件是整个项目的入口文件</span><br><span class="line">.gitignore  // git 忽略文件</span><br><span class="line">babel.config.js  // babel配置文件ES6转ES5</span><br><span class="line">package-lock.json  // 包版本控制器</span><br><span class="line">package.json  // 包的说明书</span><br><span class="line">READMEmd  // 项目说明</span><br><span class="line">vue.config.js  // 自行定义vue配置文件</span><br></pre></td></tr></table></figure>
+
+
+
+<h3 id="App-vue中的render函数"><a href="#App-vue中的render函数" class="headerlink" title="App.vue中的render函数"></a>App.vue中的render函数</h3><p>​    关于不同版本的Vue：</p>
+<pre><code>      1.vue.js与vue.runtime.xxx.js的区别：
+ 
+      (1)vue.js是完整版的Vue，包含：核心功能+模板解析器。
+</code></pre>
+<p>​            (2) vue.runtime.xxx.js是运行版的Vue，只包含：核心功能；没有模板解析器。</p>
+<p>​                vue.runtime.xxx.js 运行时js文件</p>
+<pre><code>      2.因为vue.runtime.xxx.js没有模板解析器，所以不能使用template配置项，需要使用
+  
+       render函数接收到的createElement函数去指定具体内容。
+</code></pre>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">new Vue(&#123;</span><br><span class="line">	el: &#x27;#app&#x27;,</span><br><span class="line">	//render函数完成了这个功能：将App组件放入容器中</span><br><span class="line">	/* render(createElement) &#123;</span><br><span class="line">		return createElement(&#x27; h1&quot;,&quot;你好啊&quot;)</span><br><span class="line">	&#125; */</span><br><span class="line">	// render:q=&gt; q(&#x27;h1&#x27;,&#x27;你好啊&#x27;)  // 简化</span><br><span class="line">	render: h =&gt; h(App),</span><br><span class="line">	</span><br><span class="line">	// template:`&lt;h1&gt;你好啊&lt;/h1&gt;`,  // 默认引入的vue是残缺版的（不包含模板解析）</span><br><span class="line">	// components:&#123;App&#125;,</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+
+
+
+<h3 id="关于不同版本的Vue-1"><a href="#关于不同版本的Vue-1" class="headerlink" title="关于不同版本的Vue"></a>关于不同版本的Vue</h3><ol>
+<li>vue.js与vue.runtime.xxx.js的区别：<ol>
+<li>vue.js是完整版的Vue，包含：核心功能 + 模板解析器。</li>
+<li>vue.runtime.xxx.js是运行版的Vue，只包含：核心功能；没有模板解析器。</li>
+</ol>
+</li>
+<li>因为vue.runtime.xxx.js没有模板解析器，所以不能使用template这个配置项，需要使用render函数接收到的createElement函数去指定具体内容。</li>
+</ol>
+<h3 id="vue-config-js配置文件-1"><a href="#vue-config-js配置文件-1" class="headerlink" title="vue.config.js配置文件"></a>vue.config.js配置文件</h3><ol>
+<li>使用vue inspect &gt; output.js可以查看到Vue脚手架的默认配置。</li>
+<li>使用vue.config.js可以对脚手架进行个性化定制，详情见：<a target="_blank" rel="noopener" href="https://cli.vuejs.org/zh">https://cli.vuejs.org/zh</a></li>
+</ol>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line">module.exports = &#123;</span><br><span class="line">  pages: &#123;</span><br><span class="line">    index: &#123;</span><br><span class="line">      // 定义项目入口js文件</span><br><span class="line">      entry: &#x27;src/main.js&#x27;,</span><br><span class="line">    &#125;,</span><br><span class="line">  &#125;,</span><br><span class="line">	lintOnSave:false, //关闭语法检查</span><br><span class="line">	// 开启代理服务器（方式一）</span><br><span class="line">	/* devServer: &#123;</span><br><span class="line">    proxy: &#x27;http://localhost:5000&#x27;</span><br><span class="line">  &#125;, */</span><br><span class="line">	// 开启代理服务器（方式二）</span><br><span class="line">	devServer: &#123;</span><br><span class="line">    proxy: &#123;</span><br><span class="line">      &#x27;/atguigu&#x27;: &#123;</span><br><span class="line">        target: &#x27;http://localhost:5000&#x27;,</span><br><span class="line">				pathRewrite:&#123;&#x27;^/atguigu&#x27;:&#x27;&#x27;&#125;,</span><br><span class="line">        // ws: true, //用于支持websocket</span><br><span class="line">        // changeOrigin: true // 用于控制请求头中的host值</span><br><span class="line">      &#125;,</span><br><span class="line">      &#x27;/demo&#x27;: &#123;</span><br><span class="line">        target: &#x27;http://localhost:5001&#x27;,</span><br><span class="line">				pathRewrite:&#123;&#x27;^/demo&#x27;:&#x27;&#x27;&#125;,</span><br><span class="line">        // ws: true, // 用于支持websocket</span><br><span class="line">        // changeOrigin: true // 用于控制请求头中的host值</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+<h3 id="ref属性"><a href="#ref属性" class="headerlink" title="ref属性"></a>ref属性</h3><p>​    类似于id属性，不同的是ref获取的是实例对象（即真实Dom元素或组件实例对象）</p>
+<ol>
+<li><p>被用来给元素或子组件注册引用信息（id的替代者）</p>
+</li>
+<li><p>应用在html标签上获取的是真实DOM元素，应用在组件标签上是组件实例对象（vc）</p>
+</li>
+<li><p>使用方式：</p>
+<p>(1) 打标识：<code>&lt;h1 ref=&quot;xxx&quot;&gt;.....&lt;/h1&gt;</code> 或 <code>&lt;School ref=&quot;xxx&quot;&gt;&lt;/School&gt;</code></p>
+<p>(2) 获取：<code>this.$refs.xxx</code></p>
+</li>
+</ol>
+<h3 id="props配置项"><a href="#props配置项" class="headerlink" title="props配置项"></a>props配置项</h3><p>​    传值时如果使用v-bind绑定，就会把引号内部解析为js表达式返回并传输</p>
+<p>​        例  :age=”18” 传递的是Number类型18</p>
+<p>​        age=”18”  传递的是String类型18</p>
+<ol>
+<li><p>功能：让组件接收外部传过来的数据</p>
+</li>
+<li><p>传递数据：<code>&lt;Demo name=&quot;xxx&quot;/&gt;</code></p>
+</li>
+<li><p>接收数据：</p>
+<p>(1) 第一种方式（只接收）：<code>props:[&#39;name&#39;] </code></p>
+<p>(2) 第二种方式（限制类型）：<code>props:&#123;name:String&#125;</code></p>
+<p>(3) 第三种方式（限制类型、限制必要性、指定默认值）：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">props</span>:&#123;</span><br><span class="line">	<span class="attr">name</span>:&#123;</span><br><span class="line">		<span class="attr">type</span>:<span class="title class_">String</span>, <span class="comment">//类型</span></span><br><span class="line">		<span class="attr">required</span>:<span class="literal">true</span>, <span class="comment">//必要性</span></span><br><span class="line">		<span class="attr">default</span>:<span class="string">&#x27;老王&#x27;</span> <span class="comment">//默认</span></span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li>
+</ol>
+<blockquote>
+<p>备注：props优先级比data中的数据优先级高，且props是只读的，Vue底层会监测你对props的修改，如果进行了修改，就会发出警告，若业务需求确实需要修改，那么请复制props的内容到data中一份，然后去修改data中的数据。</p>
+</blockquote>
+<h3 id="mixin-混入"><a href="#mixin-混入" class="headerlink" title="mixin(混入)"></a>mixin(混入)</h3><ol>
+<li><p>功能：可以把多个组件共用的配置提取成一个混入对象</p>
+</li>
+<li><p>使用方式：</p>
+<p>第一步定义混合：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">    data()&#123;....&#125;,</span><br><span class="line">    methods:&#123;....&#125;</span><br><span class="line">    ....</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>第二步使用混入：</p>
+<p> 全局混入：<code>Vue.mixin(xxx)</code> 局部混入：<code>mixins:[&#39;xxx&#39;]</code></p>
+<p>​    注意：全局混入时所有的实例对象（vm，vc）都具有混合中的方法、属性</p>
+<p>全局混入（main.js）</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">import &#123;xxx,XXX&#125; from &#x27;./mixin&#x27;</span><br><span class="line">Vue.mixin(xxx)</span><br><span class="line">Vue.mixin(XXX)</span><br></pre></td></tr></table></figure>
+
+<p>局部混入（xxx.vue）</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">import &#123;xxx,XXX&#125; from &#x27;../mixin&#x27;</span><br><span class="line">mixins:[xxx,XXX]</span><br></pre></td></tr></table></figure></li>
+<li><p>数据以本身的数据为主，本身有混合不调用</p>
+<p>但注意生命周期钩子都调用，且混合的优先级高于本身</p>
+</li>
+</ol>
+<h3 id="插件"><a href="#插件" class="headerlink" title="插件"></a>插件</h3><ol>
+<li><p>功能：用于增强Vue</p>
+</li>
+<li><p>本质：包含install方法的一个对象，install的第一个参数是Vue，第二个以后的参数是插件使用者传递的数据。</p>
+</li>
+<li><p>定义插件：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">对象.<span class="property">install</span> = <span class="keyword">function</span> (<span class="params">Vue, options</span>) &#123;</span><br><span class="line">    <span class="comment">// 1. 添加全局过滤器</span></span><br><span class="line">    <span class="title class_">Vue</span>.<span class="title function_">filter</span>(....)</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 2. 添加全局指令</span></span><br><span class="line">    <span class="title class_">Vue</span>.<span class="title function_">directive</span>(....)</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 3. 配置全局混入(合)</span></span><br><span class="line">    <span class="title class_">Vue</span>.<span class="title function_">mixin</span>(....)</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 4. 添加实例方法</span></span><br><span class="line">    <span class="title class_">Vue</span>.<span class="property"><span class="keyword">prototype</span></span>.<span class="property">$myMethod</span> = <span class="keyword">function</span> (<span class="params"></span>) &#123;...&#125;</span><br><span class="line">    <span class="title class_">Vue</span>.<span class="property"><span class="keyword">prototype</span></span>.<span class="property">$myProperty</span> = xxxx</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li>
+<li><p>使用插件：<code>Vue.use()</code></p>
+</li>
+</ol>
+<h3 id="scoped样式"><a href="#scoped样式" class="headerlink" title="scoped样式"></a>scoped样式</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">&lt;style lang=&quot;less&quot; scoped&gt;</span><br><span class="line">     // lang=&quot;less&quot;  就是language=&#x27;less&#x27;，即style标签内写的是less预编译语言</span><br><span class="line">     // scoped 设置style内样式为局部作用域</span><br><span class="line">&lt;/style&gt;</span><br></pre></td></tr></table></figure>
+
+<ol>
+<li>作用：让样式在局部生效，防止冲突。</li>
+<li>写法：<code>&lt;style scoped&gt;</code></li>
+</ol>
+<h3 id="总结TodoList案例"><a href="#总结TodoList案例" class="headerlink" title="总结TodoList案例"></a>总结TodoList案例</h3><ol>
+<li><p>组件化编码流程：</p>
+<p>(1).拆分静态组件：组件要按照功能点拆分，命名不要与html元素冲突。</p>
+<p>(2).实现动态组件：考虑好数据的存放位置，数据是一个组件在用，还是一些组件在用：</p>
+<p>​     1).一个组件在用：放在组件自身即可。</p>
+<p>​     2). 一些组件在用：放在他们共同的父组件上（状态提升）。</p>
+<p> (3).实现交互：从绑定事件开始。</p>
+</li>
+<li><p>props适用于：</p>
+<p>(1).父组件 ==&gt; 子组件 通信</p>
+<p>(2).子组件 ==&gt; 父组件 通信（要求父先给子一个函数）</p>
+</li>
+<li><p>使用v-model时要切记：v-model绑定的值不能是props传过来的值，因为props是不可以修改的！</p>
+</li>
+<li><p>props传过来的若是对象类型的值，修改对象中的属性时Vue不会报错，但不推荐这样做。</p>
+<p>注意：</p>
+<p>​    id可以使用uuid生成永不重复的id值（简化版nanoid）</p>
+<p>​    父子传值可以通过props实现：</p>
+<p>​        父传子（父直传数据），子传父（父传带参函数，子调用函数数据作为函数的参数返回给父）</p>
+<p>​    checked复选框，可以通过v-model=”布尔值数据”，实现监听复选框勾选/取消勾选的变化</p>
+<p>​    e.target获取触发事件对象，this绑定事件对象</p>
+</li>
+</ol>
+<h4 id="v-model双向数据绑定"><a href="#v-model双向数据绑定" class="headerlink" title="v-model双向数据绑定"></a>v-model双向数据绑定</h4><p>​    v-model 不推荐绑定修改props内传递的属性，可以绑定修改本身的属性</p>
+<h4 id="reduce-函数"><a href="#reduce-函数" class="headerlink" title="reduce()函数"></a>reduce()函数</h4><p>​     obj.reduce((pre, current) =&gt;{ return },0)函数</p>
+<p>​    调用该函数的obj对象内有几个内置对象就调用几次</p>
+<p>​    pre接收上一次return返回的值，current为遍历的当前内置对象</p>
+<p>​    第二次调用时的pre为第一次的返回值</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">return this.todoList.reduce((pre, todo) =&gt; &#123;</span><br><span class="line">	// 返回：当前的pre值 + 遍历的内置对象中done为true的个数        </span><br><span class="line">	return pre + (todo.done == true ? 1 : 0);</span><br><span class="line">&#125;, 0);</span><br></pre></td></tr></table></figure>
+
+
+
+<h4 id="filter-函数"><a href="#filter-函数" class="headerlink" title="filter()函数"></a>filter()函数</h4><p>​    obj = obj.filter((installObj)=&gt;{ return }) </p>
+<p>​    installObj为遍历的obj内置对象  return 返回  过滤的判断条件</p>
+<p>​    obj.filter((installObj)=&gt;{ return }) 为过滤的结果，通过 = 赋值给obj，完成过滤</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">// filter过滤器(不改变原数组) 参数为todo项，return 返回 todo.id不为传递的id的todo项</span><br><span class="line">this.todoList = this.todoList.filter((todo) =&gt; &#123;</span><br><span class="line">	return todo.id != id;</span><br><span class="line">	// return todo.done != true;  可以简写为 return !todo.done</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+
+
+
+<h3 id="父子传值"><a href="#父子传值" class="headerlink" title="父子传值"></a>父子传值</h3><p>​    在vue中存在父子传值问题</p>
+<p>​    父传子：</p>
+<p>​    第一种：通过props传递</p>
+<p>​        父组件  :pass=”待传递data数据”  子组件  props:[“pass”]</p>
+<p>​            父组件直接通过绑定事件传递数据，子组件通过props接收传递的数据</p>
+<p>​    第二种：通过自定义事件</p>
+<p>​        父组件通过<code>&lt;child v-on:event=&quot;getName&quot;&gt;</code>在子组件模板上定义自定义事件</p>
+<p>​            定义methods中的getName(value)方法获取返回的value</p>
+<p>​                如果传递的参数较多，可以封装为一个对象传递，或者使用getName(value,…params)以数组形式接收</p>
+<p>​                例如传递name a b c，对象形式name,{a,b,c}  数组形式 name,a,b,c</p>
+<pre><code>                 `getName(name,obj)`  /  `getName(name,...params)`
+</code></pre>
+<p>​                    结果：name,obj{a,b,c}  /  name,params[a,b,c]</p>
+<p>​        子组件methods中的getName方法</p>
+<p>​            通过<code>this.$emit(&quot;event&quot;,value)</code>，传递value给父组件的参数</p>
+<p>​    第三种：通过自定义对象 + ref属性</p>
+<p>​        父组件 通过<code>&lt;child v-on:event=&quot;getName&quot; :ref=&quot;child&quot;&gt;</code>定义自定义事件并添加ref属性，获取子组件的实例对象</p>
+<p>​        父组件通过挂载完成后的mounted生命周期钩子调用methods中的getName()方法</p>
+<p>​            生命周期钩子通过：<code>this.$refs.child.$on(&#39;event&#39;,this.getName)</code>调用方法</p>
+<p>​    </p>
+<p>​    子传父：</p>
+<p>​    父组件  :receive=”receive函数”   methods:{receive(x)}</p>
+<p>​    子组件  props:[“receive”] , methods:{receive(待传递数据)}</p>
+<p>​        父组件传递给子组件一个带参数的函数，子组件通过props接收传递的函数，在methods中调用改函数，并把要传递给父组件的数据作为函数的参数返回。</p>
+<p>​    <strong>注意：</strong>第三种子传父灵活性较强，可以通过定时器延迟触发</p>
+<p>​    <strong>注意：</strong>全局事件总线 / 消息订阅与发布可以实现任意组件之间的通信</p>
+<h3 id="webStorage-存储"><a href="#webStorage-存储" class="headerlink" title="webStorage(存储)"></a>webStorage(存储)</h3><ol>
+<li><p>存储内容大小一般支持5MB左右（不同浏览器可能还不一样）</p>
+</li>
+<li><p>浏览器端通过 Window.sessionStorage 和 Window.localStorage 属性来实现本地存储机制。</p>
+</li>
+<li><p>相关API：</p>
+<ol>
+<li><p><code>xxxxxStorage.setItem(&#39;key&#39;, &#39;value&#39;);</code> 该方法接受一个键和值作为参数，会把键值对添加到存储中，如果键名存在，则更新其对应的值。</p>
+</li>
+<li><p><code>xxxxxStorage.getItem(&#39;person&#39;);</code></p>
+<p>该方法接受一个键名作为参数，返回键名对应的值。</p>
+</li>
+<li><p><code>xxxxxStorage.removeItem(&#39;key&#39;);</code></p>
+<p>该方法接受一个键名作为参数，并把该键名从存储中删除。</p>
+</li>
+<li><p><code>xxxxxStorage.clear()</code></p>
+<p>该方法会清空存储中的所有数据。</p>
+</li>
+</ol>
+</li>
+<li><p>备注：</p>
+<ol>
+<li><p>SessionStorage存储的内容会随着浏览器窗口关闭而消失。</p>
+</li>
+<li><p>LocalStorage存储的内容，需要手动清除才会消失。</p>
+</li>
+<li><p><code>xxxxxStorage.getItem(xxx)</code>如果xxx对应的value获取不到，那么getItem的返回值是null。</p>
+</li>
+<li><p><code>JSON.parse(null)</code>的结果依然是null。</p>
+</li>
+<li><p>JSON.stringify()能够把对象转换为字符串</p>
+</li>
+<li><p>JSON.parse()字符串转换为对象</p>
+</li>
+</ol>
+</li>
+</ol>
+<h3 id="组件的自定义事件"><a href="#组件的自定义事件" class="headerlink" title="组件的自定义事件"></a>组件的自定义事件</h3><ol>
+<li><p>一种组件间通信的方式，适用于：<strong>子组件 ===&gt; 父组件</strong></p>
+</li>
+<li><p>使用场景：A是父组件，B是子组件，B想给A传数据，那么就要在A中给B绑定自定义事件（事件的回调在A中）。</p>
+</li>
+<li><p>绑定自定义事件：</p>
+<ol>
+<li><p>第一种方式，在父组件中：<code>&lt;Demo @atguigu=&quot;test&quot;/&gt;</code> 或 <code>&lt;Demo v-on:atguigu=&quot;test&quot;/&gt;</code></p>
+</li>
+<li><p>第二种方式，在父组件中：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">&lt;<span class="title class_">Demo</span> ref=<span class="string">&quot;demo&quot;</span>/&gt;</span><br><span class="line">......</span><br><span class="line"><span class="title function_">mounted</span>(<span class="params"></span>)&#123;</span><br><span class="line">   <span class="variable language_">this</span>.<span class="property">$refs</span>.<span class="property">xxx</span>.$on(<span class="string">&#x27;atguigu&#x27;</span>,<span class="variable language_">this</span>.<span class="property">test</span>)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li>
+<li><p>若想让自定义事件只能触发一次，可以使用<code>once</code>修饰符，或<code>$once</code>方法。</p>
+</li>
+</ol>
+</li>
+<li><p>触发自定义事件：<code>this.$emit(&#39;atguigu&#39;,数据)</code></p>
+</li>
+<li><p>解绑自定义事件</p>
+<p>解绑单个<code>this.$off(&#39;atguigu&#39;)</code>,解绑多个<code>this.$off([&#39;atguigu&#39;,&#39;two&#39;])</code>,解绑所有<code>this.$off()</code></p>
+</li>
+<li><p>组件上也可以绑定原生DOM事件，需要使用<code>native</code>修饰符(@click.native=”show”)。</p>
+<p>​    组件中v-on绑定的事件都默认为自定义事件，需要通过this.$emit(事件名) 触发</p>
+</li>
+<li><p>注意：通过<code>this.$refs.xxx.$on(&#39;atguigu&#39;,回调)</code>绑定自定义事件时，回调要么配置在methods中，要么用箭头函数，否则this指向会出问题！</p>
+</li>
+</ol>
+<h3 id="全局事件总线（GlobalEventBus）"><a href="#全局事件总线（GlobalEventBus）" class="headerlink" title="全局事件总线（GlobalEventBus）"></a>全局事件总线（GlobalEventBus）</h3><ol>
+<li><p>一种组件间通信的方式，适用于任意组件间通信。</p>
+</li>
+<li><p>安装全局事件总线：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">new</span> <span class="title class_">Vue</span>(&#123;</span><br><span class="line">	......</span><br><span class="line">	<span class="title function_">beforeCreate</span>(<span class="params"></span>) &#123;</span><br><span class="line">		<span class="title class_">Vue</span>.<span class="property"><span class="keyword">prototype</span></span>.<span class="property">$bus</span> = <span class="variable language_">this</span> <span class="comment">//安装全局事件总线，$bus就是当前应用的vm</span></span><br><span class="line">	&#125;,</span><br><span class="line">    ......</span><br><span class="line">&#125;) </span><br></pre></td></tr></table></figure></li>
+<li><p>使用事件总线：</p>
+<ol>
+<li><p>接收数据：A组件想接收数据，则在A组件中给$bus绑定自定义事件，事件的回调留在A组件自身。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="title function_">methods</span>(<span class="params"></span>)&#123;</span><br><span class="line">  <span class="title function_">demo</span>(<span class="params">data</span>)&#123;......&#125;</span><br><span class="line">&#125;</span><br><span class="line">......</span><br><span class="line"><span class="title function_">mounted</span>(<span class="params"></span>) &#123;</span><br><span class="line">  <span class="variable language_">this</span>.<span class="property">$bus</span>.$on(<span class="string">&#x27;xxxx&#x27;</span>,<span class="variable language_">this</span>.<span class="property">demo</span>)</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">// 或</span></span><br><span class="line"><span class="title function_">mounted</span>(<span class="params"></span>) &#123;</span><br><span class="line">  <span class="variable language_">this</span>.<span class="property">$bus</span>.$on(<span class="string">&#x27;xxxx&#x27;</span>,<span class="function">(<span class="params">data</span>)=&gt;</span>&#123;...&#125;)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li>
+<li><p>提供数据：<code>this.$bus.$emit(&#39;xxxx&#39;,数据)</code></p>
+</li>
+</ol>
+</li>
+<li><p>最好在beforeDestroy钩子中，用$off去解绑当前组件所用到的事件。</p>
+</li>
+</ol>
+<h3 id="消息订阅与发布（pubsub）"><a href="#消息订阅与发布（pubsub）" class="headerlink" title="消息订阅与发布（pubsub）"></a>消息订阅与发布（pubsub）</h3><ol>
+<li><p>一种组件间通信的方式，适用于任意组件间通信。</p>
+</li>
+<li><p>使用步骤：</p>
+<ol>
+<li><p>安装pubsub：<code>npm i pubsub-js</code></p>
+</li>
+<li><p>引入: <code>import pubsub from &#39;pubsub-js&#39;</code></p>
+</li>
+<li><p>接收数据：A组件想接收数据，则在A组件中订阅消息，订阅的回调留在A组件自身。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="title function_">methods</span>(<span class="params"></span>)&#123;</span><br><span class="line">  <span class="title function_">demo</span>(<span class="params">data</span>)&#123;......&#125;</span><br><span class="line">&#125;</span><br><span class="line">......</span><br><span class="line"><span class="title function_">mounted</span>(<span class="params"></span>) &#123;</span><br><span class="line">  <span class="variable language_">this</span>.<span class="property">pid</span> = pubsub.<span class="title function_">subscribe</span>(<span class="string">&#x27;xxx&#x27;</span>,<span class="variable language_">this</span>.<span class="property">demo</span>) <span class="comment">//订阅消息</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li>
+<li><p>提供数据：<code>pubsub.publish(&#39;xxx&#39;,数据)</code></p>
+</li>
+<li><p>最好在beforeDestroy钩子中，用<code>pubsub.unsubscribe(pid)</code>去取消订阅。</p>
+</li>
+</ol>
+</li>
+</ol>
+<h3 id="nextTick（特殊）"><a href="#nextTick（特殊）" class="headerlink" title="$nextTick（特殊）"></a>$nextTick（特殊）</h3><p>​    vue中的nextTick主要用于处理数据动态变化后，DOM还未及时更新的问题，用nextTick就可以获取数据更新后最新DON的变化</p>
+<ol>
+<li>语法：<code>this.$nextTick(回调函数)</code></li>
+<li>作用：在下一次 DOM 更新结束后执行其指定的回调。</li>
+<li>什么时候用：当改变数据后，要基于更新后的新DOM进行某些操作时，要在nextTick所指定的回调函数中执行。</li>
+</ol>
+<p>常见案例用法：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">const &#123;proxy&#125; = getCurrentIntance();</span><br><span class="line"></span><br><span class="line">// 1. 点击获取元素宽度</span><br><span class="line">proxy.$nextTick(()=&gt;&#123;</span><br><span class="line">	// 此时下方的的proxy如同vue2中的this</span><br><span class="line">	proxy.pWidth = proxy.$refs.myWidth.offsetWidth();</span><br><span class="line">&#125;)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">// 2. 点击按钮获取以v-show = false 隐藏起来的输入框，并获取焦点</span><br><span class="line">proxy.$nextTick(()=&gt;&#123;</span><br><span class="line">	// 此时因为dom元素还没渲染，即input输入框的display属性还是none，其他方法无法获取改元素节点</span><br><span class="line">	document.getElementById(&quot;inputBox&quot;).fous();</span><br><span class="line">&#125;)</span><br><span class="line"></span><br><span class="line">// 3. 增加和修改</span><br><span class="line"></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+
+
+
+
+<h3 id="Vue封装的过度与动画"><a href="#Vue封装的过度与动画" class="headerlink" title="Vue封装的过度与动画"></a>Vue封装的过度与动画</h3><ol>
+<li><p>作用：在插入、更新或移除 DOM元素时，在合适的时候给元素添加样式类名。</p>
+</li>
+<li><p>图示：</p>
+<p><img src="C:\Users\john\AppData\Roaming\Typora\typora-user-images\image-20221008233239254.png" alt="image-20221008233239254">![]</p>
+</li>
+<li><p>写法：</p>
+<ol>
+<li><p>准备好样式：</p>
+<ul>
+<li>元素进入的样式：<ol>
+<li>v-enter：进入的起点</li>
+<li>v-enter-active：进入过程中</li>
+<li>v-enter-to：进入的终点</li>
+</ol>
+</li>
+<li>元素离开的样式：<ol>
+<li>v-leave：离开的起点</li>
+<li>v-leave-active：离开过程中</li>
+<li>v-leave-to：离开的终点</li>
+</ol>
+</li>
+</ul>
+</li>
+<li><p>使用<code>&lt;transition&gt;</code>包裹要过度的元素，并配置name属性：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&lt;transition name=&quot;hello&quot;&gt;</span><br><span class="line">	&lt;h1 v-show=&quot;isShow&quot;&gt;你好啊！&lt;/h1&gt;</span><br><span class="line">&lt;/transition&gt;</span><br></pre></td></tr></table></figure></li>
+<li><p>备注：若有多个元素需要过度，则需要使用：<code>&lt;transition-group&gt;</code>，且每个元素都要指定<code>key</code>值。</p>
+</li>
+</ol>
+</li>
+</ol>
+<h3 id="vue脚手架配置请求-响应代理"><a href="#vue脚手架配置请求-响应代理" class="headerlink" title="vue脚手架配置请求/响应代理"></a>vue脚手架配置请求/响应代理</h3><h4 id="方法一"><a href="#方法一" class="headerlink" title="方法一"></a>方法一</h4><p> 在vue.config.js中添加如下配置：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">devServer</span>:&#123;</span><br><span class="line">  <span class="attr">proxy</span>:<span class="string">&quot;http://localhost:5000&quot;</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>说明：</p>
+<ol>
+<li>优点：配置简单，请求资源时直接发给前端（8080）即可。</li>
+<li>缺点：不能配置多个代理，不能灵活的控制请求是否走代理。</li>
+<li>工作方式：若按照上述配置代理，当请求了前端不存在的资源时，那么该请求会转发给服务器 （优先匹配前端资源）</li>
+</ol>
+<h4 id="方法二"><a href="#方法二" class="headerlink" title="方法二"></a>方法二</h4><p> 编写vue.config.js配置具体代理规则：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">// vue文件中跨域请求 http:/localhost:5000/students</span><br><span class="line">axios.get(&#x27;http://localhost:8080/api1/students&#x27;).then(</span><br><span class="line">	response =&gt; &#123;</span><br><span class="line">		console.log(&#x27;请求成功了&#x27;,response.data)</span><br><span class="line">	&#125;,</span><br><span class="line">    error =&gt; &#123;</span><br><span class="line">		console.log(&#x27;请求失败了&#x27;,error.message)</span><br><span class="line">	&#125;</span><br><span class="line">)</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable language_">module</span>.<span class="property">exports</span> = &#123;</span><br><span class="line">	<span class="attr">devServer</span>: &#123;</span><br><span class="line">      <span class="attr">proxy</span>: &#123;</span><br><span class="line">      <span class="string">&#x27;/api1&#x27;</span>: &#123;<span class="comment">// 匹配所有以 &#x27;/api1&#x27;开头的请求路径</span></span><br><span class="line">        <span class="attr">target</span>: <span class="string">&#x27;http://localhost:5000&#x27;</span>,<span class="comment">// 代理目标的基础路径</span></span><br><span class="line">        <span class="attr">ws</span>: <span class="literal">true</span>,  <span class="comment">//用于支持websocket</span></span><br><span class="line">        <span class="attr">changeOrigin</span>: <span class="literal">true</span>,  <span class="comment">//用于控制请求头中的host值</span></span><br><span class="line">        <span class="attr">pathRewrite</span>: &#123;<span class="string">&#x27;^/api1&#x27;</span>: <span class="string">&#x27;&#x27;</span>&#125;  <span class="comment">// 重写路径消除路径中的/api1</span></span><br><span class="line">      &#125;,</span><br><span class="line">      <span class="string">&#x27;/api2&#x27;</span>: &#123;<span class="comment">// 匹配所有以 &#x27;/api2&#x27;开头的请求路径</span></span><br><span class="line">        <span class="attr">target</span>: <span class="string">&#x27;http://localhost:5001&#x27;</span>,<span class="comment">// 代理目标的基础路径</span></span><br><span class="line">        <span class="attr">changeOrigin</span>: <span class="literal">true</span>,</span><br><span class="line">        <span class="attr">pathRewrite</span>: &#123;<span class="string">&#x27;^/api2&#x27;</span>: <span class="string">&#x27;&#x27;</span>&#125;</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">/*</span></span><br><span class="line"><span class="comment">   changeOrigin设置为true时，服务器收到的请求头中的host为：localhost:5000</span></span><br><span class="line"><span class="comment">   changeOrigin设置为false时，服务器收到的请求头中的host为：localhost:8080</span></span><br><span class="line"><span class="comment">   changeOrigin默认值为true</span></span><br><span class="line"><span class="comment">*/</span></span><br></pre></td></tr></table></figure>
+
+<p>说明：</p>
+<ol>
+<li>优点：可以配置多个代理，且可以灵活的控制请求是否走代理。</li>
+<li>缺点：配置略微繁琐，请求资源时必须加前缀。</li>
+</ol>
+<h3 id="vue-resource（请求-响应）"><a href="#vue-resource（请求-响应）" class="headerlink" title="vue-resource（请求/响应）"></a>vue-resource（请求/响应）</h3><p>​    vue-resource是Vue.js的一款插件，它可以通过XMLHttpRequest或JSONP发起请求并处理响应</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">// 首先下载对应插件npm i vue-resource</span><br><span class="line">// 然后在main.js文件中引入vue-resource</span><br><span class="line">import vueResource from &quot;vue-resource&quot;</span><br><span class="line">// 最后使用插件</span><br><span class="line">Vue.use(vueRseource)</span><br><span class="line"></span><br><span class="line">// 此时在vue文件中就可以使用 $http 来替代axios使用</span><br><span class="line">this.$http.get(`https://api.github.com/search/users?q=$&#123;this.keyWord&#125;`).then((response) =&gt; &#123;&#125;)</span><br><span class="line">// axios实现上方代码</span><br><span class="line">axios.get(`https://api.github.com/search/users?q=$&#123;this.keyWord&#125;`).then((response) =&gt; &#123;&#125;)</span><br></pre></td></tr></table></figure>
+
+
+
+<h3 id="插槽"><a href="#插槽" class="headerlink" title="插槽"></a>插槽</h3><ol>
+<li><p>作用：让父组件可以向子组件指定位置插入html结构，也是一种组件间通信的方式，适用于 <strong>父组件 ===&gt; 子组件</strong> 。</p>
+</li>
+<li><p>分类：默认插槽、具名插槽、作用域插槽</p>
+</li>
+<li><p>使用方式：</p>
+<ol>
+<li><p>默认插槽：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">父组件中：</span><br><span class="line">        &lt;Category&gt;</span><br><span class="line">           &lt;div&gt;html结构1&lt;/div&gt;</span><br><span class="line">        &lt;/Category&gt;</span><br><span class="line">子组件中：</span><br><span class="line">        &lt;template&gt;</span><br><span class="line">            &lt;div&gt;</span><br><span class="line">               &lt;!-- 定义插槽 --&gt;</span><br><span class="line">               &lt;slot&gt;插槽默认内容...&lt;/slot&gt;</span><br><span class="line">            &lt;/div&gt;</span><br><span class="line">        &lt;/template&gt;</span><br></pre></td></tr></table></figure></li>
+<li><p>具名插槽：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">父组件中：</span><br><span class="line">        &lt;Category&gt;</span><br><span class="line">            &lt;template slot=&quot;center&quot;&gt;</span><br><span class="line">              &lt;div&gt;html结构1&lt;/div&gt;</span><br><span class="line">            &lt;/template&gt;</span><br><span class="line"></span><br><span class="line">            &lt;template v-slot:footer&gt;</span><br><span class="line">               &lt;div&gt;html结构2&lt;/div&gt;</span><br><span class="line">            &lt;/template&gt;</span><br><span class="line">        &lt;/Category&gt;</span><br><span class="line">子组件中：</span><br><span class="line">        &lt;template&gt;</span><br><span class="line">            &lt;div&gt;</span><br><span class="line">               &lt;!-- 定义插槽 --&gt;</span><br><span class="line">               &lt;slot name=&quot;center&quot;&gt;插槽默认内容...&lt;/slot&gt;</span><br><span class="line">               &lt;slot name=&quot;footer&quot;&gt;插槽默认内容...&lt;/slot&gt;</span><br><span class="line">            &lt;/div&gt;</span><br><span class="line">        &lt;/template&gt;</span><br></pre></td></tr></table></figure></li>
+<li><p>作用域插槽：</p>
+<ol>
+<li><p>理解：数据在组件的自身，但根据数据生成的结构需要组件的使用者来决定。（games数据在Category组件中，但使用数据所遍历出来的结构由App组件决定）</p>
+</li>
+<li><p>具体编码：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line">父组件中：</span><br><span class="line">		&lt;Category&gt;</span><br><span class="line">			&lt;template scope=&quot;scopeData&quot;&gt;</span><br><span class="line">				&lt;!-- 生成的是ul列表 --&gt;</span><br><span class="line">				&lt;ul&gt;</span><br><span class="line">					&lt;li v-for=&quot;g in scopeData.games&quot; :key=&quot;g&quot;&gt;&#123;&#123;g&#125;&#125;&lt;/li&gt;</span><br><span class="line">				&lt;/ul&gt;</span><br><span class="line">			&lt;/template&gt;</span><br><span class="line">		&lt;/Category&gt;</span><br><span class="line"></span><br><span class="line">		&lt;Category&gt;</span><br><span class="line">			&lt;template slot-scope=&quot;scopeData&quot;&gt;</span><br><span class="line">				&lt;!-- 生成的是h4标题 --&gt;</span><br><span class="line">				&lt;h4 v-for=&quot;g in scopeData.games&quot; :key=&quot;g&quot;&gt;&#123;&#123;g&#125;&#125;&lt;/h4&gt;</span><br><span class="line">			&lt;/template&gt;</span><br><span class="line">		&lt;/Category&gt;</span><br><span class="line">子组件中：</span><br><span class="line">        &lt;template&gt;</span><br><span class="line">            &lt;div&gt;</span><br><span class="line">                &lt;slot :games=&quot;games&quot;&gt;&lt;/slot&gt;</span><br><span class="line">            &lt;/div&gt;</span><br><span class="line">        &lt;/template&gt;</span><br><span class="line">		</span><br><span class="line">        &lt;script&gt;</span><br><span class="line">            export default &#123;</span><br><span class="line">                name:&#x27;Category&#x27;,</span><br><span class="line">                props:[&#x27;title&#x27;],</span><br><span class="line">                //数据在子组件自身</span><br><span class="line">                data() &#123;</span><br><span class="line">                    return &#123;</span><br><span class="line">                        games:[&#x27;红色警戒&#x27;,&#x27;穿越火线&#x27;,&#x27;劲舞团&#x27;,&#x27;超级玛丽&#x27;]</span><br><span class="line">                    &#125;</span><br><span class="line">                &#125;,</span><br><span class="line">            &#125;</span><br><span class="line">        &lt;/script&gt;</span><br></pre></td></tr></table></figure></li>
+</ol>
+</li>
+</ol>
+</li>
+</ol>
+
+        </div>
+
+        
+            <section class="post-copyright">
+                
+                
+                
+                
+
+            </section>
+        
+        <section class="post-tags">
+            <div>
+                <span>Tag(s):</span>
+                <span class="tag">
+                    
+                </span>
+            </div>
+            <div>
+                <a href="javascript:window.history.back();">back</a>
+                <span>· </span>
+                <a href="/">home</a>
+            </div>
+        </section>
+        <section class="post-nav">
+            
+                <a class="prev" rel="prev" href="/2022/04/09/vue2%E7%9F%A5%E8%AF%86%E6%80%BB%E7%BB%9304/">Vuex和路由</a>
+            
+            
+            <a class="next" rel="next" href="/2022/03/09/vue2%E7%9F%A5%E8%AF%86%E6%80%BB%E7%BB%9302/">Vue2组件化编程</a>
+            
+        </section>
+
+
+    </article>
+</div>
+
+            </div>
+            <footer id="footer" class="footer">
+    <div class="copyright">
+        <span>© lufei | Powered by <a href="https://hexo.io" target="_blank">Hexo</a> & <a href="https://github.com/Siricee/hexo-theme-Chic" target="_blank">Chic</a></span>
+    </div>
+</footer>
+
+    </div>
+</body>
+
+</html>

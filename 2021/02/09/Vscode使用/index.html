@@ -1,0 +1,312 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="UTF-8">
+<meta name="viewport"
+      content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+    <meta name="author" content="lufei">
+
+
+
+
+
+<title>Hello World | lufei</title>
+
+
+
+    <link rel="icon" href="/favicon.ico">
+
+
+
+
+    <!-- stylesheets list from _config.yml -->
+    
+    <link rel="stylesheet" href="/css/style.css">
+    
+
+
+
+    <!-- scripts list from _config.yml -->
+    
+    <script src="/js/script.js"></script>
+    
+    <script src="/js/tocbot.min.js"></script>
+    
+
+
+
+    
+    
+        
+    
+
+
+<meta name="generator" content="Hexo 5.4.2"></head>
+
+<body>
+    <script>
+        // this function is used to check current theme before page loaded.
+        (() => {
+            const currentTheme = window.localStorage && window.localStorage.getItem('theme') || '';
+            const isDark = currentTheme === 'dark';
+            const pagebody = document.getElementsByTagName('body')[0]
+            if (isDark) {
+                pagebody.classList.add('dark-theme');
+                // mobile
+                document.getElementById("mobile-toggle-theme").innerText = "· Dark"
+            } else {
+                pagebody.classList.remove('dark-theme');
+                // mobile
+                document.getElementById("mobile-toggle-theme").innerText = "· Light"
+            }
+        })();
+    </script>
+
+    <div class="wrapper">
+        <header>
+    <nav class="navbar">
+        <div class="container">
+            <div class="navbar-header header-logo"><a href="/">bravefei</a></div>
+            <div class="menu navbar-right">
+                
+                    <a class="menu-item" href="/archives">笔记</a>
+                
+                <input id="switch_default" type="checkbox" class="switch_default">
+                <label for="switch_default" class="toggleBtn"></label>
+            </div>
+        </div>
+    </nav>
+
+    
+    <nav class="navbar-mobile" id="nav-mobile">
+        <div class="container">
+            <div class="navbar-header">
+                <div>
+                    <a href="/">bravefei</a><a id="mobile-toggle-theme">·&nbsp;Light</a>
+                </div>
+                <div class="menu-toggle" onclick="mobileBtn()">&#9776; Menu</div>
+            </div>
+            <div class="menu" id="mobile-menu">
+                
+                    <a class="menu-item" href="/archives">笔记</a>
+                
+            </div>
+        </div>
+    </nav>
+
+</header>
+<script>
+    var mobileBtn = function f() {
+        var toggleMenu = document.getElementsByClassName("menu-toggle")[0];
+        var mobileMenu = document.getElementById("mobile-menu");
+        if(toggleMenu.classList.contains("active")){
+           toggleMenu.classList.remove("active")
+            mobileMenu.classList.remove("active")
+        }else{
+            toggleMenu.classList.add("active")
+            mobileMenu.classList.add("active")
+        }
+    }
+</script>
+            <div class="main">
+                <div class="container">
+    
+    
+        <div class="post-toc">
+    <div class="tocbot-list">
+    </div>
+    <div class="tocbot-list-menu">
+        <a class="tocbot-toc-expand" onclick="expand_toc()">Expand all</a>
+        <a onclick="go_top()">Back to top</a>
+        <a onclick="go_bottom()">Go to bottom</a>
+    </div>
+</div>
+
+<script>
+    var tocbot_timer;
+    var DEPTH_MAX = 6; // 为 6 时展开所有
+    var tocbot_default_config = {
+        tocSelector: '.tocbot-list',
+        contentSelector: '.post-content',
+        headingSelector: 'h1, h2, h3, h4, h5',
+        orderedList: false,
+        scrollSmooth: true,
+        onClick: extend_click,
+    };
+
+    function extend_click() {
+        clearTimeout(tocbot_timer);
+        tocbot_timer = setTimeout(function() {
+            tocbot.refresh(obj_merge(tocbot_default_config, {
+                hasInnerContainers: true
+            }));
+        }, 420); // 这个值是由 tocbot 源码里定义的 scrollSmoothDuration 得来的
+    }
+
+    document.ready(function() {
+        tocbot.init(obj_merge(tocbot_default_config, {
+            collapseDepth: 1
+        }));
+    });
+
+    function expand_toc() {
+        var b = document.querySelector('.tocbot-toc-expand');
+        var expanded = b.getAttribute('data-expanded');
+        expanded ? b.removeAttribute('data-expanded') : b.setAttribute('data-expanded', true);
+        tocbot.refresh(obj_merge(tocbot_default_config, {
+            collapseDepth: expanded ? 1 : DEPTH_MAX
+        }));
+        b.innerText = expanded ? 'Expand all' : 'Collapse all';
+    }
+
+    function go_top() {
+        window.scrollTo(0, 0);
+    }
+
+    function go_bottom() {
+        window.scrollTo(0, document.body.scrollHeight);
+    }
+
+    function obj_merge(target, source) {
+        for (var item in source) {
+            if (source.hasOwnProperty(item)) {
+                target[item] = source[item];
+            }
+        }
+        return target;
+    }
+</script>
+    
+
+    
+    <article class="post-wrap">
+        <header class="post-header">
+            <h1 class="post-title">Hello World</h1>
+            
+                <div class="post-meta">
+                    
+                        Author: <a itemprop="author" rel="author" href="/">lufei</a>
+                    
+
+                    
+                        <span class="post-time">
+                        Date: <a href="#">二月 9, 2021&nbsp;&nbsp;12:11:09</a>
+                        </span>
+                    
+                    
+                </div>
+            
+        </header>
+
+        <div class="post-content">
+            <h1 id="VScode编辑器的使用"><a href="#VScode编辑器的使用" class="headerlink" title="VScode编辑器的使用"></a>VScode编辑器的使用</h1><h3 id="1-为什么使用VSCode"><a href="#1-为什么使用VSCode" class="headerlink" title="1. 为什么使用VSCode"></a>1. 为什么使用VSCode</h3><ul>
+<li>集成开发环境(Integrated Development Environment) <ul>
+<li>Visual Studio</li>
+<li>Android Studio</li>
+<li>Eclipse</li>
+<li>Xcode</li>
+<li>Netbeans</li>
+<li>JetBrains 全家桶 <ul>
+<li>PyCharm</li>
+<li>WebStorm</li>
+<li>Intellij IDEA</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>脚本编辑器(Text Editor) <ul>
+<li>VisaulStudioCode</li>
+<li>Atom</li>
+<li>Sublime</li>
+<li>NotePad ++</li>
+<li>Vim</li>
+<li>Emacs</li>
+<li>HBuilder</li>
+</ul>
+</li>
+</ul>
+<p>脚本编辑器其实就是纯文本编辑工具，集成开发环境通常集成过多的东西导致很臃肿，因此文件体积更小，启动速度更快的脚本编辑器越来越受到程序员们的追捧。VisualStudio如果将所有语言的开发包都安装上需要几十个G，而VScode的安装包大小只有不到 100M。</p>
+<p>IDE适合大型开发，特别是需要编译运行还要依赖各种环境的 C++ 或者 Java ，IDE的配套环境真的可以省去很多麻烦，调试使用 IDE 的工具也很省心。脚本编辑器更加适合敏捷开发，比如 js python 这类的脚本语言。而且现在很多IDE也支持插件开发进行功能扩展，并不是脚本编辑器特有的功能了。</p>
+<h3 id="2-VSCode-优点"><a href="#2-VSCode-优点" class="headerlink" title="2. VSCode 优点"></a>2. VSCode 优点</h3><ul>
+<li>微软爸爸的财大气粗做后盾，维护很积极</li>
+<li>图形化图标，交互比较友好</li>
+<li>集成 Git 和 Cmd 以及 Debug 工具，Sublime 都没有内置</li>
+<li>安装插件有图形化界面，可以不敲命令行，对新手很舒服</li>
+<li>插件超级丰富，社区极度活跃，有问题基本都可以在 Github Issue 以及 Stack Overflow 上查到答案</li>
+</ul>
+<h3 id="3-安装"><a href="#3-安装" class="headerlink" title="3. 安装"></a>3. 安装</h3><p>下载地址：<a target="_blank" rel="noopener" href="https://code.visualstudio.com/">https://code.visualstudio.com/</a><br>下载自己对应的版本，直接双击安装<br><img src="https://cdn.nlark.com/yuque/0/2022/png/22278242/1653898546685-59789aaf-7cdf-4b90-a643-cdbe20d37054.png#averageHue=%23ebebe9&clientId=u6d16e5d7-4da5-4&from=paste&height=840&id=u5d4dbb1c&name=image.png&originHeight=1512&originWidth=2036&originalType=binary&ratio=1&rotation=0&showTitle=false&size=666682&status=done&style=none&taskId=u4275662b-daad-44bf-a1e9-8c24898a7f2&title=&width=1131.1111410753235" alt="image.png"></p>
+<h3 id="转为中文"><a href="#转为中文" class="headerlink" title="转为中文"></a>转为中文</h3><p>点击扩展 - 搜索chinese - 直接安装 - 重启vscode<br><img src="https://cdn.nlark.com/yuque/0/2022/png/22278242/1653898561821-908e13dc-d0e7-4415-8a29-34e2096644d7.png#averageHue=%23e1dfdd&clientId=u6d16e5d7-4da5-4&from=paste&height=422&id=uf2601144&name=image.png&originHeight=760&originWidth=2052&originalType=binary&ratio=1&rotation=0&showTitle=false&size=290185&status=done&style=none&taskId=u0ed6f4c7-71cc-4138-80ba-54e7e0f46ee&title=&width=1140.0000301996874" alt="image.png"></p>
+<h3 id="配置颜色主题"><a href="#配置颜色主题" class="headerlink" title="配置颜色主题"></a>配置颜色主题</h3><p><img src="https://cdn.nlark.com/yuque/0/2022/png/22278242/1653898574107-d21df550-3e13-4739-8588-4bd11bf0c8d6.png#averageHue=%23bcbdbd&clientId=u6d16e5d7-4da5-4&from=paste&height=339&id=u3b45f072&name=image.png&originHeight=610&originWidth=722&originalType=binary&ratio=1&rotation=0&showTitle=false&size=176360&status=done&style=none&taskId=u0c12b43d-9453-495d-a19c-69306ad5da5&title=&width=401.1111217369271" alt="image.png"><br><img src="https://cdn.nlark.com/yuque/0/2022/png/22278242/1653898585330-647ec54b-35eb-4cac-b3d6-7f71890a7da0.png#averageHue=%23eeeeee&clientId=u6d16e5d7-4da5-4&from=paste&height=343&id=u1846aeff&name=image.png&originHeight=618&originWidth=1274&originalType=binary&ratio=1&rotation=0&showTitle=false&size=77345&status=done&style=none&taskId=u1b990464-17e6-4527-a6fc-456b307a676&title=&width=707.7777965274863" alt="image.png"><br>默认提供的主题有两大类：浅色系 和 深色系；可以自己选择</p>
+<h3 id="自动换行"><a href="#自动换行" class="headerlink" title="自动换行"></a>自动换行</h3><p>管理 - 设置 - word warp<br>默认为off 关闭状态；调整为on 打开状态；<br><img src="https://cdn.nlark.com/yuque/0/2022/png/22278242/1653898632746-38b255f2-1499-4938-8f7c-5bfa5e9bb2a6.png#averageHue=%23fafaf9&clientId=u6d16e5d7-4da5-4&from=paste&height=138&id=uc7ec996f&name=image.png&originHeight=248&originWidth=1286&originalType=binary&ratio=1&rotation=0&showTitle=false&size=54450&status=done&style=none&taskId=u6668bb8f-a483-4c27-bb57-3ca428c8913&title=&width=714.4444633707593" alt="image.png"></p>
+<h3 id="更改字体大小"><a href="#更改字体大小" class="headerlink" title="更改字体大小"></a>更改字体大小</h3><p>管理 - 设置 - Font size 字体大小<br>直接更改为自己想要的大小即可<br><img src="https://cdn.nlark.com/yuque/0/2022/png/22278242/1653898649507-33482427-df08-4fbf-a59b-b2611adadc9f.png#averageHue=%23fafaf9&clientId=u6d16e5d7-4da5-4&from=paste&height=116&id=uc0bc0c42&name=image.png&originHeight=208&originWidth=972&originalType=binary&ratio=1&rotation=0&showTitle=false&size=46291&status=done&style=none&taskId=u928bfdc7-219f-445a-8f12-28a043eccec&title=&width=540.0000143051151" alt="image.png"></p>
+<h3 id="用浏览器打开页面效果"><a href="#用浏览器打开页面效果" class="headerlink" title="用浏览器打开页面效果"></a>用浏览器打开页面效果</h3><p><img src="https://cdn.nlark.com/yuque/0/2022/png/22278242/1653898662324-0b98fe04-1ddc-4748-8a50-616f043f25de.png#averageHue=%23dad3d2&clientId=u6d16e5d7-4da5-4&from=paste&height=314&id=u0ea32ba7&name=image.png&originHeight=566&originWidth=1136&originalType=binary&ratio=1&rotation=0&showTitle=false&size=129681&status=done&style=none&taskId=u3ed7b0e5-b11b-4f59-8c64-f63c85d38e9&title=&width=631.1111278298465" alt="image.png"></p>
+<h3 id="自动生成文件结构"><a href="#自动生成文件结构" class="headerlink" title="自动生成文件结构"></a>自动生成文件结构</h3><p>老版本中使用!+会车，能够快速创建html页面结构<br>新版本的vscode中需要配置，配置完之后使用!+tab快速创建html页面结构<br><img src="https://cdn.nlark.com/yuque/0/2022/png/22278242/1657622362207-4f6ea4a2-2749-49a9-b537-036b29626146.png#averageHue=%23fafaf9&clientId=uafa04be3-2905-4&from=paste&height=173&id=ufb5160ab&name=image.png&originHeight=311&originWidth=1003&originalType=binary&ratio=1&rotation=0&showTitle=false&size=20798&status=done&style=none&taskId=u6472c788-a4d0-4a77-b544-b0946e2a0d9&title=&width=557.2222369835705" alt="image.png"></p>
+<h3 id="使用服务器环境打开页面"><a href="#使用服务器环境打开页面" class="headerlink" title="使用服务器环境打开页面"></a>使用服务器环境打开页面</h3><p>使用服务器环境打开<br>会自动创建服务器，自己配置端口号<br><img src="https://cdn.nlark.com/yuque/0/2022/png/22278242/1653898677596-d82e38f2-adc1-424f-a943-00f306001daa.png#averageHue=%23d7d5d4&clientId=u6d16e5d7-4da5-4&from=paste&height=368&id=u85736714&name=image.png&originHeight=662&originWidth=1142&originalType=binary&ratio=1&rotation=0&showTitle=false&size=127195&status=done&style=none&taskId=u8ad34474-f4ae-4210-9aa3-9af266fcab2&title=&width=634.444461251483" alt="image.png"></p>
+<p>下载完后，你会发现页面下方有个Go Live，点击它，就可以运行你的html页面了。<br><img src="https://cdn.nlark.com/yuque/0/2022/png/22278242/1653898690602-aa0cee05-c5c8-4ebc-a6db-6fef62b60610.png#averageHue=%23e55a44&clientId=u6d16e5d7-4da5-4&from=paste&height=130&id=uf4deedfd&name=image.png&originHeight=234&originWidth=906&originalType=binary&ratio=1&rotation=0&showTitle=false&size=27763&status=done&style=none&taskId=u16414f69-d4f6-4461-8ed7-4ca506741da&title=&width=503.33334666711346" alt="image.png"></p>
+<h3 id="自动联想类名【后期安装】"><a href="#自动联想类名【后期安装】" class="headerlink" title="自动联想类名【后期安装】"></a>自动联想类名【后期安装】</h3><p>HTML to CSS autocompletion，外联样式提示插件<br>css-class-intellisense，内联样式提示插件<br>1）找到，点击右下角的安装进行安装<br><img src="https://cdn.nlark.com/yuque/0/2022/png/22278242/1657866385568-a038673b-34c9-4e3e-91e8-cfec052e88aa.png#averageHue=%23e5e9c5&clientId=u21e4482b-b2a0-4&from=paste&height=394&id=u4581f154&name=image.png&originHeight=709&originWidth=1365&originalType=binary&ratio=1&rotation=0&showTitle=false&size=172850&status=done&style=none&taskId=ue42a4a9d-4e4f-47c7-b53a-41a9c0f504b&title=&width=758.3333534223067" alt="image.png"><br>2）安装完以后进行配置<br>点击右下角设置，点击命令面板，【或者快捷键 ctrl + shift + p】<br><img src="https://cdn.nlark.com/yuque/0/2022/png/22278242/1657866411278-4c2ff935-442c-41f2-9cc9-d5fb8c3e8c3c.png#averageHue=%23f9f9f8&clientId=u21e4482b-b2a0-4&from=paste&height=394&id=uabdad753&name=image.png&originHeight=710&originWidth=951&originalType=binary&ratio=1&rotation=0&showTitle=false&size=80905&status=done&style=none&taskId=u33693bb5-2746-4bbf-b867-980e4637124&title=&width=528.3333473293874" alt="image.png"><br>3）搜索settings.json配置文件<br>搜索框中输入settings.json<br>点击：首选项：打开设置（json）<br><img src="https://cdn.nlark.com/yuque/0/2022/png/22278242/1657866427334-9829c0ec-3bdc-4e0f-b877-c670d6192c31.png#averageHue=%23dcbf95&clientId=u21e4482b-b2a0-4&from=paste&height=394&id=u92df280f&name=image.png&originHeight=709&originWidth=1205&originalType=binary&ratio=1&rotation=0&showTitle=false&size=106821&status=done&style=none&taskId=udb6d21eb-c291-49c2-b834-763dfbefb68&title=&width=669.4444621786664" alt="image.png"><br>4）输入配置代码<br><img src="https://cdn.nlark.com/yuque/0/2022/png/22278242/1657866441945-ebd50f5c-1b93-4dfa-b2f0-c4cde9daf3d3.png#averageHue=%23f7ebc8&clientId=u21e4482b-b2a0-4&from=paste&height=404&id=u8b64a0cd&name=image.png&originHeight=728&originWidth=1262&originalType=binary&ratio=1&rotation=0&showTitle=false&size=127056&status=done&style=none&taskId=ufd3c55e1-207b-46d5-92a1-d312730e7ef&title=&width=701.1111296842132" alt="image.png"></p>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">&quot;editor<span class="selector-class">.parameterHints</span>&quot;: true,</span><br><span class="line"><span class="string">&quot;editor.quickSuggestions&quot;</span>: &#123;</span><br><span class="line">  &quot;other&quot;: true,</span><br><span class="line">  <span class="string">&quot;comments&quot;</span>: true,</span><br><span class="line">  <span class="string">&quot;strings&quot;</span>: true</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>5）最后，重启<a target="_blank" rel="noopener" href="https://so.csdn.net/so/search?q=vscode&spm=1001.2101.3001.7020">vscode</a>，即可完美提示运行。</p>
+<h1 id="VSCode-技巧"><a href="#VSCode-技巧" class="headerlink" title="VSCode 技巧"></a>VSCode 技巧</h1><p>在VSCode中，合理的使⽤快捷键可以让编码效果事半功倍</p>
+<h3 id="快捷键"><a href="#快捷键" class="headerlink" title="快捷键"></a>快捷键</h3><ul>
+<li>复制 Ctrl + C</li>
+<li>粘贴 Ctrl + V</li>
+<li>剪切 Ctrl + X</li>
+<li>保存 Ctrl + S</li>
+<li>删除一行 Ctrl+Shilft+K</li>
+<li>选择所有选中的值 Ctrl + D</li>
+<li>撤回到上⼀步 Ctrl + Z</li>
+<li>恢复到下⼀步 Ctrl + Shift + Z</li>
+</ul>
+
+        </div>
+
+        
+            <section class="post-copyright">
+                
+                
+                
+                
+
+            </section>
+        
+        <section class="post-tags">
+            <div>
+                <span>Tag(s):</span>
+                <span class="tag">
+                    
+                </span>
+            </div>
+            <div>
+                <a href="javascript:window.history.back();">back</a>
+                <span>· </span>
+                <a href="/">home</a>
+            </div>
+        </section>
+        <section class="post-nav">
+            
+                <a class="prev" rel="prev" href="/2021/03/11/HTML-CSS%E7%9F%A5%E8%AF%86%E7%82%B903/">CSS高级技巧</a>
+            
+            
+            <a class="next" rel="next" href="/2021/02/08/HTML-CSS%E7%9F%A5%E8%AF%86%E7%82%B902/">Css布局</a>
+            
+        </section>
+
+
+    </article>
+</div>
+
+            </div>
+            <footer id="footer" class="footer">
+    <div class="copyright">
+        <span>© lufei | Powered by <a href="https://hexo.io" target="_blank">Hexo</a> & <a href="https://github.com/Siricee/hexo-theme-Chic" target="_blank">Chic</a></span>
+    </div>
+</footer>
+
+    </div>
+</body>
+
+</html>

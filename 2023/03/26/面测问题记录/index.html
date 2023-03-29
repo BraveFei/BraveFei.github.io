@@ -1,0 +1,387 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="UTF-8">
+<meta name="viewport"
+      content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+    <meta name="author" content="lufei">
+
+
+
+
+
+<title>面测问题记录 | lufei</title>
+
+
+
+    <link rel="icon" href="/favicon.ico">
+
+
+
+
+    <!-- stylesheets list from _config.yml -->
+    
+    <link rel="stylesheet" href="/css/style.css">
+    
+
+
+
+    <!-- scripts list from _config.yml -->
+    
+    <script src="/js/script.js"></script>
+    
+    <script src="/js/tocbot.min.js"></script>
+    
+
+
+
+    
+    
+        
+    
+
+
+<meta name="generator" content="Hexo 5.4.2"></head>
+
+<body>
+    <script>
+        // this function is used to check current theme before page loaded.
+        (() => {
+            const currentTheme = window.localStorage && window.localStorage.getItem('theme') || '';
+            const isDark = currentTheme === 'dark';
+            const pagebody = document.getElementsByTagName('body')[0]
+            if (isDark) {
+                pagebody.classList.add('dark-theme');
+                // mobile
+                document.getElementById("mobile-toggle-theme").innerText = "· Dark"
+            } else {
+                pagebody.classList.remove('dark-theme');
+                // mobile
+                document.getElementById("mobile-toggle-theme").innerText = "· Light"
+            }
+        })();
+    </script>
+
+    <div class="wrapper">
+        <header>
+    <nav class="navbar">
+        <div class="container">
+            <div class="navbar-header header-logo"><a href="/">bravefei</a></div>
+            <div class="menu navbar-right">
+                
+                    <a class="menu-item" href="/archives">笔记</a>
+                
+                <input id="switch_default" type="checkbox" class="switch_default">
+                <label for="switch_default" class="toggleBtn"></label>
+            </div>
+        </div>
+    </nav>
+
+    
+    <nav class="navbar-mobile" id="nav-mobile">
+        <div class="container">
+            <div class="navbar-header">
+                <div>
+                    <a href="/">bravefei</a><a id="mobile-toggle-theme">·&nbsp;Light</a>
+                </div>
+                <div class="menu-toggle" onclick="mobileBtn()">&#9776; Menu</div>
+            </div>
+            <div class="menu" id="mobile-menu">
+                
+                    <a class="menu-item" href="/archives">笔记</a>
+                
+            </div>
+        </div>
+    </nav>
+
+</header>
+<script>
+    var mobileBtn = function f() {
+        var toggleMenu = document.getElementsByClassName("menu-toggle")[0];
+        var mobileMenu = document.getElementById("mobile-menu");
+        if(toggleMenu.classList.contains("active")){
+           toggleMenu.classList.remove("active")
+            mobileMenu.classList.remove("active")
+        }else{
+            toggleMenu.classList.add("active")
+            mobileMenu.classList.add("active")
+        }
+    }
+</script>
+            <div class="main">
+                <div class="container">
+    
+    
+        <div class="post-toc">
+    <div class="tocbot-list">
+    </div>
+    <div class="tocbot-list-menu">
+        <a class="tocbot-toc-expand" onclick="expand_toc()">Expand all</a>
+        <a onclick="go_top()">Back to top</a>
+        <a onclick="go_bottom()">Go to bottom</a>
+    </div>
+</div>
+
+<script>
+    var tocbot_timer;
+    var DEPTH_MAX = 6; // 为 6 时展开所有
+    var tocbot_default_config = {
+        tocSelector: '.tocbot-list',
+        contentSelector: '.post-content',
+        headingSelector: 'h1, h2, h3, h4, h5',
+        orderedList: false,
+        scrollSmooth: true,
+        onClick: extend_click,
+    };
+
+    function extend_click() {
+        clearTimeout(tocbot_timer);
+        tocbot_timer = setTimeout(function() {
+            tocbot.refresh(obj_merge(tocbot_default_config, {
+                hasInnerContainers: true
+            }));
+        }, 420); // 这个值是由 tocbot 源码里定义的 scrollSmoothDuration 得来的
+    }
+
+    document.ready(function() {
+        tocbot.init(obj_merge(tocbot_default_config, {
+            collapseDepth: 1
+        }));
+    });
+
+    function expand_toc() {
+        var b = document.querySelector('.tocbot-toc-expand');
+        var expanded = b.getAttribute('data-expanded');
+        expanded ? b.removeAttribute('data-expanded') : b.setAttribute('data-expanded', true);
+        tocbot.refresh(obj_merge(tocbot_default_config, {
+            collapseDepth: expanded ? 1 : DEPTH_MAX
+        }));
+        b.innerText = expanded ? 'Expand all' : 'Collapse all';
+    }
+
+    function go_top() {
+        window.scrollTo(0, 0);
+    }
+
+    function go_bottom() {
+        window.scrollTo(0, document.body.scrollHeight);
+    }
+
+    function obj_merge(target, source) {
+        for (var item in source) {
+            if (source.hasOwnProperty(item)) {
+                target[item] = source[item];
+            }
+        }
+        return target;
+    }
+</script>
+    
+
+    
+    <article class="post-wrap">
+        <header class="post-header">
+            <h1 class="post-title">面测问题记录</h1>
+            
+                <div class="post-meta">
+                    
+                        Author: <a itemprop="author" rel="author" href="/">lufei</a>
+                    
+
+                    
+                        <span class="post-time">
+                        Date: <a href="#">三月 26, 2023&nbsp;&nbsp;16:37:03</a>
+                        </span>
+                    
+                    
+                </div>
+            
+        </header>
+
+        <div class="post-content">
+            <h1 id="面试测试问题"><a href="#面试测试问题" class="headerlink" title="面试测试问题"></a>面试测试问题</h1><h1 id="vue"><a href="#vue" class="headerlink" title="vue"></a>vue</h1><h2 id="vue的生命周期"><a href="#vue的生命周期" class="headerlink" title="vue的生命周期"></a>vue的生命周期</h2><p>beforeCreate  初始化阶段</p>
+<p>created</p>
+<p>beforeMount  挂载阶段</p>
+<p>mounted</p>
+<p>beforeUpdate  更新阶段</p>
+<p>updated</p>
+<p>beforeDestroy  销毁阶段</p>
+<p>destroyed</p>
+<h2 id="vuex"><a href="#vuex" class="headerlink" title="vuex"></a>vuex</h2><p>state主要存储一些数据</p>
+<p>mutation  修改state中存储的数据的方法</p>
+<p>actions   一般异步请求时，可以调用mutation的方法改变数据的状态</p>
+<p>getters  获取state中的数据，方便使用</p>
+<p>modules  进行模块处理</p>
+<h2 id="Vue3和Vue2区别"><a href="#Vue3和Vue2区别" class="headerlink" title="Vue3和Vue2区别"></a>Vue3和Vue2区别</h2><h4 id="响应式原理"><a href="#响应式原理" class="headerlink" title="响应式原理"></a>响应式原理</h4><p>vue2利用es5的Object.definepropert() 数据劫持 Object.defineProperty() 来转换为 getter/setter 对象。这样，当这些属性的值发生改变时，观察者实例就会接收到通知，并触发相应的回调函数，在这些回调函数中可以更新视图。 Vue3 es6的proxy 数据代理 不会把所有的属性进行一次遍历，他只是在需要使用到某个属性的时候才去代理。 vue3可以检测到数组内部数据的变化。 <a name="dd9u1"></a></p>
+<h4 id="生命周期"><a href="#生命周期" class="headerlink" title="生命周期"></a>生命周期</h4><p>vue2八个生命周期 vue3将beforeCreate和 Created 变为setup 7个生命周期</p>
+<h3 id="API"><a href="#API" class="headerlink" title="API"></a>API</h3><p>vue2选项式API vue3组合式API</p>
+<h2 id="vue-diff与react-diff"><a href="#vue-diff与react-diff" class="headerlink" title="vue diff与react diff"></a>vue diff与react diff</h2><h3 id="Vue-diff算法"><a href="#Vue-diff算法" class="headerlink" title="Vue diff算法"></a>Vue diff算法</h3><p>vue的diff算法进行双指针比较，当虚拟DOM的当前的DOM的key值一致的话就沿用之前的虚拟DOM生成真实DOM，如果不一致的话，就使用当前dom生成真实dom</p>
+<h3 id="React-diff算法"><a href="#React-diff算法" class="headerlink" title="React diff算法"></a>React diff算法</h3><p>React的diff算法是比较两个虚拟dom树的差异，并进行最小变化渲染的优化算法。它只会对比同一层次的virtual DOM元素，如果发现不同，就会重新渲染。</p>
+<h1 id="小程序"><a href="#小程序" class="headerlink" title="小程序"></a>小程序</h1><h3 id="小程序生命周期与页面生命周期"><a href="#小程序生命周期与页面生命周期" class="headerlink" title="小程序生命周期与页面生命周期"></a>小程序生命周期与页面生命周期</h3><p>小程序生命周期为<code>onLaunch</code>、<code>onShow</code>、<code>onHide</code></p>
+<p>onLaunch监听小程序初始化</p>
+<p>onShow监听小程序显示</p>
+<p>onHide监听小程序隐藏</p>
+<p>页面生命周期<code>onLoad</code>、<code>onReady</code>、<code>onShow</code>、<code>onHide</code>、<code>onUnload</code></p>
+<p>onLoad监听页面加载</p>
+<p>onReady监听页面初次渲染完成</p>
+<p>onShow监听页面显示</p>
+<p>onHide监听页面隐藏</p>
+<p>onUnload监听页面卸载</p>
+<h3 id="小程序页面数据交互"><a href="#小程序页面数据交互" class="headerlink" title="小程序页面数据交互"></a>小程序页面数据交互</h3><p>globalData：全局数据</p>
+<p>get/setStorageSync：缓存</p>
+<p>navigate：跳转url传参</p>
+<h3 id="小程序的登录"><a href="#小程序的登录" class="headerlink" title="小程序的登录"></a>小程序的登录</h3><p>​    wx.provider获取数据</p>
+<p>​    wx.getUserInfo获取用户数据</p>
+<p>​    wx.login登录，后台校验</p>
+<h3 id="直播"><a href="#直播" class="headerlink" title="直播"></a>直播</h3><p>直播需要资质，申请开通微信的直播功能</p>
+<p>开通后，利用live-pusher可以将手机画面或者摄像头推送到对应的直播服务器中，然后播放器可以利用live-player播放直播流</p>
+<p>直播本质来讲，就是主播利用直播端，将摄像头画面推送到直播服务器，然后直播服务器转流成为视频播放地址，让播放端进行播放即可。</p>
+<h3 id="小程序页面数据交互-1"><a href="#小程序页面数据交互-1" class="headerlink" title="小程序页面数据交互"></a>小程序页面数据交互</h3><p>​    globalData：全局数据</p>
+<p>​    get/setStorageSync：缓存</p>
+<p>​    navigate：跳转url传参</p>
+<h1 id="js"><a href="#js" class="headerlink" title="js"></a>js</h1><h2 id="回流重绘"><a href="#回流重绘" class="headerlink" title="回流重绘"></a>回流重绘</h2><p>回流：当渲染树中的一部分或者全部因为元素的尺寸、布局、隐藏等改变而需要重新构建的时候，这时候就会发生回流。</p>
+<ul>
+<li>添加或删除可见的DOM元素</li>
+<li>元素的位置发生变化</li>
+<li>元素的尺寸发生变化（包括外边距、内边框、边框大小、高度和宽度等）</li>
+<li>内容发生变化，比如文本变化或图片被另一个不同尺寸的图片所替代。</li>
+<li>浏览器的窗口尺寸变化（因为回流是根据视口的大小来计算元素的位置和大小的）</li>
+</ul>
+<p>重绘：完成回流以后，浏览器会重新绘制受到影响的部分元素到屏幕中，这个过程就是重绘</p>
+<h1 id="react"><a href="#react" class="headerlink" title="react"></a>react</h1><h2 id="React生命周期"><a href="#React生命周期" class="headerlink" title="React生命周期"></a>React生命周期</h2><p><strong>更新阶段</strong></p>
+<p>constructor 构建实例</p>
+<p>render 渲染dom结构</p>
+<p>componentDidMount 挂载</p>
+<p><strong>更新阶段</strong></p>
+<p>getDrivedStateFromProps  state数据修改 props继承数据改变触发</p>
+<p>render创建虚拟dom,更新dom</p>
+<p>component挂载组件后立即调用。</p>
+<h2 id="React函数式组件和类组件的区别"><a href="#React函数式组件和类组件的区别" class="headerlink" title="React函数式组件和类组件的区别"></a>React函数式组件和类组件的区别</h2><ul>
+<li>函数式组件无具体的声明周期，类组件有具体的声明周期</li>
+<li>函数组件是一个纯函数，它接收一个props对象返回一个react元素；而类组件需要去继承React.Component并且创建render函数返回react元素</li>
+</ul>
+<h2 id="redux"><a href="#redux" class="headerlink" title="redux"></a>redux</h2><p>state存放数据</p>
+<p>reducers  用于根据action改变store中的state</p>
+<p>action   用于改变store中的state</p>
+<h1 id="HTTP"><a href="#HTTP" class="headerlink" title="HTTP"></a>HTTP</h1><h2 id="http协议"><a href="#http协议" class="headerlink" title="http协议"></a>http协议</h2><p>http（超文本传输协议）是一个基于请求与响应模式的、无状态的、应用层的协议，常基于TCP的连接方式</p>
+<ol>
+<li>简单快速：客户向服务器请求服务时，只需传送请求方法和路径。请求方法常用的有GET、HEAD、POST。每种方法规定了客户与服务器联系的类型不同。由于HTTP协议简单，使得HTTP服务器的程序规模小，因而通信速度很快。</li>
+<li>灵活：HTTP允许传输任意类型的数据对象。正在传输的类型由Content-Type加以标记。</li>
+<li>无连接：无连接的含义是限制每次连接只处理一个请求。服务器处理完客户的请求，并收到客户的应答后，即断开连接。采用这种方式可以节省传输时间。</li>
+<li>无状态：HTTP协议是无状态协议。无状态是指协议对于事务处理没有记忆能力。缺少状态意味着如果后续处理需要前面的信息，则它必须重传，这样可能导致每次连接传送的数据量增大。另一方面，在服务器不需要先前信息时它的应答就较快。</li>
+</ol>
+<h2 id="http请求、响应"><a href="#http请求、响应" class="headerlink" title="http请求、响应"></a>http请求、响应</h2><p>[<a href="http://host[&quot;:&quot;port][abs_path](http://host[&quot;&quot;port][abs_path/)]">http://host[&quot;:&quot;port][abs_path](http://host[&quot;&quot;port][abs_path/)]</a></p>
+<p>http表示要通过HTTP协议来定位网络资源；host表示合法的Internet主机域名或者IP地址；port指定一个端口号，为空则使用缺省端口80；abs_path指定请求资源的URI；如果URL中没有给出abs_path，那么当它作为请求URI时，必须以“/”的形式给出，通常这个工作浏览器自动帮我们完成。</p>
+<p>http请求由三部分组成，分别是：请求行、请求头、请求正文</p>
+<ol>
+<li>请求行以一个方法符号开头，以空格分开，后面跟着请求的URI和协议的版本，格式如下：<code>Method Request-URI HTTP-Version CRLF</code><br> 其中 Method表示请求方法；Request-URI是一个统一资源标识符；HTTP-Version表示请求的HTTP协议版本；CRLF表示回车和换行（除了作为结尾的CRLF外，不允许出现单独的CR或LF字符）。</li>
+<li>请求报头允许客户端向服务器端传递请求的附加信息以及客户端自身的信息。</li>
+</ol>
+<p>请求方法（所有方法全为大写）有多种，各个方法的解释如下：</p>
+<ul>
+<li>GET     请求获取Request-URI所标识的资源</li>
+<li>POST    在Request-URI所标识的资源后附加新的数据</li>
+<li>HEAD    请求获取由Request-URI所标识的资源的响应消息报头</li>
+<li>PUT     请求服务器存储一个资源，并用Request-URI作为其标识</li>
+<li>DELETE  请求服务器删除Request-URI所标识的资源</li>
+<li>TRACE   请求服务器回送收到的请求信息，主要用于测试或诊断</li>
+<li>CONNECT 保留将来使用</li>
+<li>OPTIONS 请求查询服务器的性能，或者查询与资源相关的选项和需求</li>
+</ul>
+<p>HTTP响应也是由三个部分组成，分别是：状态行、消息报头、响应正文</p>
+<ol>
+<li>状态行格式如下：<br> HTTP-Version Status-Code Reason-Phrase CRLF<br> 其中，HTTP-Version表示服务器HTTP协议的版本；Status-Code表示服务器发回的响应状态代码；Reason-Phrase表示状态代码的文本描述。</li>
+<li>响应报头允许服务器传递不能放在状态行中的附加响应信息，以及关于服务器的信息和对Request-URI所标识的资源进行下一步访问的信息</li>
+</ol>
+<p>状态代码有三位数字组成，第一个数字定义了响应的类别，且有五种可能取值：<br> 1xx：指示信息–表示请求已接收，继续处理<br> 2xx：成功–表示请求已被成功接收、理解、接受<br> 3xx：重定向–要完成请求必须进行更进一步的操作<br> 4xx：客户端错误–请求有语法错误或请求无法实现<br> 5xx：服务器端错误–服务器未能实现合法的请求<br> 常见状态代码、状态描述、说明：<br> 200 OK      //客户端请求成功<br> 400 Bad Request  //客户端请求有语法错误，不能被服务器所理解<br> 401 Unauthorized //请求未经授权，这个状态代码必须和WWW-Authenticate报头域一起使用<br> 403 Forbidden  //服务器收到请求，但是拒绝提供服务<br> 404 Not Found  //请求资源不存在，eg：输入了错误的URL<br> 500 Internal Server Error //服务器发生不可预期的错误<br> 503 Server Unavailable  //服务器当前不能处理客户端的请求，一段时间后可能恢复正常<br> eg：HTTP/1.1 200 OK （CRLF）</p>
+<h2 id="http缓存"><a href="#http缓存" class="headerlink" title="http缓存"></a>http缓存</h2><p>HTTP缓存有多种规则，根据是否需要重新向服务器发起请求来分类，我将其分为两大类(强制缓存，对比缓存)</p>
+<p><img src="https://secure2.wostatic.cn/static/uJdTDUG4A8RaggARJYzW4T/image.png?auth_key=1680051013-3h9bRxYRZJoohCx3tFjDp8-0-0183575f4b6c7e772e16eb8e852cbf0a" alt="img"></p>
+<p>**强制缓存  **</p>
+<p>对于强制缓存来说，响应header中会有两个字段来标明失效规则（Expires/Cache-Control）</p>
+<p>Expires的值为服务端返回的到期时间，即下一次请求时，请求时间小于服务端返回的到期时间，直接使用缓存数据。  （不过Expires 是HTTP 1.0的东西，现在默认浏览器均默认使用HTTP 1.1，所以它的作用基本忽略）</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">Cache-Control</span><br><span class="line">Cache-Control 是最重要的规则。常见的取值有private、public、no-cache、max-age，no-store，默认为private。</span><br><span class="line">private:             客户端可以缓存</span><br><span class="line">public:              客户端和代理服务器都可缓存（前端的同学，可以认为public和private是一样的）</span><br><span class="line">max-age=xxx:   缓存的内容将在 xxx 秒后失效</span><br><span class="line">no-cache:          需要使用对比缓存来验证缓存数据（后面介绍）</span><br><span class="line">no-store:           所有内容都不会缓存，强制缓存，对比缓存都不会触发（对于前端开发来说，缓存越多越好，so...基本上和它说886）</span><br></pre></td></tr></table></figure>
+
+<p>**对比缓存  **</p>
+<p>对比缓存，顾名思义，需要进行比较判断是否可以使用缓存。</p>
+<ol>
+<li>浏览器第一次请求数据时，服务器会将缓存标识与数据一起返回给客户端，客户端将二者备份至缓存数据库中。</li>
+<li>再次请求数据时，客户端将备份的缓存标识发送给服务器，服务器根据缓存标识进行判断，判断成功后，返回304状态码，通知客户端比较成功，可以使用缓存数据。</li>
+</ol>
+<p>对于对比缓存来说，缓存标识的传递是我们着重需要理解的，它在请求header和响应header间进行传递，<br> 一共分为两种标识传递，Last-Modified/If-Modified-Since、Etag/If-None-Match（优先级高于Last-Modified  /  If-Modified-Since）</p>
+<p>Last-Modified：第一次请请求时，服务器返回资源最后一次修改的时间</p>
+<p>If-Modified-Since：再次请求时，浏览器通知服务器，上次请求时资源返回的最后修改时间</p>
+<p>Etag：第一次请求时服务器返回的资源唯一标识</p>
+<p>If-None-Match：再次请求时，浏览器通知服务器，上次返回的资源唯一标识</p>
+<blockquote>
+<p><strong>总结：</strong>对于强制缓存，服务器通知浏览器一个缓存时间，在缓存时间内，下次请求，直接用缓存，不在时间内，执行比较缓存策略。对于比较缓存，将缓存信息中的Etag和Last-Modified通过请求发送给服务器，由服务器校验，返回304状态码时，浏览器直接使用缓存。</p>
+</blockquote>
+<h1 id="项目"><a href="#项目" class="headerlink" title="项目"></a>项目</h1><h3 id="项目中遇到的问题"><a href="#项目中遇到的问题" class="headerlink" title="项目中遇到的问题"></a>项目中遇到的问题</h3><p>在权限管理系统中刷新页面会导致页面路由丢失</p>
+<p>（在第一请求的时候已经将路由信息储存到session中） vue-router直接引入pinia store获取不到路由信息 pinia必须在beforeEach（全局前置守卫）中获取store，在外部不能实现</p>
+<h1 id="其他"><a href="#其他" class="headerlink" title="其他"></a>其他</h1><h3 id="图片懒加载"><a href="#图片懒加载" class="headerlink" title="图片懒加载"></a>图片懒加载</h3><p>lazyload</p>
+<p>触底加载</p>
+<p>就是滚动 动态加载 或是触底</p>
+<p>将图片真实的路径储存起来，可以给img标签绑定自定义属性，例如data-src，获取页面滚动距离（scoretop）和视窗高度（window.innerHeight）大于等于图片距离顶部的高度（offsettop），</p>
+<p>getAttribute替换真实路径</p>
+<p>判断滚动高度 + 视窗高度 大于 可视区域（clientHeight）documentElement.clientHeight page++</p>
+<h3 id="瀑布流布局怎么实现"><a href="#瀑布流布局怎么实现" class="headerlink" title="瀑布流布局怎么实现"></a>瀑布流布局怎么实现</h3><p>一般使用响应式，根据容器宽度，设置每一列展示的数量，声明一个render函数，根据列的数量，平均分配列宽，创建一个数组存第一行的高度，在数组中找到第一行最小的高度获取下标，设置x.style.top和x.style.left，使其在最小高度的下面继续排列，并替换高度数组中对应的高度（offsetheight+行间距)，以此类推，实现瀑布流，页面全部加载后调用函数render（onload），当窗口改变时（window.resize）调用render</p>
+<h3 id="想找一份什么样的工作"><a href="#想找一份什么样的工作" class="headerlink" title="想找一份什么样的工作"></a>想找一份什么样的工作</h3><p>我希望找一个，其实就想找个像咱们这样的公司，而且咱公司，刚才我进来之后，发现咱公司整体的氛围还蛮好的，因为就是环境会影响一个人，心情好的话，这样工作效率才会高。</p>
+<h3 id="小程序生命周期与页面生命周期-1"><a href="#小程序生命周期与页面生命周期-1" class="headerlink" title="小程序生命周期与页面生命周期"></a>小程序生命周期与页面生命周期</h3><p>小程序生命周期为<code>onLaunch</code>、<code>onShow</code>、<code>onHide</code></p>
+<p>onLaunch监听小程序初始化</p>
+<p>onShow监听小程序显示</p>
+<p>onLaunch监听小程序隐藏</p>
+<p>页面生命周期<code> onLoad</code>、<code>onReady</code>、<code>onShow</code>、<code>onHide</code>、<code>onUnload</code></p>
+<p>onLoad监听页面加载</p>
+<p>onReady监听页面初次渲染完成</p>
+<p>onShow监听页面显示</p>
+<p>onHide监听页面隐藏</p>
+<p>onUnload监听页面卸载</p>
+
+        </div>
+
+        
+            <section class="post-copyright">
+                
+                
+                
+                
+
+            </section>
+        
+        <section class="post-tags">
+            <div>
+                <span>Tag(s):</span>
+                <span class="tag">
+                    
+                </span>
+            </div>
+            <div>
+                <a href="javascript:window.history.back();">back</a>
+                <span>· </span>
+                <a href="/">home</a>
+            </div>
+        </section>
+        <section class="post-nav">
+            
+            
+            <a class="next" rel="next" href="/2022/12/21/%E6%9C%8D%E5%8A%A1%E5%99%A8%E6%93%8D%E4%BD%9C/">服务器操作</a>
+            
+        </section>
+
+
+    </article>
+</div>
+
+            </div>
+            <footer id="footer" class="footer">
+    <div class="copyright">
+        <span>© lufei | Powered by <a href="https://hexo.io" target="_blank">Hexo</a> & <a href="https://github.com/Siricee/hexo-theme-Chic" target="_blank">Chic</a></span>
+    </div>
+</footer>
+
+    </div>
+</body>
+
+</html>
